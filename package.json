@@ -1,0 +1,35 @@
+{
+	"name": "owe-core",
+	"version": "0.3.0",
+	"description": "Core of the owe.js API framework ecosystem.",
+	"keywords": [
+		"api",
+		"web",
+		"protocol",
+		"graph",
+		"exposal",
+		"wrapper"
+	],
+	"license": "GPL-3.0",
+	"author": {
+		"name": "Clemens Damke",
+		"email": "clemens@cortys.de",
+		"url": "http://www.cortys.de"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/runnr/owe-core.git"
+	},
+	"main": "src/index.js",
+	"dependencies": {
+
+	},
+	"devDependencies": {
+		"gulp": "~3.8.11",
+		"gulp-mocha": "~2.0.0",
+		"expect.js": "~0.3.1"
+	},
+	"scripts": {
+		"test": "./node_modules/.bin/mocha"
+	}
+}

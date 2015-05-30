@@ -63,8 +63,8 @@ owe.resource = function resource(object, data) {
 	return object;
 };
 
-owe.resouceData = function resourceData(object) {
-	return typeof object === "object" && object !== null ? object[resourceSymbol] : undefined;
+owe.resourceData = function resourceData(object) {
+	return typeof object === "object" && object !== null && object[resourceSymbol] || {};
 };
 
 owe.State = State;

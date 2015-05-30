@@ -1,6 +1,6 @@
 {
 	"name": "owe-core",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "Core of the owe.js API framework ecosystem.",
 	"keywords": [
 		"api",
@@ -25,6 +25,7 @@
 
 	},
 	"devDependencies": {
+		"mocha": "~2.2.5",
 		"gulp": "~3.8.11",
 		"gulp-mocha": "~2.0.0",
 		"expect.js": "~0.3.1"

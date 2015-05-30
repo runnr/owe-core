@@ -4,6 +4,8 @@ var Api = require("./Api"),
 	Binding = require("./Binding"),
 	State = require("./State");
 
+var resourceSymbol = Symbol("resource");
+
 function owe(object, router, closer, type) {
 
 	// An object of the form { router:[function], closer:[function] } can be used as well:
@@ -38,18 +40,36 @@ function owe(object, router, closer, type) {
 	return Binding.bind(object, router, closer, type);
 }
 
-owe.api = function(object, router, closer, type) {
+owe.api = function api(object, router, closer, type) {
 	if(!Binding.isBound(object) || arguments.length > 1)
 		object = owe(object, router, closer, type);
 
 	return new Api(object);
 };
 
-owe.State = State;
-owe.Binding = Binding;
-owe.isBound = Binding.isBound.bind(Binding); // kek.
-owe.isApi = function(api) {
+owe.isApi = function isApi(api) {
 	return api instanceof Api;
 };
+
+owe.resource = function resource(object, data) {
+	if(typeof object !== "object" || object === null || !Object.isExtensible(object) || resourceSymbol in object)
+		throw new TypeError("Could not transform given object into a resource.");
+
+	if(typeof object !== "object" || object === null)
+		throw new TypeError("Resource data has to be an object.");
+
+	object[resourceSymbol] = data;
+
+	return object;
+};
+
+owe.resouceData = function resourceData(object) {
+	return typeof object === "object" && object !== null ? object[resourceSymbol] : undefined;
+};
+
+owe.State = State;
+
+owe.Binding = Binding;
+owe.isBound = Binding.isBound.bind(Binding); // kek.
 
 module.exports = owe;

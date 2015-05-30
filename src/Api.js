@@ -14,7 +14,7 @@ class Api {
 	constructor(pObject, pPosition, pOrigin) {
 		var pos = this[position] = (pPosition || []).slice(0);
 
-		this[origin] = pOrigin;
+		this[origin] = pOrigin || {};
 
 		this[boundObject] = Promise.resolve(pObject).then(function(object) {
 			if(!Binding.isBound(object))
@@ -24,6 +24,9 @@ class Api {
 	}
 
 	origin(source) {
+
+		if(typeof source !== "object" || source === null)
+			throw new TypeError("Api origin has to be an object.");
 
 		var clone = Object.create(this);
 

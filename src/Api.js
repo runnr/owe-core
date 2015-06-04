@@ -1,17 +1,17 @@
 /**
- * @module owe-core/Api
+ * @module Api
  */
 "use strict";
 
 var Binding = require("./Binding");
 
 /**
- * Represents an Api node.
+ * Represents an API node.
  */
 class Api {
 
 	/**
-	 * @param {object|Promise} object A bound object this Api should be exposing. This may also be a Promise that resolves to a bound object.
+	 * @param {object|Promise} object A bound object this {@link Api} should be exposing. This may also be a Promise that resolves to a bound object.
 	 * @param {any[]} position The stack of routes that led to this Api pointer.
 	 * @param {object} [pOrigin={}] An object to use as the origin of this Api.
 	 */
@@ -28,9 +28,9 @@ class Api {
 	}
 
 	/**
-	 * Setter for the origin of an Api.
+	 * Setter for the origin of an {@link Api}.
 	 * @param {object} value The origin object for the new Api node.
-	 * @return {Api} Returns a new Api node with the given origin, that points at the same exposed object.
+	 * @return {Api} Returns a new {@link Api} with the given origin, that points at the same exposed object.
 	 */
 	origin(value) {
 
@@ -47,7 +47,7 @@ class Api {
 	/**
 	 * Routes the Api according to its exposed objects routing function.
 	 * @param {any} destination The destination to route to.
-	 * @return {Api} A new Api for the object the routing function returned.
+	 * @return {Api} A new {@link Api} for the object the routing function returned.
 	 */
 	route(destination) {
 		var that = this,
@@ -90,7 +90,7 @@ class Api {
 	}
 
 	/**
-	 * @return {Promise} Resolves to the exposed object this Api is pointing to.
+	 * @return {Promise} Resolves to the exposed object this {@link Api} is pointing to.
 	 */
 	get object() {
 		return this[object] || (this[object] = this[boundObject].then(function(object) {
@@ -108,6 +108,12 @@ var errorHandled = Symbol("errorHandled"),
 
 var errorHandlers = {
 
+	/**
+	 * Handle routing errors.
+	 * @private
+	 * @param {any[]} position
+	 * @param {Error} err
+	 */
 	route(position, err) {
 		try {
 			if(!(errorHandled in err)) {
@@ -121,6 +127,12 @@ var errorHandlers = {
 		}
 	},
 
+	/**
+	 * Handle closing errors.
+	 * @private
+	 * @param {any} data
+	 * @param {Error} err
+	 */
 	close(data, err) {
 		try {
 			if(!(errorHandled in err)) {

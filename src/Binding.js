@@ -1,5 +1,5 @@
 /**
- * @module owe-core/Binding
+ * @module Binding
  */
 "use strict";
 
@@ -8,18 +8,21 @@ var State = require("./State");
 /**
  * The types of Bindings.
  * @constant {object}
- * @namespace
+ * @namespace Binding~types
+ * @property {symbol} normal Only allow bindings to unbound objects; throw otherwise. Afterwards the given object is bound ({@link Binding.isBound} will return true).
+ * @property {symbol} clone Allow any object or function as binding target. Afterwards the given object will not be changed: Unbound if it was unbound before, bound (with the same {@link Binding}) if it was bound before.
+ * @property {symbol} rebind Allow any object or function as binding target. Afterwards the given object is bound ({@link Binding.isBound} will return true). If the object was bound before, the old binding is overridden.
  */
 const types = {
 	normal: Symbol("normal"),
 	clone: Symbol("clone"),
 	rebind: Symbol("rebind")
 };
-
 Object.freeze(types);
 
 /**
  * Stores the router and closer functions of bound objects.
+ * @class
  */
 class Binding {
 
@@ -27,7 +30,7 @@ class Binding {
 	 * @param {object|function} object The object that will be bound.
 	 * @param {function} router The router function for this binding.
 	 * @param {function} closer The closer function for this binding.
-	 * @param {symbol} [type={@linkcode Binding.types.normal}] The {@link Binding.types type of binding} to be used.
+	 * @param {types} [type={@linkcode Binding~types.normal}] The {@link Binding~types type of binding} to be used.
 	 */
 	constructor(object, router, closer, type, clonedObject) {
 
@@ -56,13 +59,13 @@ class Binding {
 
 		/**
 		 * Stores the router function.
-		 * @type {function}
+		 * @member {function} router
 		 */
 		this.router = usedRouter;
 
 		/**
 		 * Stores the closer function.
-		 * @type {function}
+		 * @member {function} closer
 		 */
 		this.closer = closer;
 
@@ -76,7 +79,7 @@ class Binding {
 			},
 			/**
 			 * The binding type that was used to create this Binding.
-			 * @member {symbol} type
+			 * @member {Binding~types} type
 			 */
 			type: {
 				value: type
@@ -91,7 +94,7 @@ class Binding {
 	 * @return {boolean} true if the object is bound. false if not.
 	 */
 	static isBound(object) {
-		return (typeof object === "object" || typeof object === "function") && object !== null && Object.getOwnPropertyDescriptor(object, this.key) !== undefined && object[this.key] instanceof this;
+		return(typeof object === "object" || typeof object === "function") && object !== null && Object.getOwnPropertyDescriptor(object, this.key) !== undefined && object[this.key] instanceof this;
 	}
 
 	/**
@@ -169,9 +172,19 @@ Object.defineProperties(Binding.prototype, {
 });
 
 Object.defineProperties(Binding, {
+	/**
+	 * The symbol key that is used to store {@link Binding} instances in bound objects.
+	 * @name Binding.key
+	 * @member {symbol}
+	 */
 	key: {
 		value: Symbol("binding")
 	},
+
+	/**
+	 * @name Binding.types
+	 * @borrows types as types
+	 */
 	types: {
 		value: types
 	}

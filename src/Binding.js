@@ -183,7 +183,7 @@ Object.defineProperties(Binding, {
 
 	/**
 	 * @name Binding.types
-	 * @borrows types as types
+	 * @borrows Binding~types as types
 	 */
 	types: {
 		value: types

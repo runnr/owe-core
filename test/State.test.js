@@ -122,6 +122,7 @@ describe("State", function() {
 			var modified = state.setValue({
 				value: "test"
 			});
+
 			expect(modified).not.to.be(state);
 			expect(modified).to.be.a(State);
 			expect(modified.value).to.be("test");
@@ -135,6 +136,7 @@ describe("State", function() {
 				value: null,
 				writable: true
 			});
+
 			modified.value = "test";
 			expect(modified.value).to.be(null);
 		});
@@ -148,6 +150,7 @@ describe("State", function() {
 						hiddenValue = val;
 					}
 				});
+
 			modified.value = "test";
 			expect(modified.value).to.be("test");
 		});

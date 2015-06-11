@@ -23,6 +23,7 @@ describe("Api", function() {
 			expect(this.value).to.be(original);
 			if(!(key in this.value))
 				throw new Error(key + " not found.");
+
 			return this.value[key];
 		}, Binding.types.clone),
 		api = new Api(object);
@@ -119,6 +120,7 @@ describe("Api", function() {
 
 			if(!(key in this.value))
 				throw new Error(key + " not found.");
+
 			return this.value[key];
 		}, Binding.types.clone)).origin(test);
 

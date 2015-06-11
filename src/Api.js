@@ -23,6 +23,7 @@ class Api {
 		this[boundObject] = Promise.resolve(pObject).then(function(object) {
 			if(!Binding.isBound(object))
 				throw new TypeError("Object at position '" + pos.join("/") + "' is not exposed.");
+
 			return object;
 		}).catch(errorHandlers.route.bind(null, pos));
 	}
@@ -65,6 +66,7 @@ class Api {
 	 */
 	close(data) {
 		var that = this;
+
 		return this[boundObject].then(function(object) {
 			return object[Binding.key].close(that[position], that[origin], data);
 		}).catch(errorHandlers.close.bind(this, data));

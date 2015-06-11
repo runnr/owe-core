@@ -9,6 +9,7 @@ describe("Binding", function() {
 		it("should return true for objects that were bound", function() {
 			var boundObject = Binding.bind(null, function() {}, function() {}),
 				boundFunction = Binding.bind(function() {}, function() {}, function() {});
+
 			expect(Binding.isBound(boundObject)).to.be(true);
 			expect(Binding.isBound(boundFunction)).to.be(true);
 		});
@@ -28,6 +29,7 @@ describe("Binding", function() {
 	describe(".key", function() {
 		it("should be used as key in bound objects to point to Binding objects", function() {
 			var object = {};
+
 			Binding.bind(object, function() {}, function() {});
 			expect(object[Binding.key]).to.be.a(Binding);
 		});
@@ -71,21 +73,26 @@ describe("Binding", function() {
 
 			it("when 'normal': only accepts unbound objects", function() {
 				var object = {};
+
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).not.to.throwError();
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).to.throwError();
 			});
 
 			it("when 'rebind': accepts all objects and rebinds them if neccessary", function() {
 				var object = {};
+
 				expect(bindingFunction).withArgs(object, function() {}, function() {}, Binding.types.rebind).not.to.throwError();
 				expect(bindingFunction).withArgs(object, function() {}, function() {}, Binding.types.rebind).not.to.throwError();
 			});
 
 			it("when 'clone': binds to a new object that behaves as if it were the original object in Apis", function() {
 				var object = {};
+
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).not.to.throwError();
 				expect(Binding.isBound(object)).to.be(true);
+
 				var clone;
+
 				expect(function() {
 					clone = Binding.bind(object, function() {}, function() {}, Binding.types.clone);
 				}).not.to.throwError();
@@ -101,12 +108,17 @@ describe("Binding", function() {
 			var o = {};
 
 			var a = Binding.bind(o, function() {}, function() {});
+
 			expect(a).to.be(o);
 			expect(Binding.isBound(o)).to.be.ok();
+
 			var b = Binding.unbind(o);
+
 			expect(b).to.be(o);
 			expect(Binding.isBound(o)).not.to.be.ok();
+
 			var c = Binding.bind(o, function() {}, function() {});
+
 			expect(c).to.be(o);
 			expect(Binding.isBound(o)).to.be.ok();
 		});
@@ -139,6 +151,7 @@ describe("Binding", function() {
 			expect(this.binding).to.be(binding);
 			expect(this.origin).to.be(origin);
 			expect(data).to.be(pData);
+
 			return "result";
 		},
 		closer = router,
@@ -168,16 +181,19 @@ describe("Binding", function() {
 		it("should always contain the binding target object", function() {
 			var o = {},
 				oBound = Binding.bind(o, function() {}, function() {}, Binding.types.normal);
+
 			expect(oBound[Binding.key].target).to.be(o);
 			expect(oBound).to.be(o);
 
 			var p = o,
 				pBound = Binding.bind(o, function() {}, function() {}, Binding.types.rebind);
+
 			expect(pBound[Binding.key].target).to.be(p);
 			expect(pBound).to.be(p);
 
 			var q = {},
 				qBound = Binding.bind(q, function() {}, function() {}, Binding.types.clone);
+
 			expect(qBound[Binding.key].target).to.be(q);
 			expect(qBound).not.to.be(q);
 		});

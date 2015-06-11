@@ -52,10 +52,10 @@ owe.isApi = function isApi(api) {
 };
 
 owe.resource = function resource(object, data) {
-	if(typeof object !== "object" || object === null || !Object.isExtensible(object) || resourceSymbol in object)
+	if(typeof object !== "object" || object === null || !Object.isExtensible(object) || resourceSymbol in object)
 		throw new TypeError("Could not transform given object into a resource.");
 
-	if(typeof object !== "object" || object === null)
+	if(typeof object !== "object" || object === null)
 		throw new TypeError("Resource data has to be an object.");
 
 	object[resourceSymbol] = data;

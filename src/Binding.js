@@ -18,6 +18,7 @@ const types = {
 	clone: Symbol("clone"),
 	rebind: Symbol("rebind")
 };
+
 Object.freeze(types);
 
 /**
@@ -39,6 +40,7 @@ class Binding {
 
 		if(typeof object !== "object" && typeof object !== "function")
 			throw new TypeError("Only objects and functions can be bound. Got '" + object + "'.");
+
 		if(Binding.isBound(object) && type !== types.rebind && type !== types.clone)
 			throw new Error("Object '" + object + "' is already bound.");
 
@@ -94,7 +96,7 @@ class Binding {
 	 * @return {boolean} true if the object is bound. false if not.
 	 */
 	static isBound(object) {
-		return(typeof object === "object" || typeof object === "function") && object !== null && Object.getOwnPropertyDescriptor(object, this.key) !== undefined && object[this.key] instanceof this;
+		return (typeof object === "object" || typeof object === "function") && object !== null && Object.getOwnPropertyDescriptor(object, this.key) !== undefined && object[this.key] instanceof this;
 	}
 
 	/**

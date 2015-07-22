@@ -1,10 +1,10 @@
 "use strict";
 
-var Api = require("./Api"),
+const Api = require("./Api"),
 	Binding = require("./Binding"),
 	State = require("./State");
 
-var resourceSymbol = Symbol("resource");
+const resourceMap = new WeakMap();
 
 function owe(object, router, closer, type) {
 
@@ -52,19 +52,19 @@ owe.isApi = function isApi(api) {
 };
 
 owe.resource = function resource(object, data) {
-	if(typeof object !== "object" || object === null || !Object.isExtensible(object) || resourceSymbol in object)
+	if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
 		throw new TypeError("Could not transform given object into a resource.");
 
 	if(typeof object !== "object" || object === null)
 		throw new TypeError("Resource data has to be an object.");
 
-	object[resourceSymbol] = data;
+	resourceMap.set(object, data);
 
 	return object;
 };
 
 owe.resourceData = function resourceData(object) {
-	return typeof object === "object" && object !== null && object[resourceSymbol] || {};
+	return resourceMap.get(object) || {};
 };
 
 owe.State = State;

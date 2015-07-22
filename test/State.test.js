@@ -1,12 +1,12 @@
-var expect = require("expect.js");
+const expect = require("expect.js");
 
-var owe = require("../src"),
+const owe = require("../src"),
 	State = require("../src/State"),
 	Binding = require("../src/Binding");
 
 describe("State", function() {
 
-	var value = {
+	const value = {
 			test: "Hello World.",
 			value: 42,
 			toString: function() {
@@ -18,7 +18,7 @@ describe("State", function() {
 		},
 		location = ["location", "of", "this", "state"],
 		origin = {},
-		binding = Binding.bind(null, function() {}, function() {})[Binding.key],
+		binding = Binding.getBinding(Binding.bind(null, function() {}, function() {})),
 		state = new State(value, location, origin, binding);
 
 	it("should be frozen", function() {
@@ -119,7 +119,7 @@ describe("State", function() {
 			expect(state.value).to.be(value);
 		});
 		it("should return a new State with the new value", function() {
-			var modified = state.setValue({
+			const modified = state.setValue({
 				value: "test"
 			});
 
@@ -132,7 +132,7 @@ describe("State", function() {
 			expect(state.setValue({}).modified).to.be(true);
 		});
 		it("can not make .value writable", function() {
-			var modified = state.setValue({
+			const modified = state.setValue({
 				value: null,
 				writable: true
 			});
@@ -141,8 +141,9 @@ describe("State", function() {
 			expect(modified.value).to.be(null);
 		});
 		it("can define getter & setter functions for .value", function() {
-			var hiddenValue = null,
-				modified = state.setValue({
+			var hiddenValue = null;
+
+			const modified = state.setValue({
 					get: function() {
 						return hiddenValue;
 					},

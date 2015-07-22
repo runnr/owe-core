@@ -3,7 +3,7 @@
  */
 "use strict";
 
-var State = require("./State");
+const State = require("./State");
 
 /**
  * The types of Bindings.
@@ -20,6 +20,8 @@ const types = {
 };
 
 Object.freeze(types);
+
+const bindingMap = new WeakMap();
 
 /**
  * Stores the router and closer functions of bound objects.
@@ -51,7 +53,7 @@ class Binding {
 		else if(typeof router !== "function" || typeof closer !== "function")
 			throw new TypeError("Bindings require a router and a closer function or another binding to copy.");
 
-		var usedRouter = type === types.clone && clonedObject !== undefined ? function() {
+		const usedRouter = type === types.clone && clonedObject !== undefined ? function() {
 			return Promise.resolve(router.apply(this, arguments)).then(function(result) {
 				return result === object ? clonedObject : result;
 			});
@@ -96,11 +98,21 @@ class Binding {
 	 * @return {boolean} true if the object is bound. false if not.
 	 */
 	static isBound(object) {
-		return (typeof object === "object" || typeof object === "function") && object !== null && Object.getOwnPropertyDescriptor(object, this.key) !== undefined && object[this.key] instanceof this;
+		return object && (typeof object === "object" || typeof object === "function") && bindingMap.has(object) || false;
 	}
 
 	/**
-	 * Binds an unbound object. This will add a Binding.key symbol property to the given object.
+	 * Returns the Binding object of the given object if it is bound.
+	 * undefined elsewise.
+	 * @param {object} object The object that should be checked.
+	 * @return {Binding|undefined} The binding of object.
+	 */
+	static getBinding(object) {
+		return object && (typeof object === "object" || typeof object === "function") && bindingMap.get(object) || undefined;
+	}
+
+	/**
+	 * Binds an unbound object.
 	 * @static
 	 * @param {?object|function} object The object to be bound. If the given object (strictly) equals null, a new empty object will be used as the binding target.
 	 * @param {!function} router The router function to be used for the binding.
@@ -110,17 +122,13 @@ class Binding {
 	 */
 	static bind(object, router, closer, type) {
 
-		var target = object === null || type === types.clone ? Object.create(null, {
+		const target = object === null || type === types.clone ? Object.create(null, {
 				object: {
 					value: object
 				}
-			}) : object,
-			binding = new this(object, router, closer, type, target);
+			}) : object;
 
-		Object.defineProperty(target, this.key, {
-			configurable: true,
-			value: binding
-		});
+		bindingMap.set(target, new this(object, router, closer, type, target));
 
 		return target;
 	}
@@ -134,10 +142,9 @@ class Binding {
 	static unbind(object) {
 
 		if(this.isBound(object))
-			delete object[this.key];
+			bindingMap.delete(object);
 
 		return object;
-
 	}
 
 }
@@ -173,23 +180,12 @@ Object.defineProperties(Binding.prototype, {
 	}
 });
 
-Object.defineProperties(Binding, {
-	/**
-	 * The symbol key that is used to store {@link Binding} instances in bound objects.
-	 * @name Binding.key
-	 * @member {symbol}
-	 */
-	key: {
-		value: Symbol("binding")
-	},
-
-	/**
-	 * @name Binding.types
-	 * @borrows Binding~types as types
-	 */
-	types: {
-		value: types
-	}
+/**
+ * @name Binding.types
+ * @borrows Binding~types as types
+ */
+Object.defineProperty(Binding, "types", {
+	value: types
 });
 
 if(State.setBinding)

@@ -1,13 +1,13 @@
-var expect = require("expect.js");
+const expect = require("expect.js");
 
-var owe = require("../src"),
+const owe = require("../src"),
 	Binding = require("../src/Binding"),
 	State = require("../src/State"),
 	Api = require("../src/Api");
 
 describe("Api", function() {
 
-	var original = {
+	const original = {
 			a: 1,
 			b: 2,
 			c: 3
@@ -104,10 +104,10 @@ describe("Api", function() {
 
 	describe("#origin()", function() {
 
-		var foo = {},
+		const foo = {},
 			test = Object.create(null);
 
-		var api = new Api(Binding.bind(original, function(a) {
+		const api = new Api(Binding.bind(original, function(a) {
 			expect(this).to.be.a(State);
 			expect(this.value).to.be(original);
 			expect([test, foo]).to.contain(this.origin);

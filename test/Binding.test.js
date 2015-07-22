@@ -1,13 +1,13 @@
-var expect = require("expect.js");
+const expect = require("expect.js");
 
-var owe = require("../src"),
+const owe = require("../src"),
 	Binding = require("../src/Binding");
 
 describe("Binding", function() {
 
 	describe(".isBound()", function() {
 		it("should return true for objects that were bound", function() {
-			var boundObject = Binding.bind(null, function() {}, function() {}),
+			const boundObject = Binding.bind(null, function() {}, function() {}),
 				boundFunction = Binding.bind(function() {}, function() {}, function() {});
 
 			expect(Binding.isBound(boundObject)).to.be(true);
@@ -26,18 +26,18 @@ describe("Binding", function() {
 		});
 	});
 
-	describe(".key", function() {
-		it("should be used as key in bound objects to point to Binding objects", function() {
-			var object = {};
+	describe(".getBinding()", function() {
+		it("should return the Binding object for the given object", function() {
+			const object = {};
 
 			Binding.bind(object, function() {}, function() {});
-			expect(object[Binding.key]).to.be.a(Binding);
+			expect(Binding.getBinding(object)).to.be.a(Binding);
 		});
 	});
 
 	describe(".bind()", function() {
 
-		var bindingFunction = Binding.bind.bind(Binding);
+		const bindingFunction = Binding.bind.bind(Binding);
 
 		it("can be used to bind to an object by calling bind", function() {
 			expect(Binding.isBound(Binding.bind({}, function() {}, function() {}))).to.be.ok();
@@ -68,25 +68,25 @@ describe("Binding", function() {
 
 		describe("type parameter", function() {
 			it("should be optional and 'normal' by default", function() {
-				expect(Binding.bind({}, function() {}, function() {})[Binding.key].type).to.be(Binding.types.normal);
+				expect(Binding.getBinding(Binding.bind({}, function() {}, function() {})).type).to.be(Binding.types.normal);
 			});
 
 			it("when 'normal': only accepts unbound objects", function() {
-				var object = {};
+				const object = {};
 
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).not.to.throwError();
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).to.throwError();
 			});
 
 			it("when 'rebind': accepts all objects and rebinds them if neccessary", function() {
-				var object = {};
+				const object = {};
 
 				expect(bindingFunction).withArgs(object, function() {}, function() {}, Binding.types.rebind).not.to.throwError();
 				expect(bindingFunction).withArgs(object, function() {}, function() {}, Binding.types.rebind).not.to.throwError();
 			});
 
 			it("when 'clone': binds to a new object that behaves as if it were the original object in Apis", function() {
-				var object = {};
+				const object = {};
 
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).not.to.throwError();
 				expect(Binding.isBound(object)).to.be(true);
@@ -105,19 +105,19 @@ describe("Binding", function() {
 
 	describe(".unbind()", function() {
 		it("unbinds bound objects and returns them", function() {
-			var o = {};
+			const o = {};
 
-			var a = Binding.bind(o, function() {}, function() {});
+			const a = Binding.bind(o, function() {}, function() {});
 
 			expect(a).to.be(o);
 			expect(Binding.isBound(o)).to.be.ok();
 
-			var b = Binding.unbind(o);
+			const b = Binding.unbind(o);
 
 			expect(b).to.be(o);
 			expect(Binding.isBound(o)).not.to.be.ok();
 
-			var c = Binding.bind(o, function() {}, function() {});
+			const c = Binding.bind(o, function() {}, function() {});
 
 			expect(c).to.be(o);
 			expect(Binding.isBound(o)).to.be.ok();
@@ -125,7 +125,7 @@ describe("Binding", function() {
 
 		it("just returns unbound objects and data", function() {
 
-			var o = Object.freeze({}),
+			const o = Object.freeze({}),
 				f = function() {},
 				s = Symbol();
 
@@ -139,7 +139,7 @@ describe("Binding", function() {
 
 	});
 
-	var object = {
+	const object = {
 			the: "object"
 		},
 		location = ["a", "b", "c"],
@@ -155,7 +155,7 @@ describe("Binding", function() {
 			return "result";
 		},
 		closer = router,
-		binding = Binding.bind(object, router, closer)[Binding.key];
+		binding = Binding.getBinding(Binding.bind(object, router, closer));
 
 	describe("#router", function() {
 		it("should contain the assigned router", function() {
@@ -171,30 +171,30 @@ describe("Binding", function() {
 
 	describe("#type", function() {
 		it("should contain the type used at Binding creation", function() {
-			expect(Binding.bind({}, function() {}, function() {}, Binding.types.normal)[Binding.key].type).to.be(Binding.types.normal);
-			expect(Binding.bind({}, function() {}, function() {}, Binding.types.clone)[Binding.key].type).to.be(Binding.types.clone);
-			expect(Binding.bind({}, function() {}, function() {}, Binding.types.rebind)[Binding.key].type).to.be(Binding.types.rebind);
+			expect(Binding.getBinding(Binding.bind({}, function() {}, function() {}, Binding.types.normal)).type).to.be(Binding.types.normal);
+			expect(Binding.getBinding(Binding.bind({}, function() {}, function() {}, Binding.types.clone)).type).to.be(Binding.types.clone);
+			expect(Binding.getBinding(Binding.bind({}, function() {}, function() {}, Binding.types.rebind)).type).to.be(Binding.types.rebind);
 		});
 	});
 
 	describe("#target", function() {
 		it("should always contain the binding target object", function() {
-			var o = {},
+			const o = {},
 				oBound = Binding.bind(o, function() {}, function() {}, Binding.types.normal);
 
-			expect(oBound[Binding.key].target).to.be(o);
+			expect(Binding.getBinding(oBound).target).to.be(o);
 			expect(oBound).to.be(o);
 
-			var p = o,
+			const p = o,
 				pBound = Binding.bind(o, function() {}, function() {}, Binding.types.rebind);
 
-			expect(pBound[Binding.key].target).to.be(p);
+			expect(Binding.getBinding(pBound).target).to.be(p);
 			expect(pBound).to.be(p);
 
-			var q = {},
+			const q = {},
 				qBound = Binding.bind(q, function() {}, function() {}, Binding.types.clone);
 
-			expect(qBound[Binding.key].target).to.be(q);
+			expect(Binding.getBinding(qBound).target).to.be(q);
 			expect(qBound).not.to.be(q);
 		});
 	});

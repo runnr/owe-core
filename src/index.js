@@ -1,8 +1,8 @@
 "use strict";
 
-const Api = require("./Api"),
-	Binding = require("./Binding"),
-	State = require("./State");
+const Api = require("./Api");
+const Binding = require("./Binding");
+const State = require("./State");
 
 const resourceMap = new WeakMap();
 
@@ -29,7 +29,7 @@ function owe(object, router, closer, type) {
 		if(typeof type === "object" && type !== null && "valueOf" in type)
 			type = type.valueOf();
 
-		if(typeof type === "string")
+		if(typeof type === "string" && type in Binding.types)
 			type = Binding.types[type];
 		else if(typeof type === "boolean")
 			type = type ? Binding.types.clone : Binding.types.normal;
@@ -48,23 +48,23 @@ owe.api = function api(object, router, closer, type) {
 };
 
 owe.isApi = function isApi(api) {
-	return api instanceof Api;
+	return api && typeof api === "object" && api instanceof Api || false;
 };
 
 owe.resource = function resource(object, data) {
+
+	if(data === undefined)
+		return resourceMap.get(object) || {};
+
 	if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
 		throw new TypeError("Could not transform given object into a resource.");
 
-	if(typeof object !== "object" || object === null)
+	if(typeof data !== "object" || data === null)
 		throw new TypeError("Resource data has to be an object.");
 
 	resourceMap.set(object, data);
 
 	return object;
-};
-
-owe.resourceData = function resourceData(object) {
-	return resourceMap.get(object) || {};
 };
 
 owe.State = State;

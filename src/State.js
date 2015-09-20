@@ -4,7 +4,7 @@
 "use strict";
 
 // Binding will be late bound, due to circular dependency between it and State.
-var Binding;
+let Binding;
 
 /**
  * Stores the state of an API request.

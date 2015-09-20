@@ -14,6 +14,9 @@ const State = require("./State");
  * @property {symbol} rebind Allow any object or function as binding target. Afterwards the given object is bound ({@link Binding.isBound} will return true). If the object was bound before, the old binding is overridden.
  */
 const types = {
+
+	__proto__: null,
+
 	normal: Symbol("normal"),
 	clone: Symbol("clone"),
 	rebind: Symbol("rebind")
@@ -37,29 +40,30 @@ class Binding {
 	 */
 	constructor(object, router, closer, type, clonedObject) {
 
-		if(typeof type !== "symbol")
+		if(type === undefined)
 			type = types.normal;
+		else if(type !== types.normal && type !== types.clone && type !== types.rebind)
+			throw new Error(`Given type '${type}' is invalid.`);
 
 		if(typeof object !== "object" && typeof object !== "function")
-			throw new TypeError("Only objects and functions can be bound. Got '" + object + "'.");
+			throw new TypeError(`Only objects and functions can be bound. Got '${object}'.`);
 
 		if(Binding.isBound(object) && type !== types.rebind && type !== types.clone)
-			throw new Error("Object '" + object + "' is already bound.");
+			throw new Error(`Object '${object}' is already bound.`);
 
-		if(router instanceof Binding) {
-			closer = router.closer;
-			router = router.router[types.clone] || router.router;
-		}
-		else if(typeof router !== "function" || typeof closer !== "function")
+		if(typeof router !== "function" || typeof closer !== "function")
 			throw new TypeError("Bindings require a router and a closer function or another binding to copy.");
 
+		if(typeof router[types.clone] === "function")
+			router = router[types.clone];
+
 		const usedRouter = type === types.clone && clonedObject !== undefined ? function() {
-			return Promise.resolve(router.apply(this, arguments)).then(function(result) {
-				return result === object ? clonedObject : result;
-			});
+			return Promise.resolve(router.apply(this, arguments))
+				.then(result => result === object ? clonedObject : result);
 		} : router;
 
-		usedRouter[types.clone] = router;
+		if(usedRouter !== router)
+			usedRouter[types.clone] = router;
 
 		/**
 		 * Stores the router function.
@@ -149,13 +153,19 @@ class Binding {
 
 }
 
+/**
+ * @name Binding.types
+ * @borrows Binding~types as types
+ */
+Binding.types = types;
+
 function traverse(type) {
 	return function(location, origin, data) {
 		return this[type].call(new State(this.target, location, origin, this), data);
 	};
 }
 
-Object.defineProperties(Binding.prototype, {
+Object.assign(Binding.prototype, {
 	/**
 	 * Calls {@link Binding#router} with a {@link State} object as its this-context.
 	 * @name Binding#route
@@ -164,9 +174,7 @@ Object.defineProperties(Binding.prototype, {
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The destination to route to.
 	 */
-	route: {
-		value: traverse("router")
-	},
+	route: traverse("router"),
 	/**
 	 * Calls {@link Binding#closer} with a {@link State} object as its this-context.
 	 * @name Binding#close
@@ -175,17 +183,7 @@ Object.defineProperties(Binding.prototype, {
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The data to close with.
 	 */
-	close: {
-		value: traverse("closer")
-	}
-});
-
-/**
- * @name Binding.types
- * @borrows Binding~types as types
- */
-Object.defineProperty(Binding, "types", {
-	value: types
+	close: traverse("closer")
 });
 
 if(State.setBinding)

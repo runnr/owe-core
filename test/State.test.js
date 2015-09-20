@@ -1,8 +1,12 @@
+/* jshint mocha: true */
+
+"use strict";
+
 const expect = require("expect.js");
 
-const owe = require("../src"),
-	State = require("../src/State"),
-	Binding = require("../src/Binding");
+const owe = require("../src");
+const State = require("../src/State");
+const Binding = require("../src/Binding");
 
 describe("State", function() {
 
@@ -38,10 +42,9 @@ describe("State", function() {
 			expect(state.value).to.be(value);
 		});
 		it("should be read-only", function() {
-			state.value = {
+			expect(() => state.value = {
 				something: "else"
-			};
-			expect(state.value).to.be(value);
+			}).to.throwError();
 		});
 	});
 
@@ -53,8 +56,7 @@ describe("State", function() {
 			expect(state.location).to.eql(location);
 		});
 		it("should be read-only", function() {
-			state.location = ["something", "else"];
-			expect(state.location).to.eql(location);
+			expect(() => state.location = ["something", "else"]).to.throwError();
 		});
 	});
 
@@ -63,8 +65,7 @@ describe("State", function() {
 			expect(state.origin).to.eql(origin);
 		});
 		it("should be read-only", function() {
-			state.origin = "derp";
-			expect(state.origin).to.eql(origin);
+			expect(() => state.origin = "derp").to.throwError();
 		});
 	});
 
@@ -76,8 +77,7 @@ describe("State", function() {
 			expect(state.binding).to.be(binding);
 		});
 		it("should be read-only", function() {
-			state.binding = null;
-			expect(state.binding).to.be(binding);
+			expect(() => state.binding = null).to.throwError();
 		});
 	});
 
@@ -132,16 +132,17 @@ describe("State", function() {
 			expect(state.setValue({}).modified).to.be(true);
 		});
 		it("can not make .value writable", function() {
-			const modified = state.setValue({
-				value: null,
-				writable: true
-			});
+			expect(() => {
+				const modified = state.setValue({
+					value: null,
+					writable: true
+				});
 
-			modified.value = "test";
-			expect(modified.value).to.be(null);
+				modified.value = "test";
+			}).to.throwError();
 		});
 		it("can define getter & setter functions for .value", function() {
-			var hiddenValue = null;
+			let hiddenValue = null;
 
 			const modified = state.setValue({
 					get: function() {

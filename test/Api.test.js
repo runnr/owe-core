@@ -1,9 +1,13 @@
+/* jshint mocha: true */
+
+"use strict";
+
 const expect = require("expect.js");
 
-const owe = require("../src"),
-	Binding = require("../src/Binding"),
-	State = require("../src/State"),
-	Api = require("../src/Api");
+const owe = require("../src");
+const Binding = require("../src/Binding");
+const State = require("../src/State");
+const Api = require("../src/Api");
 
 describe("Api", function() {
 
@@ -62,7 +66,7 @@ describe("Api", function() {
 		});
 		it("should reject incorrect requests", function() {
 
-			var error;
+			let error;
 
 			return Promise.all([
 				api.close("d").then(function() {

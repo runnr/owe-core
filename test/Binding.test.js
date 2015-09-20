@@ -1,7 +1,11 @@
+/* jshint mocha: true */
+
+"use strict";
+
 const expect = require("expect.js");
 
-const owe = require("../src"),
-	Binding = require("../src/Binding");
+const owe = require("../src");
+const Binding = require("../src/Binding");
 
 describe("Binding", function() {
 
@@ -86,19 +90,28 @@ describe("Binding", function() {
 			});
 
 			it("when 'clone': binds to a new object that behaves as if it were the original object in Apis", function() {
-				const object = {};
+				const object = {
+					a: 1
+				};
 
 				expect(bindingFunction).withArgs(object, function() {}, function() {}).not.to.throwError();
 				expect(Binding.isBound(object)).to.be(true);
 
-				var clone;
+				let clone;
 
-				expect(function() {
-					clone = Binding.bind(object, function() {}, function() {}, Binding.types.clone);
-				}).not.to.throwError();
+				expect(() => clone = Binding.bind(object, function() {
+
+					expect(this.value).to.be(object);
+
+					return this.value;
+				}, function() {}, Binding.types.clone)).not.to.throwError();
 				expect(Binding.isBound(clone)).to.be(true);
 				expect(Object.getPrototypeOf(clone)).to.be(null);
 				expect(clone.object).to.be(object);
+
+				const binding = Binding.getBinding(clone);
+
+				return binding.route([], {}).then(result => expect(result).to.be(clone));
 			});
 		});
 	});
@@ -140,22 +153,22 @@ describe("Binding", function() {
 	});
 
 	const object = {
-			the: "object"
-		},
-		location = ["a", "b", "c"],
-		data = "ein test",
-		origin = {},
-		router = function(pData) {
-			expect(this.value).to.be(object);
-			expect(this.location).to.eql(location);
-			expect(this.binding).to.be(binding);
-			expect(this.origin).to.be(origin);
-			expect(data).to.be(pData);
+		the: "object"
+	};
+	const location = ["a", "b", "c"];
+	const data = "ein test";
+	const origin = {};
+	const router = function(pData) {
+		expect(this.value).to.be(object);
+		expect(this.location).to.eql(location);
+		expect(this.binding).to.be(binding);
+		expect(this.origin).to.be(origin);
+		expect(data).to.be(pData);
 
-			return "result";
-		},
-		closer = router,
-		binding = Binding.getBinding(Binding.bind(object, router, closer));
+		return "result";
+	};
+	const closer = router;
+	const binding = Binding.getBinding(Binding.bind(object, router, closer));
 
 	describe("#router", function() {
 		it("should contain the assigned router", function() {

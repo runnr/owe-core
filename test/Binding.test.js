@@ -161,13 +161,23 @@ describe("Binding", function() {
 	const router = function(pData) {
 		expect(this.value).to.be(object);
 		expect(this.location).to.eql(location);
+		expect(this.type).to.be("route");
 		expect(this.binding).to.be(binding);
 		expect(this.origin).to.be(origin);
 		expect(data).to.be(pData);
 
 		return "result";
 	};
-	const closer = router;
+	const closer = function(pData) {
+		expect(this.value).to.be(object);
+		expect(this.location).to.eql(location);
+		expect(this.type).to.be("close");
+		expect(this.binding).to.be(binding);
+		expect(this.origin).to.be(origin);
+		expect(data).to.be(pData);
+
+		return "result";
+	};
 	const binding = Binding.getBinding(Binding.bind(object, router, closer));
 
 	describe("#router", function() {

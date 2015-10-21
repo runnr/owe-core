@@ -14,15 +14,12 @@ const State = require("./State");
  * @property {symbol} rebind Allow any object or function as binding target. Afterwards the given object is bound ({@link Binding.isBound} will return true). If the object was bound before, the old binding is overridden.
  */
 const types = {
-
 	__proto__: null,
 
 	normal: Symbol("normal"),
 	clone: Symbol("clone"),
 	rebind: Symbol("rebind")
 };
-
-Object.freeze(types);
 
 const bindingMap = new WeakMap();
 
@@ -31,7 +28,6 @@ const bindingMap = new WeakMap();
  * @class
  */
 class Binding {
-
 	/**
 	 * @param {object|function} object The object that will be bound.
 	 * @param {function} router The router function for this binding.
@@ -39,7 +35,6 @@ class Binding {
 	 * @param {types} [type={@linkcode Binding~types.normal}] The {@link Binding~types type of binding} to be used.
 	 */
 	constructor(object, router, closer, type, clonedObject) {
-
 		if(type === undefined)
 			type = types.normal;
 		else if(type !== types.normal && type !== types.clone && type !== types.rebind)
@@ -125,7 +120,6 @@ class Binding {
 	 * @return {object|function} The object that was given. Now bound. If null was given, the newly created empty bound object will be returned.
 	 */
 	static bind(object, router, closer, type) {
-
 		const target = object === null || type === types.clone ? Object.create(null, {
 				object: {
 					value: object
@@ -144,7 +138,6 @@ class Binding {
 	 * @return {any} Returns the object that was given. Now unbound.
 	 */
 	static unbind(object) {
-
 		if(this.isBound(object))
 			bindingMap.delete(object);
 
@@ -159,9 +152,9 @@ class Binding {
  */
 Binding.types = types;
 
-function traverse(type) {
+function traverse(type, typeName) {
 	return function(location, origin, data) {
-		return this[type].call(new State(this.target, location, origin, this), data);
+		return this[type].call(new State(this.target, location, typeName, origin, this), data);
 	};
 }
 
@@ -174,7 +167,8 @@ Object.assign(Binding.prototype, {
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The destination to route to.
 	 */
-	route: traverse("router"),
+	route: traverse("router", "route"),
+
 	/**
 	 * Calls {@link Binding#closer} with a {@link State} object as its this-context.
 	 * @name Binding#close
@@ -183,7 +177,7 @@ Object.assign(Binding.prototype, {
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The data to close with.
 	 */
-	close: traverse("closer")
+	close: traverse("closer", "close")
 });
 
 if(State.setBinding)

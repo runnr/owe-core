@@ -40,7 +40,6 @@ class Api {
 	 * @return {Api} Returns a new {@link Api} with the given origin, that points at the same exposed object.
 	 */
 	origin(value) {
-
 		if(typeof value !== "object" || value === null)
 			throw new TypeError("Api origin has to be an object.");
 
@@ -60,7 +59,11 @@ class Api {
 		const newPosition = this[position].concat([destination]);
 
 		return new Api(
-			this[boundObject].then(object => Binding.getBinding(object).route(this[position], this[origin], destination)),
+			this[boundObject].then(object => Binding.getBinding(object).route(
+				this[position],
+				this[origin],
+				destination
+			)),
 			newPosition,
 			this[origin]);
 	}
@@ -99,14 +102,13 @@ class Api {
 	 * @return {Promise} Resolves to the exposed object this {@link Api} is pointing to.
 	 */
 	get object() {
-		return this[object] ||
-			(this[object] = this[boundObject].then(object => Binding.getBinding(object).target));
+		return this[object]
+			|| (this[object] = this[boundObject].then(object => Binding.getBinding(object).target));
 	}
 
 }
 
 const errorHandlers = {
-
 	/**
 	 * Handle routing errors.
 	 * @private

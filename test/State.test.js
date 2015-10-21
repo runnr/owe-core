@@ -23,7 +23,7 @@ describe("State", function() {
 		location = ["location", "of", "this", "state"],
 		origin = {},
 		binding = Binding.getBinding(Binding.bind(null, function() {}, function() {})),
-		state = new State(value, location, origin, binding);
+		state = new State(value, location, "great", origin, binding);
 
 	it("should be frozen", function() {
 		expect(Object.isFrozen(state)).to.be.ok();
@@ -57,6 +57,15 @@ describe("State", function() {
 		});
 		it("should be read-only", function() {
 			expect(() => state.location = ["something", "else"]).to.throwError();
+		});
+	});
+
+	describe("#type", function() {
+		it("should contain the assigned type", function() {
+			expect(state.type).to.be("great");
+		});
+		it("should be read-only", function() {
+			expect(() => state.type = "derp").to.throwError();
 		});
 	});
 

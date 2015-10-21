@@ -7,9 +7,8 @@ const State = require("./State");
 const resourceMap = new WeakMap();
 
 function owe(object, router, closer, type) {
-
 	// An object of the form { router:[function], closer:[function] } can be used as well:
-	if(router != null && typeof router === "object") {
+	if(router && typeof router === "object") {
 
 		if(closer !== undefined && arguments.length === 3) {
 			type = closer;
@@ -21,8 +20,8 @@ function owe(object, router, closer, type) {
 		router = router.router;
 	}
 
-	router = router == null ? function() {} : router;
-	closer = closer == null ? function() {} : closer;
+	router = typeof router !== "function" ? () => undefined : router;
+	closer = typeof closer !== "function" ? () => undefined : closer;
 
 	if(type !== undefined && typeof type !== "symbol") {
 
@@ -52,7 +51,6 @@ owe.isApi = function isApi(api) {
 };
 
 owe.resource = function resource(object, data) {
-
 	if(data === undefined)
 		return resourceMap.get(object) || {};
 

@@ -6,7 +6,7 @@ const route = Symbol("route");
 class ClientApi {
 	constructor(pProtocol, pRoute) {
 		this[protocol] = pProtocol;
-		this[route] = (pRoute || []).slice(0);
+		this[route] = pRoute || [];
 	}
 
 	route(destination) {

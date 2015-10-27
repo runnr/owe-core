@@ -20,6 +20,10 @@ describe("owe", () => {
 		expect(owe.State).to.be(require("../src/State"));
 	});
 
+	it("should have a reference to client", () => {
+		expect(owe.client).to.be(require("../src/client"));
+	});
+
 	describe(".call()", () => {
 		it("should return the given object", () => {
 			const o = {};

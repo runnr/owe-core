@@ -153,8 +153,8 @@ class Binding {
 Binding.types = types;
 
 function traverse(type, typeName) {
-	return function(location, origin, data) {
-		return this[type].call(new State(this.target, location, typeName, origin, this), data);
+	return function(route, origin, data) {
+		return this[type].call(new State(this.target, route, typeName, origin, this), data);
 	};
 }
 
@@ -163,7 +163,7 @@ Object.assign(Binding.prototype, {
 	 * Calls {@link Binding#router} with a {@link State} object as its this-context.
 	 * @name Binding#route
 	 * @method
-	 * @param {any[]} location The value for {@link State#location}
+	 * @param {any[]} route The value for {@link State#route}
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The destination to route to.
 	 */
@@ -173,7 +173,7 @@ Object.assign(Binding.prototype, {
 	 * Calls {@link Binding#closer} with a {@link State} object as its this-context.
 	 * @name Binding#close
 	 * @method
-	 * @param {any[]} location The value for {@link State#location}
+	 * @param {any[]} route The value for {@link State#route}
 	 * @param {object} origin The value for {@link State#origin}
 	 * @param {any} destination The data to close with.
 	 */

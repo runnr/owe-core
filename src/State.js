@@ -13,14 +13,14 @@ let Binding;
 class State {
 	/**
 	 * @param {object|function} value The object of the {@link Api} that created this {@link State}.
-	 * @param {any[]} location The location of the {@link Api} that created this {@link State}.
+	 * @param {any[]} route The route of the {@link Api} that created this {@link State}.
 	 * @param {object} origin The origin of the {@link Api} that created this {@link State}.
 	 * @param {Binding} binding The {@link Binding} object of {@link State#value}. This has to be set, because {@link Binding~types.clone clone}-Bindings do not bind the object itself and thus hold no reference to the {@link Binding}.
 	 */
-	constructor(value, location, type, origin, binding) {
+	constructor(value, route, type, origin, binding) {
 
-		if(!Array.isArray(location))
-			throw new TypeError("State location has to be an array.");
+		if(!Array.isArray(route))
+			throw new TypeError("State route has to be an array.");
 		if(!Binding || !(binding instanceof Binding))
 			throw new TypeError("State binding has to be an instance of Binding.");
 
@@ -29,9 +29,9 @@ class State {
 				enumerable: true,
 				value: value
 			},
-			location: {
+			route: {
 				enumerable: true,
-				value: location.slice(0)
+				value: route.slice(0)
 			},
 			type: {
 				enumerable: true,
@@ -65,7 +65,9 @@ class State {
 	 * @return {string}
 	 */
 	toString() {
-		return (typeof this.value === "object" || typeof this.value === "function") && typeof this.value.toString === "function" ? this.value.toString() : Object.prototype.toString.call(this.value);
+		return (typeof this.value === "object" || typeof this.value === "function") && typeof this.value.toString === "function"
+			? this.value.toString()
+			: Object.prototype.toString.call(this.value);
 	}
 
 	/**
@@ -73,7 +75,9 @@ class State {
 	 * @return {any}
 	 */
 	valueOf() {
-		return (typeof this.value === "object" || typeof this.value === "function") && typeof this.value.valueOf === "function" ? this.value.valueOf() : this.value;
+		return (typeof this.value === "object" || typeof this.value === "function") && typeof this.value.valueOf === "function"
+			? this.value.valueOf()
+			: this.value;
 	}
 
 	/**

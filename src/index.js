@@ -4,6 +4,8 @@ const Api = require("./Api");
 const Binding = require("./Binding");
 const State = require("./State");
 
+const client = require("./client");
+
 const resourceMap = new WeakMap();
 
 function owe(object, router, closer, type) {
@@ -39,35 +41,36 @@ function owe(object, router, closer, type) {
 	return Binding.bind(object, router, closer, type);
 }
 
-owe.api = function api(object, router, closer, type) {
-	if(!Binding.isBound(object) || arguments.length > 1)
-		object = owe(object, router, closer, type);
+Object.assign(owe, {
+	client, State, Binding,
 
-	return new Api(object);
-};
+	isBound: Binding.isBound.bind(Binding), // kek.
 
-owe.isApi = function isApi(api) {
-	return api && typeof api === "object" && api instanceof Api || false;
-};
+	api(object, router, closer, type) {
+		if(!Binding.isBound(object) || arguments.length > 1)
+			object = owe(object, router, closer, type);
 
-owe.resource = function resource(object, data) {
-	if(data === undefined)
-		return resourceMap.get(object) || {};
+		return new Api(object);
+	},
 
-	if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
-		throw new TypeError("Could not transform given object into a resource.");
+	isApi(api) {
+		return api && typeof api === "object" && api instanceof Api || false;
+	},
 
-	if(typeof data !== "object" || data === null)
-		throw new TypeError("Resource data has to be an object.");
+	resource(object, data) {
+		if(data === undefined)
+			return resourceMap.get(object) || {};
 
-	resourceMap.set(object, data);
+		if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
+			throw new TypeError("Could not transform given object into a resource.");
 
-	return object;
-};
+		if(typeof data !== "object" || data === null)
+			throw new TypeError("Resource data has to be an object.");
 
-owe.State = State;
+		resourceMap.set(object, data);
 
-owe.Binding = Binding;
-owe.isBound = Binding.isBound.bind(Binding); // kek.
+		return object;
+	}
+});
 
 module.exports = owe;

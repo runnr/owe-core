@@ -9,105 +9,117 @@ const Binding = require("../src/Binding");
 const State = require("../src/State");
 const Api = require("../src/Api");
 
-describe("Api", function() {
-
+describe("Api", () => {
 	const original = {
-			a: 1,
-			b: 2,
-			c: 3
-		},
-		object = Binding.bind(original, function(a) {
+		a: 1,
+		b: 2,
+		c: 3
+	};
+	const object = Binding.bind(original, function(a) {
+		expect(this).to.be.a(State);
+		expect(this.value).to.be(original);
 
-			expect(this).to.be.a(State);
-			expect(this.value).to.be(original);
+		return a && this.value;
+	}, function(key) {
+		expect(this).to.be.a(State);
+		expect(this.value).to.be(original);
+		if(!(key in this.value))
+			throw new Error(key + " not found.");
 
-			return a && this.value;
-		}, function(key) {
-			expect(this).to.be.a(State);
-			expect(this.value).to.be(original);
-			if(!(key in this.value))
-				throw new Error(key + " not found.");
+		return this.value[key];
+	}, Binding.types.clone);
+	const api = new Api(object);
 
-			return this.value[key];
-		}, Binding.types.clone),
-		api = new Api(object);
-
-	describe("#route()", function() {
-		it("should return an Api", function() {
+	describe("#route()", () => {
+		it("should return an Api", () => {
 			expect(api.route()).to.be.an(Api);
 		});
-		it("should return a navigatable Api when appropriate", function() {
-			return api.route(true).close("a").then(function(data) {
-				expect(data).to.be(1);
-			});
-		});
-		it("should return a dead Api when used inappropriately", function() {
-			return api.route().close("a").then(function(data) {
+
+		it("should return a navigatable Api when appropriate",
+			() => api.route(true).close("a").then(data => expect(data).to.be(1)));
+
+		it("should return a dead Api when used inappropriately",
+			() => api.route().close("a").then(data => {
 				expect().fail("This routing was invalid.");
-			}, function(err) {
+			}, err => {
 				expect(err.type).to.be("route");
-				expect(err.location).to.eql([undefined]);
-			});
-		});
+				expect(err.route).to.eql([undefined]);
+			}));
+
+		it("should accept multiple routes to route in sequence",
+			() => api.route(1, 2, 3).route(4).route(5, 6).then(() => {
+				expect().fail("This request should have thrown.");
+			}, err => {
+				expect(err.message).to.be("undefined not found.");
+				expect(err.route).to.eql([1, 2, 3, 4, 5, 6]);
+			}));
 	});
 
-	describe("#close()", function() {
-		it("should return a Promise", function() {
+	describe("#close()", () => {
+		it("should return a Promise", () => {
 			expect(api.close()).to.be.a(Promise);
 		});
-		it("should resolve with the requested data", function() {
-			return Promise.all([
-				api.close("a"),
-				api.close("b"),
-				api.close("c")
-			]).then(function(result) {
-				expect(result).to.eql([1, 2, 3]);
-			});
-		});
-		it("should reject incorrect requests", function() {
 
+		it("should resolve with the requested data", () => Promise.all([
+			api.close("a"),
+			api.close("b"),
+			api.close("c")
+		]).then(result => {
+			expect(result).to.eql([1, 2, 3]);
+		}));
+
+		it("should reject incorrect requests", () => {
 			let error;
 
 			return Promise.all([
-				api.close("d").then(function() {
+				api.close("d").then(() => {
 					expect().fail("This request should have thrown.");
-				}, function(err) {
+				}, err => {
 					expect(err.type).to.be("close");
-					expect(err.location).to.eql([]);
+					expect(err.route).to.eql([]);
 					expect(err.data).to.be("d");
 					expect(err.message).to.be("d not found.");
 				}),
-				api.then(function() {
+				api.then(() => {
 					expect().fail("This request should have thrown.");
-				}, function(err) {
+				}, err => {
 					expect(err.type).to.be("close");
-					expect(err.location).to.eql([]);
+					expect(err.route).to.eql([]);
 					expect(err.data).to.be(undefined);
 					expect(err.message).to.be("undefined not found.");
 				}),
-				new Api(Binding.bind({}, function() {}, function() {
+				api.catch(err => {
+					throw err;
+				}).then(() => {
+					expect().fail("This request should have thrown.");
+				}, err => {
+					expect(err.type).to.be("close");
+					expect(err.route).to.eql([]);
+					expect(err.data).to.be(undefined);
+					expect(err.message).to.be("undefined not found.");
+				}),
+				new Api(Binding.bind({}, () => {}, () => {
 					error = new Error("A frozen error.");
 					error.type = "foo";
-					Object.defineProperty(error, "location", {
-						get: function() {
+					Object.defineProperty(error, "route", {
+						get: () => {
 							return undefined;
 						},
-						set: function() {
+						set: () => {
 							throw new Error("Another error.");
 						}
 					});
 					throw Object.freeze(error);
-				})).then(function() {
+				})).then(() => {
 					expect().fail("This request should have thrown.");
-				}, function(err) {
+				}, err => {
 					expect(err).to.be(error);
 				})
 			]);
 		});
 	});
 
-	describe("#origin()", function() {
-
+	describe("#origin()", () => {
 		const foo = {},
 			test = Object.create(null);
 
@@ -128,10 +140,11 @@ describe("Api", function() {
 			return this.value[key];
 		}, Binding.types.clone)).origin(test);
 
-		it("should return an Api", function() {
+		it("should return an Api", () => {
 			expect(api.origin(test)).to.be.an(Api);
 		});
-		it("should hand given origin to all close() and route() calls from that point on", function() {
+
+		it("should hand given origin to all close() and route() calls from that point on", () => {
 			return Promise.all([
 				api.close("a"),
 				api.route(true).close("b"),
@@ -140,11 +153,8 @@ describe("Api", function() {
 		});
 	});
 
-	describe("#object", function() {
-		it("should contain a promise to the object this api exposes", function() {
-			return api.object.then(function(apiObject) {
-				expect(apiObject).to.be(original);
-			});
-		});
+	describe("#object", () => {
+		it("should contain a promise to the object this api exposes",
+			() => api.object.then(apiObject => expect(apiObject).to.be(original)));
 	});
 });

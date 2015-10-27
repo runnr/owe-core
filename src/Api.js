@@ -8,7 +8,7 @@ const Binding = require("./Binding");
 const errorHandled = Symbol("errorHandled");
 const boundObject = Symbol("boundObject");
 const object = Symbol("object");
-const position = Symbol("position");
+const route = Symbol("route");
 const origin = Symbol("origin");
 
 /**
@@ -18,20 +18,19 @@ class Api {
 
 	/**
 	 * @param {object|Promise} object A bound object this {@link Api} should be exposing. This may also be a Promise that resolves to a bound object.
-	 * @param {any[]} position The stack of routes that led to this Api pointer.
+	 * @param {any[]} pRoute The stack of routes that led to this Api pointer.
 	 * @param {object} [pOrigin={}] An object to use as the origin of this Api.
 	 */
-	constructor(pObject, pPosition, pOrigin) {
-		const pos = this[position] = (pPosition || []).slice(0);
-
+	constructor(pObject, pRoute, pOrigin) {
+		this[route] = (pRoute || []).slice(0);
 		this[origin] = pOrigin || {};
 
 		this[boundObject] = Promise.resolve(pObject).then(object => {
 			if(!Binding.isBound(object))
-				throw new TypeError(`Object at position '${pos.join("/")}' is not exposed.`);
+				throw new TypeError(`Object at position '${this[route].join("/")}' is not exposed.`);
 
 			return object;
-		}).catch(errorHandlers.route.bind(null, pos));
+		}).catch(errorHandlers.route.bind(this));
 	}
 
 	/**
@@ -56,16 +55,17 @@ class Api {
 	 * @return {Api} A new {@link Api} for the object the routing function returned.
 	 */
 	route(destination) {
-		const newPosition = this[position].concat([destination]);
+		const newPosition = this[route].concat([destination]);
 
 		return new Api(
 			this[boundObject].then(object => Binding.getBinding(object).route(
-				this[position],
+				this[route],
 				this[origin],
 				destination
 			)),
 			newPosition,
-			this[origin]);
+			this[origin]
+		);
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Api {
 	 */
 	close(data) {
 		return this[boundObject].then(object => {
-			return Binding.getBinding(object).close(this[position], this[origin], data);
+			return Binding.getBinding(object).close(this[route], this[origin], data);
 		}).catch(errorHandlers.close.bind(this, data));
 	}
 
@@ -112,14 +112,14 @@ const errorHandlers = {
 	/**
 	 * Handle routing errors.
 	 * @private
-	 * @param {any[]} position
+	 * @param {any[]} route
 	 * @param {Error} err
 	 */
-	route(position, err) {
+	route(err) {
 		try {
 			if(!(errorHandled in err)) {
 				err.type = "route";
-				err.location = position;
+				err.route = this[route];
 				err[errorHandled] = true;
 			}
 		}
@@ -138,7 +138,7 @@ const errorHandlers = {
 		try {
 			if(!(errorHandled in err)) {
 				err.type = "close";
-				err.location = this[position];
+				err.route = this[route];
 				err.data = data;
 				err[errorHandled] = true;
 			}

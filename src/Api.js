@@ -12,12 +12,14 @@ const route = Symbol("route");
 const origin = Symbol("origin");
 
 /**
+ * @class
  * Represents an API node.
  */
 class Api {
 
 	/**
-	 * @param {object|Promise} object A bound object this {@link Api} should be exposing. This may also be a Promise that resolves to a bound object.
+	 * @constructor
+	 * @param {object|Promise} pObject A bound object this {@link Api} should be exposing. This may also be a Promise that resolves to a bound object.
 	 * @param {any[]} pRoute The stack of routes that led to this Api pointer.
 	 * @param {object} [pOrigin={}] An object to use as the origin of this Api.
 	 */
@@ -39,7 +41,7 @@ class Api {
 	 * @return {Api} Returns a new {@link Api} with the given origin, that points at the same exposed object.
 	 */
 	origin(value) {
-		if(typeof value !== "object" || value === null)
+		if(!value || typeof value !== "object")
 			throw new TypeError("Api origin has to be an object.");
 
 		const clone = Object.create(this);
@@ -83,19 +85,19 @@ class Api {
 	}
 
 	/**
-	 * Shorthand for this.close().then
-	 * @param {function} success
-	 * @param {function} fail
-	 * @return {Promise}
+	 * Shorthand for this.close().then().
+	 * @param {function} success The success function.
+	 * @param {function} fail The fail function.
+	 * @return {Promise} Result of this.close().
 	 */
 	then(success, fail) {
 		return this.close().then(success, fail);
 	}
 
 	/**
-	 * Shorthand for this.close().catch
-	 * @param {function} fail
-	 * @return {function}
+	 * Shorthand for this.close().catch().
+	 * @param {function} fail The fail function.
+	 * @return {Promise} Rejects if this.close() rejects.
 	 */
 	catch(fail) {
 		return this.close().catch(fail);
@@ -112,11 +114,12 @@ class Api {
 }
 
 const errorHandlers = {
+
 	/**
 	 * Handle routing errors.
 	 * @private
-	 * @param {any[]} route
-	 * @param {Error} err
+	 * @param {Error} err Error.
+	 * @return {undefined}
 	 */
 	route(err) {
 		try {
@@ -134,8 +137,9 @@ const errorHandlers = {
 	/**
 	 * Handle closing errors.
 	 * @private
-	 * @param {any} data
-	 * @param {Error} err
+	 * @param {any} data The data that caused err.
+	 * @param {Error} err Error.
+	 * @return {undefined}
 	 */
 	close(data, err) {
 		try {

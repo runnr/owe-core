@@ -4,7 +4,6 @@
 
 const expect = require("expect.js");
 
-const owe = require("../src");
 const State = require("../src/State");
 const Binding = require("../src/Binding");
 
@@ -150,13 +149,13 @@ describe("State", () => {
 			let hiddenValue = null;
 
 			const modified = state.setValue({
-					get() {
-						return hiddenValue;
-					},
-					set(val) {
-						hiddenValue = val;
-					}
-				});
+				get() {
+					return hiddenValue;
+				},
+				set(val) {
+					hiddenValue = val;
+				}
+			});
 
 			modified.value = "test";
 			expect(modified.value).to.be("test");

@@ -37,7 +37,7 @@ describe("ClientApi", () => {
 			() => api.route(true).close("a").then(data => expect(data).to.be(1)));
 
 		it("should return a dead Api when used inappropriately",
-			() => api.route().close("a").then(data => {
+			() => api.route().close("a").then(() => {
 				expect().fail("This routing was invalid.");
 			}, err => {
 				expect(err).to.be("routeErr");

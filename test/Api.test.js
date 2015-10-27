@@ -1,10 +1,7 @@
-/* jshint mocha: true */
-
 "use strict";
 
 const expect = require("expect.js");
 
-const owe = require("../src");
 const Binding = require("../src/Binding");
 const State = require("../src/State");
 const Api = require("../src/Api");
@@ -24,7 +21,7 @@ describe("Api", () => {
 		expect(this).to.be.a(State);
 		expect(this.value).to.be(original);
 		if(!(key in this.value))
-			throw new Error(key + " not found.");
+			throw new Error(`${key} not found.`);
 
 		return this.value[key];
 	}, Binding.types.clone);
@@ -39,7 +36,7 @@ describe("Api", () => {
 			() => api.route(true).close("a").then(data => expect(data).to.be(1)));
 
 		it("should return a dead Api when used inappropriately",
-			() => api.route().close("a").then(data => {
+			() => api.route().close("a").then(() => {
 				expect().fail("This routing was invalid.");
 			}, err => {
 				expect(err.type).to.be("route");
@@ -135,7 +132,7 @@ describe("Api", () => {
 			expect(this.origin).to.be(test);
 
 			if(!(key in this.value))
-				throw new Error(key + " not found.");
+				throw new Error(`${key} not found.`);
 
 			return this.value[key];
 		}, Binding.types.clone)).origin(test);

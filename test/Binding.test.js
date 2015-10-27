@@ -4,7 +4,6 @@
 
 const expect = require("expect.js");
 
-const owe = require("../src");
 const Binding = require("../src/Binding");
 
 describe("Binding", () => {

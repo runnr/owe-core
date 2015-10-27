@@ -24,15 +24,18 @@ const types = {
 const bindingMap = new WeakMap();
 
 /**
- * Stores the router and closer functions of bound objects.
  * @class
+ * Stores the router and closer functions of bound objects.
  */
 class Binding {
+
 	/**
+	 * @constructor
 	 * @param {object|function} object The object that will be bound.
 	 * @param {function} router The router function for this binding.
 	 * @param {function} closer The closer function for this binding.
 	 * @param {types} [type={@linkcode Binding~types.normal}] The {@link Binding~types type of binding} to be used.
+	 * @param {object} clonedObject Only set if type=clone. Object the given object is a clone of.
 	 */
 	constructor(object, router, closer, type, clonedObject) {
 		if(type === undefined)
@@ -72,21 +75,19 @@ class Binding {
 		 */
 		this.closer = closer;
 
-		Object.defineProperties(this, {
+		Object.assign(this, {
+
 			/**
 			 * The object that is bound by this Binding.
 			 * @member {object} target
 			 */
-			target: {
-				value: object
-			},
+			target: object,
+
 			/**
 			 * The binding type that was used to create this Binding.
 			 * @member {Binding~types} type
 			 */
-			type: {
-				value: type
-			}
+			type
 		});
 	}
 
@@ -121,10 +122,10 @@ class Binding {
 	 */
 	static bind(object, router, closer, type) {
 		const target = object === null || type === types.clone ? Object.create(null, {
-				object: {
-					value: object
-				}
-			}) : object;
+			object: {
+				value: object
+			}
+		}) : object;
 
 		bindingMap.set(target, new this(object, router, closer, type, target));
 
@@ -159,6 +160,7 @@ function traverse(type, typeName) {
 }
 
 Object.assign(Binding.prototype, {
+
 	/**
 	 * Calls {@link Binding#router} with a {@link State} object as its this-context.
 	 * @name Binding#route

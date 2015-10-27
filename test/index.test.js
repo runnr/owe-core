@@ -99,8 +99,8 @@ describe("owe", () => {
 
 			const binding3 = owe.Binding.getBinding(owe({}));
 
-			expect(binding1.router).to.be.a("function");
-			expect(binding1.closer).to.be.a("function");
+			expect(binding3.router).to.be.a("function");
+			expect(binding3.closer).to.be.a("function");
 
 			const binding4 = owe.Binding.getBinding(owe({}, a));
 
@@ -130,11 +130,11 @@ describe("owe", () => {
 
 			const binding4 = owe.Binding.getBinding(owe({}, undefined, undefined, "clone"));
 
-			expect(binding1.type).to.be(owe.Binding.types.clone);
+			expect(binding4.type).to.be(owe.Binding.types.clone);
 
 			const binding5 = owe.Binding.getBinding(owe({}, () => undefined, () => undefined, "clone"));
 
-			expect(binding1.type).to.be(owe.Binding.types.clone);
+			expect(binding5.type).to.be(owe.Binding.types.clone);
 		});
 
 		it("should use another Binding type symbol if given as last param", () => {
@@ -154,11 +154,11 @@ describe("owe", () => {
 
 			const binding4 = owe.Binding.getBinding(owe({}, undefined, undefined, owe.Binding.types.clone));
 
-			expect(binding1.type).to.be(owe.Binding.types.clone);
+			expect(binding4.type).to.be(owe.Binding.types.clone);
 
 			const binding5 = owe.Binding.getBinding(owe({}, () => undefined, () => undefined, owe.Binding.types.clone));
 
-			expect(binding1.type).to.be(owe.Binding.types.clone);
+			expect(binding5.type).to.be(owe.Binding.types.clone);
 		});
 
 		it("should use Binding type clone if type param is true, normal if false", () => {

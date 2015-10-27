@@ -33,7 +33,7 @@ describe("client", () => {
 		it("should call the init method of the given protocol", () => {
 			let x = false;
 
-			const api = client({
+			client({
 				a: 1,
 				init() {
 					x = true;

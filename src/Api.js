@@ -57,7 +57,7 @@ class Api {
 	route(destination) {
 		const newPosition = this[route].concat([destination]);
 
-		return new Api(
+		let api = new Api(
 			this[boundObject].then(object => Binding.getBinding(object).route(
 				this[route],
 				this[origin],
@@ -66,6 +66,11 @@ class Api {
 			newPosition,
 			this[origin]
 		);
+
+		for(let i = 1; i < arguments.length; i++)
+			api = api.route(arguments[i]);
+
+		return api;
 	}
 
 	/**

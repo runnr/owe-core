@@ -22,7 +22,7 @@ class Api {
 	 * @param {object} [pOrigin={}] An object to use as the origin of this Api.
 	 */
 	constructor(pObject, pRoute, pOrigin) {
-		this[route] = (pRoute || []).slice(0);
+		this[route] = pRoute || [];
 		this[origin] = pOrigin || {};
 
 		this[boundObject] = Promise.resolve(pObject).then(object => {
@@ -55,15 +55,13 @@ class Api {
 	 * @return {Api} A new {@link Api} for the object the routing function returned.
 	 */
 	route(destination) {
-		const newPosition = this[route].concat([destination]);
-
 		let api = new Api(
 			this[boundObject].then(object => Binding.getBinding(object).route(
 				this[route],
 				this[origin],
 				destination
 			)),
-			newPosition,
+			this[route].concat([destination]),
 			this[origin]
 		);
 

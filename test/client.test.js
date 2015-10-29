@@ -62,7 +62,7 @@ describe("client", () => {
 			})).to.throwError();
 			expect(() => client({
 				closer() {}
-			})).to.throwError();
+			})).not.to.throwError();
 			expect(() => client({
 				init: {},
 				closer() {}

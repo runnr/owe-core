@@ -10,12 +10,13 @@ function client(protocol) {
 	if(typeof protocol.closer !== "function")
 		throw new TypeError("owe ClientApi proctols have to offer a closer function.");
 
-	if(typeof protocol.init !== "function")
+	if(protocol.init && typeof protocol.init !== "function")
 		throw new TypeError("owe ClientApi protocols have to offer an init function.");
 
 	protocol = Object.assign(new EventEmitter(), protocol);
 
-	protocol.init();
+	if(protocol.init)
+		protocol.init();
 
 	return new ClientApi(protocol);
 }

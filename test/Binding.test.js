@@ -93,19 +93,29 @@ describe("Binding", () => {
 				expect(Binding.isBound(object)).to.be(true);
 
 				let clone;
-
-				expect(() => clone = Binding.bind(object, function() {
+				const router = function() {
 					expect(this.value).to.be(object);
 
 					return this.value;
-				}, () => undefined, Binding.types.clone)).not.to.throwError();
+				};
+
+				expect(() => clone = Binding.bind(object, router, () => undefined, Binding.types.clone)).not.to.throwError();
 				expect(Binding.isBound(clone)).to.be(true);
 				expect(Object.getPrototypeOf(clone)).to.be(null);
 				expect(clone.object).to.be(object);
 
 				const binding = Binding.getBinding(clone);
 
-				return binding.route([], {}).then(result => expect(result).to.be(clone));
+				let clone2;
+
+				expect(() => clone2 = Binding.bind(object, binding.router, () => undefined, Binding.types.clone)).not.to.throwError();
+
+				const binding2 = Binding.getBinding(clone2);
+
+				return Promise.all([
+					binding.route([], {}).then(result => expect(result).to.be(clone)),
+					binding2.route([], {}).then(result => expect(result).to.be(clone2))
+				]);
 			});
 		});
 	});

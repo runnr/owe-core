@@ -47,6 +47,8 @@ describe("State", () => {
 
 	describe("#route", () => {
 		it("should be an array", () => {
+			expect(() => new State(value, "NOPE", "great", origin, binding))
+				.to.throwError(new TypeError("State route has to be an array."));
 			expect(state.route).to.be.an("array");
 		});
 
@@ -80,6 +82,8 @@ describe("State", () => {
 
 	describe("#binding", () => {
 		it("should be a Binding", () => {
+			expect(() => new State(value, route, "great", origin, "NOPE"))
+				.to.throwError(new TypeError("State binding has to be an instance of Binding."));
 			expect(state.binding).to.be.a(Binding);
 		});
 

@@ -141,6 +141,10 @@ describe("Api", () => {
 			expect(api.origin(test)).to.be.an(Api);
 		});
 
+		it("should require objects", () => {
+			expect(() => api.origin("test")).to.throwError();
+		});
+
 		it("should hand given origin to all close() and route() calls from that point on", () => {
 			return Promise.all([
 				api.close("a"),

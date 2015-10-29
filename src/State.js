@@ -57,8 +57,6 @@ class State {
 	}
 
 	static setBinding(val) {
-		if(Binding || typeof val !== "function")
-			throw new Error("Binding could not be set.");
 		Binding = val;
 		this.setBinding = undefined;
 	}

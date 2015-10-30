@@ -10,7 +10,7 @@ class ClientApi {
 	}
 
 	route(destination) {
-		destination = arguments.length > 1 ? Array.from(arguments) : [destination];
+		destination = arguments.length > 1 ? [...arguments] : [destination];
 
 		return new ClientApi(this[protocol], this[route].concat(destination));
 	}

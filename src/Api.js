@@ -63,7 +63,7 @@ class Api {
 				this[origin],
 				destination
 			)),
-			this[route].concat([destination]),
+			[...this[route], destination],
 			this[origin]
 		);
 

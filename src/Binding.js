@@ -24,7 +24,6 @@ const types = {
 const bindingMap = new WeakMap();
 
 /**
- * @class
  * Stores the router and closer functions of bound objects.
  */
 class Binding {

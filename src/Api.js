@@ -12,7 +12,6 @@ const route = Symbol("route");
 const origin = Symbol("origin");
 
 /**
- * @class
  * Represents an API node.
  */
 class Api {

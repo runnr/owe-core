@@ -7,7 +7,6 @@
 let Binding;
 
 /**
- * @class
  * Stores the state of an API request.
  */
 class State {

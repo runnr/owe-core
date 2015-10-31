@@ -7,14 +7,25 @@ const State = require("../src/State");
 const Api = require("../src/Api");
 
 describe("Api", () => {
+	const symb = Symbol("test");
 	const original = {
 		a: 1,
 		b: 2,
-		c: 3
+		c: 3,
+		x: Binding.bind({
+			[symb]: {}
+		}, function(r) {
+			return this.value[r];
+		}, function() {
+			return this.value;
+		})
 	};
 	const object = Binding.bind(original, function(a) {
 		expect(this).to.be.a(State);
 		expect(this.value).to.be(original);
+
+		if(a === "x")
+			return this.value.x;
 
 		return a && this.value;
 	}, function(key) {
@@ -35,13 +46,21 @@ describe("Api", () => {
 		it("should return a navigatable Api when appropriate",
 			() => api.route(true).close("a").then(data => expect(data).to.be(1)));
 
-		it("should return a dead Api when used inappropriately",
-			() => api.route().close("a").then(() => {
+		it("should return a dead Api when used inappropriately", () => Promise.all([
+			api.route().close("a").then(() => {
 				expect().fail("This routing was invalid.");
 			}, err => {
 				expect(err.type).to.be("route");
 				expect(err.route).to.eql([undefined]);
-			}));
+			}),
+			api.route("x").route(symb).then(() => {
+				expect().fail("This routing was invalid.");
+			}, err => {
+				expect(err.message).to.be("Object at position 'x/Symbol(test)' is not exposed.");
+				expect(err.type).to.be("route");
+				expect(err.route).to.eql(["x", symb]);
+			})
+		]));
 
 		it("should accept multiple routes to route in sequence",
 			() => api.route(1, 2, 3).route(4).route(5, 6).then(() => {

@@ -27,9 +27,9 @@ class ClientApi {
 	 * @return {ClientApi} A new {@link ClientApi} for the object the routing function returned.
 	 */
 	route(destination) {
-		destination = arguments.length > 1 ? [...arguments] : [destination];
+		const destinations = arguments.length > 1 ? [...arguments] : [destination];
 
-		return new ClientApi(this[protocol], this[route].concat(destination));
+		return new ClientApi(this[protocol], [...this[route], ...destinations]);
 	}
 
 	/**

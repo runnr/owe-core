@@ -27,21 +27,18 @@ function client(protocol) {
 
 			connected = value;
 			notifier.notify({
-				type: "update",
-				object: api,
-				name: "connected",
-				oldValue: !value
+				type: "connectedUpdate",
+				oldValue: !connected
 			});
 		}
 	}, protocol);
 
-	const api = new ClientApi(protocol);
-	const notifier = Object.getNotifier(api);
+	const notifier = Object.getNotifier(protocol);
 
 	if(protocol.init)
 		protocol.init();
 
-	return api;
+	return new ClientApi(protocol);
 }
 
 Object.assign(client, {

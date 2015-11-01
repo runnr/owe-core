@@ -19,6 +19,16 @@ class ClientApi {
 	constructor(pProtocol, pRoute) {
 		this[protocol] = pProtocol;
 		this[route] = pRoute || [];
+
+		const notifier = Object.getNotifier(this);
+
+		Object.observe(this[protocol],
+			changes => changes.forEach(change => notifier.notify({
+				type: "update",
+				name: "connected",
+				object: this,
+				oldValue: change.oldValue
+			})), ["connectedUpdate"]);
 	}
 
 	/**

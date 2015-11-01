@@ -88,14 +88,14 @@ describe("client", () => {
 				});
 			});
 
-			it("should be observable at the root api", () => new Promise((resolve, reject) => {
+			it("should be observable at the api", () => new Promise((resolve, reject) => {
 				let protocol;
 				const api = client({
 					init() {
 						protocol = this; // eslint-disable-line consistent-this
 					},
 					closer() {}
-				});
+				}).route();
 
 				Object.observe(api, changes => {
 					try {
@@ -142,8 +142,8 @@ describe("client", () => {
 		});
 
 		it("should return 'true' for everything that is an instance of Api", () => {
-			expect(client.isApi(new ClientApi())).to.be(true);
-			expect(client.isApi(Object.create(new ClientApi()))).to.be(true);
+			expect(client.isApi(new ClientApi({}))).to.be(true);
+			expect(client.isApi(Object.create(new ClientApi({})))).to.be(true);
 			expect(client.isApi(Object.create(ClientApi.prototype))).to.be(true);
 		});
 	});

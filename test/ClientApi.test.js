@@ -9,6 +9,7 @@ describe("ClientApi", () => {
 		a: 1,
 		b: 2,
 		c: 3,
+		connected: false,
 
 		closer(route, data) {
 			if(route.length > 1)
@@ -81,10 +82,18 @@ describe("ClientApi", () => {
 		]));
 	});
 
-	describe("#protocol", () => {
-		it("should contain a reference to the protocol object used by this api.", () => {
-			expect(api.protocol).to.be(protocol);
-			expect(api.route().protocol).to.be(protocol);
+	describe("#connected", () => {
+		it("mirror the value of protocol.connected", () => {
+			expect(api.connected).to.be(false);
+			protocol.connected = true;
+			expect(api.connected).to.be(true);
+			expect(api.route().connected).to.be(true);
+			protocol.connected = false;
+			expect(api.route().connected).to.be(false);
+		});
+
+		it("should be read-only", () => {
+			expect(() => api.connected = true).to.throwError();
 		});
 	});
 });

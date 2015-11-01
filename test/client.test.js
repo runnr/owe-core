@@ -2,8 +2,6 @@
 
 const expect = require("expect.js");
 
-const EventEmitter = require("events");
-
 const client = require("../src/client");
 const ClientApi = require("../src/ClientApi");
 
@@ -14,18 +12,19 @@ describe("client", () => {
 				a: 1,
 				b: 2,
 				c: 3,
-				init() {},
+				init() {
+					expect(this.connected).to.be(false);
+					expect(this.init).to.be(protocol.init);
+					expect(this.closer).to.be(protocol.closer);
+					expect(this.a).to.be(protocol.a);
+					expect(this.b).to.be(protocol.b);
+					expect(this.c).to.be(protocol.c);
+				},
 				closer() {}
 			};
 			const api = client(protocol);
 
 			expect(api).to.be.a(ClientApi);
-			expect(api.protocol.init).to.be(protocol.init);
-			expect(api.protocol.closer).to.be(protocol.closer);
-			expect(api.protocol.a).to.be(protocol.a);
-			expect(api.protocol.b).to.be(protocol.b);
-			expect(api.protocol.c).to.be(protocol.c);
-			expect(api.protocol).to.be.an(EventEmitter);
 		});
 
 		it("should call the init method of the given protocol", () => {
@@ -35,7 +34,6 @@ describe("client", () => {
 				a: 1,
 				init() {
 					x = true;
-					expect(this).to.be.an(EventEmitter);
 					expect(this.a).to.be(1);
 				},
 				closer() {}
@@ -71,6 +69,59 @@ describe("client", () => {
 				init() {},
 				closer: {}
 			})).to.throwError();
+		});
+
+		describe("#protocol", () => {
+			it("should have a forced boolean connected property", () => {
+				const api = client({
+					init() {
+						expect(this.connected).to.be(false);
+						this.connected = true;
+						expect(this.connected).to.be(true);
+						expect(() => this.connected = 1).to.throwError();
+						expect(() => this.connected = new Boolean(true)).to.throwError();
+						expect(() => this.connected = "true").to.throwError();
+						expect(() => this.connected = null).to.throwError();
+						expect(() => this.connected = undefined).to.throwError();
+					},
+					closer() {}
+				});
+			});
+
+			it("should be observable at the root api", () => new Promise((resolve, reject) => {
+				let protocol;
+				const api = client({
+					init() {
+						protocol = this; // eslint-disable-line consistent-this
+					},
+					closer() {}
+				});
+
+				Object.observe(api, changes => {
+					try {
+						expect(changes.length).to.be(2);
+						expect(changes[0]).to.eql({
+							type: "update",
+							name: "connected",
+							object: api,
+							oldValue: false
+						});
+						expect(changes[1]).to.eql({
+							type: "update",
+							name: "connected",
+							object: api,
+							oldValue: true
+						});
+						resolve();
+					}
+					catch(err) {
+						reject(err);
+					}
+				});
+				protocol.connected = true;
+				protocol.connected = true;
+				protocol.connected = false;
+			}));
 		});
 	});
 

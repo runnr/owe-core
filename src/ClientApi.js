@@ -66,10 +66,10 @@ class ClientApi {
 	}
 
 	/**
-	 * @return {object} The protocol this ClientApi uses.
+	 * @return {boolean} The connection state of the protocol this ClientApi uses.
 	 */
-	get protocol() {
-		return this[protocol];
+	get connected() {
+		return this[protocol].connected;
 	}
 }
 

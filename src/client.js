@@ -1,7 +1,6 @@
 "use strict";
 
 const ClientApi = require("./ClientApi");
-const EventEmitter = require("events");
 
 function client(protocol) {
 	if(!protocol || typeof protocol !== "object")
@@ -13,12 +12,36 @@ function client(protocol) {
 	if(protocol.init && typeof protocol.init !== "function")
 		throw new TypeError("owe ClientApi protocols have to offer an init function.");
 
-	protocol = Object.assign(new EventEmitter(), protocol);
+	let connected = false;
+
+	protocol = Object.assign({
+		get connected() {
+			return connected;
+		},
+		set connected(value) {
+			if(typeof value !== "boolean")
+				throw new TypeError("Protocol connection state has to be boolean.");
+
+			if(value === connected)
+				return;
+
+			connected = value;
+			notifier.notify({
+				type: "update",
+				object: api,
+				name: "connected",
+				oldValue: !value
+			});
+		}
+	}, protocol);
+
+	const api = new ClientApi(protocol);
+	const notifier = Object.getNotifier(api);
 
 	if(protocol.init)
 		protocol.init();
 
-	return new ClientApi(protocol);
+	return api;
 }
 
 Object.assign(client, {

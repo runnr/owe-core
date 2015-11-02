@@ -19,16 +19,6 @@ class ClientApi {
 	constructor(pProtocol, pRoute) {
 		this[protocol] = pProtocol;
 		this[route] = pRoute || [];
-
-		const notifier = Object.getNotifier(this);
-
-		Object.observe(this[protocol],
-			changes => changes.forEach(change => notifier.notify({
-				type: "update",
-				name: "connected",
-				object: this,
-				oldValue: change.oldValue
-			})), ["connectedUpdate"]);
 	}
 
 	/**
@@ -80,6 +70,24 @@ class ClientApi {
 	 */
 	get connected() {
 		return this[protocol].connected;
+	}
+
+	/**
+	 * Observe connection changes of the protocol this ClientApi uses.
+	 * @param {function} observer The observer to use.
+	 * @return {undefined}
+	 */
+	observeProtocol(observer) {
+		Object.observe(this[protocol], observer, ["connectedUpdate"]);
+	}
+
+	/**
+	 * Removed connection observer from the protocol this ClientApi uses.
+	 * @param {function} observer The observer to be removed.
+	 * @return {undefined}
+	 */
+	unobserveProtocol(observer) {
+		Object.unobserve(this[protocol], observer);
 	}
 }
 

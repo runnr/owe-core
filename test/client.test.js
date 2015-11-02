@@ -73,7 +73,7 @@ describe("client", () => {
 
 		describe("#protocol", () => {
 			it("should have a forced boolean connected property", () => {
-				const api = client({
+				client({
 					init() {
 						expect(this.connected).to.be(false);
 						this.connected = true;
@@ -88,8 +88,8 @@ describe("client", () => {
 				});
 			});
 
-			it("should be observable at the api", () => new Promise((resolve, reject) => {
-				let protocol;
+			it("should be (un)observable at the api", () => new Promise((resolve, reject) => {
+				let protocol, l;
 				const api = client({
 					init() {
 						protocol = this; // eslint-disable-line consistent-this
@@ -97,20 +97,22 @@ describe("client", () => {
 					closer() {}
 				}).route();
 
-				Object.observe(api, changes => {
+				api.observeProtocol(l = changes => {
 					try {
 						expect(changes.length).to.be(2);
 						expect(changes[0]).to.eql({
-							type: "update",
+							type: "connectedUpdate",
+							object: protocol,
 							name: "connected",
-							object: api,
-							oldValue: false
+							oldValue: false,
+							value: true
 						});
 						expect(changes[1]).to.eql({
-							type: "update",
+							type: "connectedUpdate",
+							object: protocol,
 							name: "connected",
-							object: api,
-							oldValue: true
+							oldValue: true,
+							value: false
 						});
 						resolve();
 					}
@@ -119,6 +121,9 @@ describe("client", () => {
 					}
 				});
 				protocol.connected = true;
+				protocol.connected = true;
+				protocol.connected = false;
+				api.unobserveProtocol(l);
 				protocol.connected = true;
 				protocol.connected = false;
 			}));

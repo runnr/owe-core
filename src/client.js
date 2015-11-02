@@ -28,6 +28,8 @@ function client(protocol) {
 			connected = value;
 			notifier.notify({
 				type: "connectedUpdate",
+				name: "connected",
+				value: connected,
 				oldValue: !connected
 			});
 		}

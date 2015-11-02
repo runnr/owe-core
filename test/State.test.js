@@ -25,14 +25,6 @@ describe("State", () => {
 		expect(Object.isFrozen(state)).to.be.ok();
 	});
 
-	it("should adapt values valueOf method", () => {
-		expect(state - 2).to.be(40);
-	});
-
-	it("should adapt values toString method", () => {
-		expect(`I say '${String(state)}'!`).to.be("I say 'hello world.'!");
-	});
-
 	describe("#value", () => {
 		it("should contain the assigned value", () => {
 			expect(state.value).to.be(value);

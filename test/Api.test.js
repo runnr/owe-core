@@ -24,6 +24,12 @@ describe("Api", () => {
 		expect(this).to.be.a(State);
 		expect(this.value).to.be(original);
 
+		if(a === "error")
+			throw new Error("error");
+
+		if(a instanceof Error)
+			throw a;
+
 		if(a === "x")
 			return this.value.x;
 
@@ -31,6 +37,10 @@ describe("Api", () => {
 	}, function(key) {
 		expect(this).to.be.a(State);
 		expect(this.value).to.be(original);
+
+		if(key instanceof Error)
+			throw key;
+
 		if(!(key in this.value))
 			throw new Error(`${key} not found.`);
 
@@ -59,6 +69,17 @@ describe("Api", () => {
 				expect(err.message).to.be("Object at position 'x/Symbol(test)' is not exposed.");
 				expect(err.type).to.be("route");
 				expect(err.route).to.eql(["x", symb]);
+			}),
+			api.route("error").then(() => {
+				expect().fail("This routing was invalid.");
+			}, err => {
+				return api.route(err);
+			}).then(() => {
+				expect().fail("This routing was invalid.");
+			}, err => {
+				expect(err.message).to.be("error");
+				expect(err.type).to.be("route");
+				expect(err.route).to.eql(["error"]);
 			})
 		]));
 
@@ -89,6 +110,18 @@ describe("Api", () => {
 
 			return Promise.all([
 				api.close("d").then(() => {
+					expect().fail("This request should have thrown.");
+				}, err => {
+					expect(err.type).to.be("close");
+					expect(err.route).to.eql([]);
+					expect(err.data).to.be("d");
+					expect(err.message).to.be("d not found.");
+				}),
+				api.close("d").then(() => {
+					expect().fail("This request should have thrown.");
+				}, err => {
+					return api.close(err);
+				}).then(() => {
 					expect().fail("This request should have thrown.");
 				}, err => {
 					expect(err.type).to.be("close");

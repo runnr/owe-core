@@ -57,7 +57,6 @@ class State {
 
 	static setBinding(val) {
 		Binding = val;
-		this.setBinding = undefined;
 	}
 
 	/**

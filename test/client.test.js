@@ -88,8 +88,9 @@ describe("client", () => {
 				});
 			});
 
-			it("should be (un)observable at the api", () => new Promise((resolve, reject) => {
+			it("should be (un)observable at the api", () => {
 				let protocol, l;
+				const changes = [true, false, true, false];
 				const api = client({
 					init() {
 						protocol = this; // eslint-disable-line consistent-this
@@ -97,28 +98,8 @@ describe("client", () => {
 					closer() {}
 				}).route();
 
-				api.observeProtocol(l = changes => {
-					try {
-						expect(changes.length).to.be(2);
-						expect(changes[0]).to.eql({
-							type: "connectedUpdate",
-							object: protocol,
-							name: "connected",
-							oldValue: false,
-							value: true
-						});
-						expect(changes[1]).to.eql({
-							type: "connectedUpdate",
-							object: protocol,
-							name: "connected",
-							oldValue: true,
-							value: false
-						});
-						resolve();
-					}
-					catch(err) {
-						reject(err);
-					}
+				api.observeProtocol(l = change => {
+					expect(change).to.be(changes.shift());
 				});
 				protocol.connected = true;
 				protocol.connected = true;
@@ -126,7 +107,9 @@ describe("client", () => {
 				api.unobserveProtocol(l);
 				protocol.connected = true;
 				protocol.connected = false;
-			}));
+
+				expect(() => api.observeProtocol()).to.throwError(new TypeError("Protocol connection state observers have to be functions."));
+			});
 		});
 	});
 

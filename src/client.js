@@ -13,6 +13,7 @@ function client(protocol) {
 		throw new TypeError("owe ClientApi protocols have to offer an init function.");
 
 	let connected = false;
+	const observers = new Set();
 
 	protocol = Object.assign({
 		get connected() {
@@ -26,16 +27,19 @@ function client(protocol) {
 				return;
 
 			connected = value;
-			notifier.notify({
-				type: "connectedUpdate",
-				name: "connected",
-				value: connected,
-				oldValue: !connected
-			});
+			for(const observer of observers)
+				observer(connected);
+		},
+		observe(observer) {
+			if(typeof observer !== "function")
+				throw new TypeError("Protocol connection state observers have to be functions.");
+
+			observers.add(observer);
+		},
+		unobserve(observer) {
+			observers.delete(observer);
 		}
 	}, protocol);
-
-	const notifier = Object.getNotifier(protocol);
 
 	if(protocol.init)
 		protocol.init();

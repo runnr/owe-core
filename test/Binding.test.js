@@ -32,6 +32,15 @@ describe("Binding", () => {
 
 			Binding.bind(object, () => undefined, () => undefined);
 			expect(Binding.getBinding(object)).to.be.a(Binding);
+
+			expect(Binding.getBinding(null)).to.be(undefined);
+			expect(Binding.getBinding(undefined)).to.be(undefined);
+			expect(Binding.getBinding({})).to.be(undefined);
+			expect(Binding.getBinding(true)).to.be(undefined);
+			expect(Binding.getBinding(3)).to.be(undefined);
+			expect(Binding.getBinding("test")).to.be(undefined);
+			expect(Binding.getBinding(() => undefined)).to.be(undefined);
+			expect(Binding.getBinding(Symbol("test"))).to.be(undefined);
 		});
 	});
 

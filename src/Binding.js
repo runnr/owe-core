@@ -181,7 +181,6 @@ Object.assign(Binding.prototype, {
 	close: traverse("closer", "close")
 });
 
-if(State.setBinding)
-	State.setBinding(Binding);
+State.setBinding(Binding);
 
 module.exports = Binding;

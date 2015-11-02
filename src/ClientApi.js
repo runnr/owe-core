@@ -78,7 +78,7 @@ class ClientApi {
 	 * @return {undefined}
 	 */
 	observeProtocol(observer) {
-		Object.observe(this[protocol], observer, ["connectedUpdate"]);
+		this[protocol].observe(observer);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class ClientApi {
 	 * @return {undefined}
 	 */
 	unobserveProtocol(observer) {
-		Object.unobserve(this[protocol], observer);
+		this[protocol].unobserve(observer);
 	}
 }
 

@@ -98,7 +98,9 @@ describe("owe", () => {
 			const binding3 = owe.Binding.getBinding(owe({}));
 
 			expect(binding3.router).to.be.a("function");
+			expect(binding3.router()).to.be(undefined);
 			expect(binding3.closer).to.be.a("function");
+			expect(binding3.closer()).to.be(undefined);
 
 			const binding4 = owe.Binding.getBinding(owe({}, a));
 

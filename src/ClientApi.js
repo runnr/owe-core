@@ -77,7 +77,7 @@ class ClientApi {
 	 * @param {function} observer The observer to use.
 	 * @return {undefined}
 	 */
-	observeProtocol(observer) {
+	observeConnection(observer) {
 		this[protocol].observe(observer);
 	}
 
@@ -86,7 +86,7 @@ class ClientApi {
 	 * @param {function} observer The observer to be removed.
 	 * @return {undefined}
 	 */
-	unobserveProtocol(observer) {
+	unobserveConnection(observer) {
 		this[protocol].unobserve(observer);
 	}
 }

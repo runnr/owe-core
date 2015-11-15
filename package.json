@@ -1,6 +1,6 @@
 {
 	"name": "owe-core",
-	"version": "0.9.5",
+	"version": "0.9.6",
 	"description": "Core of the owe.js API framework ecosystem.",
 	"keywords": [
 		"api",
@@ -29,12 +29,12 @@
 		"owe-helpers": "^0.9"
 	},
 	"devDependencies": {
-		"eslint": "1.8.0",
+		"eslint": "1.9.0",
 		"expect.js": "0.3.1",
 		"gulp": "3.9.0",
-		"gulp-eslint": "1.0.0",
+		"gulp-eslint": "1.1.0",
 		"gulp-istanbul": "0.10.2",
-		"gulp-mocha": "2.1.3",
+		"gulp-mocha": "2.2.0",
 		"mocha": "2.3.3",
 		"run-sequence": "1.1.4",
 		"coveralls": "2.11.4"

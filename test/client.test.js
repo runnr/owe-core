@@ -98,17 +98,17 @@ describe("client", () => {
 					closer() {}
 				}).route();
 
-				api.observeProtocol(l = change => {
+				api.observeConnection(l = change => {
 					expect(change).to.be(changes.shift());
 				});
 				protocol.connected = true;
 				protocol.connected = true;
 				protocol.connected = false;
-				api.unobserveProtocol(l);
+				api.unobserveConnection(l);
 				protocol.connected = true;
 				protocol.connected = false;
 
-				expect(() => api.observeProtocol()).to.throwError(new TypeError("Protocol connection state observers have to be functions."));
+				expect(() => api.observeConnection()).to.throwError(new TypeError("Protocol connection state observers have to be functions."));
 			});
 		});
 	});

@@ -1,23 +1,33 @@
-/**
- * @module Binding
- */
 "use strict";
 
 const State = require("./State");
 
 /**
  * The types of Bindings.
- * @constant {object}
- * @namespace Binding~types
- * @property {symbol} normal Only allow bindings to unbound objects; throw otherwise. Afterwards the given object is bound ({@link Binding.isBound} will return true).
- * @property {symbol} clone Allow any object or function as binding target. Afterwards the given object will not be changed: Unbound if it was unbound before, bound (with the same {@link Binding}) if it was bound before.
- * @property {symbol} rebind Allow any object or function as binding target. Afterwards the given object is bound ({@link Binding.isBound} will return true). If the object was bound before, the old binding is overridden.
+ * @alias Binding.types
+ * @enum {symbol}
  */
 const types = {
+
+	/**
+	 * Set prototype to null.
+	 * @ignore
+	 */
 	__proto__: null,
 
+	/**
+	 * Only allow bindings to unbound objects; throw otherwise. Afterwards the given object is bound ({@link Binding.isBound} will return true).
+	 */
 	normal: Symbol("normal"),
+
+	/**
+	 * Allow any object or function as binding target. Afterwards the given object will not be changed: Unbound if it was unbound before, bound (with the same {@link Binding}) if it was bound before.
+	 */
 	clone: Symbol("clone"),
+
+	/**
+	 * Allow any object or function as binding target. Afterwards the given object is bound ({@link Binding.isBound} will return true). If the object was bound before, the old binding is overridden.
+	 */
 	rebind: Symbol("rebind")
 };
 
@@ -33,7 +43,7 @@ class Binding {
 	 * @param {object|function} object The object that will be bound.
 	 * @param {function} router The router function for this binding.
 	 * @param {function} closer The closer function for this binding.
-	 * @param {types} [type={@linkcode Binding~types.normal}] The {@link Binding~types type of binding} to be used.
+	 * @param {types} [type=Binding.types.normal] The {@link Binding.types type of binding} to be used.
 	 * @param {object} clonedObject Only set if type=clone. Object the given object is a clone of.
 	 */
 	constructor(object, router, closer, type, clonedObject) {
@@ -62,29 +72,33 @@ class Binding {
 		if(usedRouter !== router)
 			usedRouter[types.clone] = router;
 
-		/**
-		 * Stores the router function.
-		 * @member {function} router
-		 */
-		this.router = usedRouter;
-
-		/**
-		 * Stores the closer function.
-		 * @member {function} closer
-		 */
-		this.closer = closer;
-
 		Object.assign(this, {
 
 			/**
+			 * Stores the router function.
+			 * @alias Binding#router
+			 * @type {function}
+			 */
+			router: usedRouter,
+
+			/**
+			 * Stores the closer function.
+			 * @alias Binding#closer
+			 * @type {function}
+			 */
+			closer,
+
+			/**
 			 * The object that is bound by this Binding.
-			 * @member {object} target
+			 * @alias Binding#target
+			 * @type {object}
 			 */
 			target: object,
 
 			/**
 			 * The binding type that was used to create this Binding.
-			 * @member {Binding~types} type
+			 * @alias Binding#type
+			 * @type {Binding.types}
 			 */
 			type
 		});
@@ -93,8 +107,8 @@ class Binding {
 	/**
 	 * Returns whether the given object is bound (it has a Binding associated to it).
 	 * @static
-	 * @param {any} object The object to check. This can actually be any value. The method will always return false for non-objects.
-	 * @return {boolean} true if the object is bound. false if not.
+	 * @param {any} object The object to check. This can be any value. The method will always return false for non-objects.
+	 * @return {boolean} `true` if the object is bound. `false` if not.
 	 */
 	static isBound(object) {
 		return object && (typeof object === "object" || typeof object === "function") && bindingMap.has(object) || false;
@@ -104,7 +118,7 @@ class Binding {
 	 * Returns the Binding object of the given object if it is bound.
 	 * undefined elsewise.
 	 * @param {object} object The object that should be checked.
-	 * @return {Binding|undefined} The binding of object.
+	 * @return {?Binding} The binding of object.
 	 */
 	static getBinding(object) {
 		return object && (typeof object === "object" || typeof object === "function") && bindingMap.get(object) || undefined;
@@ -146,10 +160,6 @@ class Binding {
 
 }
 
-/**
- * @name Binding.types
- * @borrows Binding~types as types
- */
 Binding.types = types;
 
 function traverse(type, typeName) {

@@ -1,6 +1,3 @@
-/**
- * @module ClientApi
- */
 "use strict";
 
 const protocol = Symbol("protocol");
@@ -23,7 +20,7 @@ class ClientApi {
 
 	/**
 	 * Routes the ClientApi via its protocol.
-	 * @param {any} destination The destination to route to.
+	 * @param {...any} destination The destination to route to. Multiple destinations are handled like a chained {@link ClientApi#route} call.
 	 * @return {ClientApi} A new {@link ClientApi} for the object the routing function returned.
 	 */
 	route(destination) {
@@ -47,26 +44,27 @@ class ClientApi {
 	}
 
 	/**
-	 * Shorthand for this.close().then().
+	 * Shorthand for `this.close().then()`.
 	 * @param {function} success The success function.
 	 * @param {function} fail The fail function.
-	 * @return {Promise} Result of this.close().
+	 * @return {Promise} Result of `this.close()`.
 	 */
 	then(success, fail) {
 		return this.close().then(success, fail);
 	}
 
 	/**
-	 * Shorthand for this.close().catch().
+	 * Shorthand for `this.close().catch()`.
 	 * @param {function} fail The fail function.
-	 * @return {Promise} Rejects if this.close() rejects.
+	 * @return {Promise} Rejects if `this.close()` rejects.
 	 */
 	catch(fail) {
 		return this.close().catch(fail);
 	}
 
 	/**
-	 * @return {boolean} The connection state of the protocol this ClientApi uses.
+	 * The connection state of the protocol this ClientApi uses.
+	 * @type {boolean}
 	 */
 	get connected() {
 		return this[protocol].connected;

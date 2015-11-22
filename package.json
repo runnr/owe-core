@@ -29,14 +29,18 @@
 		"owe-helpers": "^0.9"
 	},
 	"devDependencies": {
-		"eslint": "1.9.0",
+		"eslint": "1.10.1",
 		"expect.js": "0.3.1",
+		"jsdoc": "3.4.0",
 		"gulp": "3.9.0",
+		"minami": "1.1.1",
 		"gulp-eslint": "1.1.0",
 		"gulp-istanbul": "0.10.2",
 		"gulp-mocha": "2.2.0",
-		"mocha": "2.3.3",
-		"run-sequence": "1.1.4",
+		"gulp-rename": "1.2.2",
+		"gulp-shell": "0.5.1",
+		"mocha": "2.3.4",
+		"run-sequence": "1.1.5",
 		"coveralls": "2.11.4"
 	},
 	"scripts": {

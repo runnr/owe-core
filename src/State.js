@@ -1,6 +1,3 @@
-/**
- * @module State
- */
 "use strict";
 
 // Binding will be late bound, due to circular dependency between it and State.
@@ -27,26 +24,62 @@ class State {
 			throw new TypeError("State binding has to be an instance of Binding.");
 
 		Object.defineProperties(this, {
+
+			/**
+			 * The `value` that was given to the constructor.
+			 * @name State#value
+			 * @type {object|function}
+			 */
 			value: {
 				enumerable: true,
 				value
 			},
+
+			/**
+			 * The `route` that was given to the constructor.
+			 * @name State#route
+			 * @type {any[]}
+			 */
 			route: {
 				enumerable: true,
 				value: route.slice(0)
 			},
+
+			/**
+			 * The `type` ("route" or "close") that was given to the constructor.
+			 * @name State#type
+			 * @type {string}
+			 */
 			type: {
 				enumerable: true,
 				value: type
 			},
+
+			/**
+			 * The `origin` that was given to the constructor.
+			 * @name State#origin
+			 * @type {object}
+			 */
 			origin: {
 				enumerable: true,
 				value: origin
 			},
+
+			/**
+			 * The `binding` that was given to the constructor.
+			 * @name State#binding
+			 * @type {object}
+			 */
 			binding: {
 				enumerable: true,
 				value: binding
 			},
+
+			/**
+			 * `true` if this state was the result of a {@link State#setValue} call, `false` elsewise.
+			 * @name State#modified
+			 * @type {boolean}
+			 */
 			modified: {
 				value: false
 			}
@@ -55,12 +88,9 @@ class State {
 		Object.freeze(this);
 	}
 
-	static setBinding(val) {
-		Binding = val;
-	}
-
 	/**
-	 * Returns a new State, that prototypically inherits from this State, but with another {@link Binding#value value}.
+	 * Returns a new state, that prototypically inherits from this State, but with another {@link Binding#value value}.
+	 * The new state will get an active {@link State#modified} flag.
 	 * @param {any} valueDescriptor The new value.
 	 * @return {State} A new State.
 	 */
@@ -77,6 +107,9 @@ class State {
 		}));
 	}
 
+	static setBinding(val) {
+		Binding = val;
+	}
 }
 
 module.exports = State;

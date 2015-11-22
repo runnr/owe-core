@@ -1,6 +1,3 @@
-/**
- * @module Api
- */
 "use strict";
 
 const helpers = require("owe-helpers");
@@ -54,7 +51,7 @@ class Api {
 
 	/**
 	 * Routes the Api according to its exposed objects routing function.
-	 * @param {any} destination The destination to route to.
+	 * @param {...any} destination The destination to route to. Multiple destinations are handled like a chained {@link Api#route} call.
 	 * @return {Api} A new {@link Api} for the object the routing function returned.
 	 */
 	route(destination) {
@@ -86,26 +83,27 @@ class Api {
 	}
 
 	/**
-	 * Shorthand for this.close().then().
+	 * Shorthand for `this.close().then()`.
 	 * @param {function} success The success function.
 	 * @param {function} fail The fail function.
-	 * @return {Promise} Result of this.close().
+	 * @return {Promise} Result of `this.close()`.
 	 */
 	then(success, fail) {
 		return this.close().then(success, fail);
 	}
 
 	/**
-	 * Shorthand for this.close().catch().
+	 * Shorthand for `this.close().catch()`.
 	 * @param {function} fail The fail function.
-	 * @return {Promise} Rejects if this.close() rejects.
+	 * @return {Promise} Rejects if `this.close()` rejects.
 	 */
 	catch(fail) {
 		return this.close().catch(fail);
 	}
 
 	/**
-	 * @return {Promise} Resolves to the exposed object this {@link Api} is pointing to.
+	 * Resolves to the exposed object this {@link Api} is pointing to.
+	 * @type {Promise}
 	 */
 	get object() {
 		return this[object]

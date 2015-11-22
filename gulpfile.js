@@ -6,6 +6,7 @@ const mocha = require("gulp-mocha");
 const eslint = require("gulp-eslint");
 const runSequence = require("run-sequence");
 const shell = require("gulp-shell");
+const ghPages = require("gulp-gh-pages");
 
 gulp.task("eslint", () => {
 	return gulp.src(["src/*.js", "test/*.test.js"])
@@ -44,6 +45,10 @@ gulp.task("docs", callback => {
 		.on("end", callback);
 });
 
+gulp.task("uploadDocs", () => {
+	return gulp.src("docs/owe-core/**/*").pipe(ghPages());
+});
+
 gulp.task("docWatch", () => {
 	gulp.watch(["src/**", "test/**"], ["test", "docs"]);
 });
@@ -58,4 +63,8 @@ gulp.task("default", () => {
 
 gulp.task("withDocs", () => {
 	runSequence("test", "docs", "docWatch");
+});
+
+gulp.task("deploy", () => {
+	runSequence("docs", "uploadDocs");
 });

@@ -1,12 +1,10 @@
-/**
- * @module owe-core/client
- */
 "use strict";
 
 const ClientApi = require("./ClientApi");
 
 /**
  * Creates a {@link ClientApi} for the given protocol handler.
+ * @namespace
  * @param {object} protocol The protocol that should be wrapped.
  * @param {function} [protocol.init] Called after the {@link ClientApi} that will be returned is prepared. Gets the Protocol object it was assigned to as its context.
  * @param {function} protocol.closer Called if a route is closed by the used. It gets the route array as its first parameter and the close data as its second. The protocol object the closer was assigned to is used as the context.
@@ -58,6 +56,13 @@ function client(protocol) {
 }
 
 Object.assign(client, {
+
+	/**
+	 * Returns whether the given object is a {@link ClientApi} instance.
+	 * @memberof client
+	 * @param {any} api The api to check. This can be any value. The method will always return false for non-objects.
+	 * @return {boolean} `true` if `api` is a {@link ClientApi}. `false` if not.
+	 */
 	isApi(api) {
 		return api && typeof api === "object" && api instanceof ClientApi || false;
 	}

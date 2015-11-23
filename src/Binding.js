@@ -168,28 +168,30 @@ function traverse(type, typeName) {
 	};
 }
 
-Object.assign(Binding.prototype, {
+Object.assign(Binding.prototype,
 
 	/**
-	 * Calls {@link Binding#router} with a {@link State} object as its this-context.
-	 * @name Binding#route
-	 * @method
-	 * @param {any[]} route The value for {@link State#route}
-	 * @param {object} origin The value for {@link State#origin}
-	 * @param {any} destination The destination to route to.
+	 * @lends Binding#
 	 */
-	route: traverse("router", "route"),
+	{
+		/**
+		 * Calls {@link Binding#router} with a {@link State} object as its this-context.
+		 * @method
+		 * @param {any[]} route The value for {@link State#route}
+		 * @param {object} origin The value for {@link State#origin}
+		 * @param {any} destination The destination to route to.
+		 */
+		route: traverse("router", "route"),
 
-	/**
-	 * Calls {@link Binding#closer} with a {@link State} object as its this-context.
-	 * @name Binding#close
-	 * @method
-	 * @param {any[]} route The value for {@link State#route}
-	 * @param {object} origin The value for {@link State#origin}
-	 * @param {any} destination The data to close with.
-	 */
-	close: traverse("closer", "close")
-});
+		/**
+		 * Calls {@link Binding#closer} with a {@link State} object as its this-context.
+		 * @method
+		 * @param {any[]} route The value for {@link State#route}
+		 * @param {object} origin The value for {@link State#origin}
+		 * @param {any} destination The data to close with.
+		 */
+		close: traverse("closer", "close")
+	});
 
 State.setBinding(Binding);
 

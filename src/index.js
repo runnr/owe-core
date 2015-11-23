@@ -1,8 +1,4 @@
 /**
- * owe-core exports its `owe` function by default.
- * It can be called in two ways.
- *
- * The first way using a `binding` object that wraps the router and closer function is usually preferred.
  * @module owe-core
  */
 "use strict";
@@ -16,7 +12,9 @@ const client = require("./client");
 const resourceMap = new WeakMap();
 
 /**
- * Binds the given object to a router and closer function.
+ * @exports owe-core
+ *//**
+ * Binds the given object to a `binding` object that wraps a router and/or closer function. **This usually is the preferred way to call this function.**
  * @param {object} object The object that should be bound.
  * @param {object} binding An object containing a router and closer function.
  * @param {function} [binding.router] The router that should be used.
@@ -41,6 +39,7 @@ function owe(object, router, closer, type) {
 		}
 		else if(closer !== undefined)
 			throw new TypeError("Invalid binding functions.");
+
 		closer = router.closer;
 		router = router.router;
 	}
@@ -67,38 +66,28 @@ function owe(object, router, closer, type) {
 Object.assign(owe, {
 
 	/**
-	 * A reference to the {@link client} submodule.
-	 * @name client
-	 * @memberof! owe
+	 * A reference to the {@link client} namespace.
 	 */
 	client,
 
 	/**
 	 * A reference to the {@link State} class.
-	 * @memberof! owe
-	 * @name owe.State
 	 */
 	State,
 
 	/**
 	 * A reference to the {@link Binding} class.
-	 * @name owe.Binding
-	 * @memberof! owe
 	 */
 	Binding,
 
 	/**
 	 * Checks whether a given object is bound.
 	 * @method
-	 * @name isBound
-	 * @memberof! owe
 	 */
 	isBound: Binding.isBound.bind(Binding), // kek.
 
 	/**
 	 * Behaves like {@link owe} but return an Api instead of the given object. If `object` is already bound, router, closer and type are optional and `api()` simply returns an {@link Api} instance for the given object.
-	 * @name api
-	 * @memberof! owe
 	 * @param {object} object The object that should be bound.
 	 * @param {function} router The router that should be used.
 	 * @param {function} closer The closer that should be used.
@@ -114,10 +103,8 @@ Object.assign(owe, {
 
 	/**
 	 * Returns whether the given object is an {@link Api} instance.
-	 * @name isApi
-	 * @memberof! owe
 	 * @param {any} api The api to check. This can be any value. The method will always return false for non-objects.
-	 * @return {boolean} `true` if `api` is an @{Api}. `false` if not.
+	 * @return {boolean} `true` if `api` is an {@link Api}. `false` if not.
 	 */
 	isApi(api) {
 		return api && typeof api === "object" && api instanceof Api || false;
@@ -125,8 +112,6 @@ Object.assign(owe, {
 
 	/**
 	 * Attaches resource data to a given object. The resource data is usually used to store metadata (e. g. a content type) for an object.
-	 * @name resource
-	 * @memberof! owe
 	 * @param {!object|!function} object The object that should get the given resource data.
 	 * @param {!object} data The resource data that should be attached to `object`.
 	 * @return {!object|!function} The given object.

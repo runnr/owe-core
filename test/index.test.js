@@ -4,6 +4,7 @@ const expect = require("expect.js");
 
 const owe = require("../src");
 const Api = require("../src/Api");
+const exposed = require("../src/exposed");
 
 describe("owe", () => {
 	it("should have a reference to Binding", () => {
@@ -20,6 +21,19 @@ describe("owe", () => {
 
 	it("should have a reference to client", () => {
 		expect(owe.client).to.be(require("../src/client"));
+	});
+
+	it("should have a reference to resource", () => {
+		expect(owe.resource).to.be(require("../src/resource"));
+	});
+
+	it("should have a reference to exposed", () => {
+		expect(owe.exposed).to.be(exposed);
+		expect(owe.expose).to.be(exposed);
+	});
+
+	it("should have a reference to exposed.isExposed", () => {
+		expect(owe.isExposed).to.be(exposed.isExposed);
 	});
 
 	describe(".call()", () => {
@@ -252,52 +266,6 @@ describe("owe", () => {
 				api1.object.then(object => expect(object).to.be(o1)),
 				api2.object.then(object => expect(object).to.be(o2))
 			]);
-		});
-	});
-
-	describe(".resource()", () => {
-		it("should return an empty object for everything without a resource", () => {
-			expect(owe.resource({})).to.eql({});
-			expect(owe.resource(() => undefined)).to.eql({});
-			expect(owe.resource(null)).to.eql({});
-			expect(owe.resource(undefined)).to.eql({});
-			expect(owe.resource(0)).to.eql({});
-			expect(owe.resource(NaN)).to.eql({});
-			expect(owe.resource(Infinity)).to.eql({});
-			expect(owe.resource("test")).to.eql({});
-			expect(owe.resource(1)).to.eql({});
-			expect(owe.resource(true)).to.eql({});
-			expect(owe.resource(Symbol("test"))).to.eql({});
-		});
-
-		it("should throw when assigning a resource to a basic type", () => {
-			expect(() => owe.resource(null, {})).to.throwError();
-			expect(() => owe.resource(0, {})).to.throwError();
-			expect(() => owe.resource(undefined, {})).to.throwError();
-			expect(() => owe.resource(55, {})).to.throwError();
-			expect(() => owe.resource("test", {})).to.throwError();
-			expect(() => owe.resource(true, {})).to.throwError();
-			expect(() => owe.resource(Symbol("test"), {})).to.throwError();
-		});
-
-		it("should throw when assigning a basic type to an object", () => {
-			expect(() => owe.resource({}, null)).to.throwError();
-			expect(() => owe.resource({}, 0)).to.throwError();
-			expect(() => owe.resource({}, 55)).to.throwError();
-			expect(() => owe.resource({}, "test")).to.throwError();
-			expect(() => owe.resource({}, true)).to.throwError();
-			expect(() => owe.resource({}, Symbol("test"))).to.throwError();
-		});
-
-		it("should assign an object resource to an object that can then be read", () => {
-			const a = {};
-			const b = {};
-
-			const test = owe.resource(a, b);
-
-			expect(test).to.be(a);
-
-			expect(owe.resource(a)).to.be(b);
 		});
 	});
 });

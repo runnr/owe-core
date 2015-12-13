@@ -5,6 +5,7 @@ const expect = require("expect.js");
 const Binding = require("../src/Binding");
 const State = require("../src/State");
 const Api = require("../src/Api");
+const exposed = require("../src/exposed");
 
 describe("Api", () => {
 	const symb = Symbol("test");
@@ -67,6 +68,7 @@ describe("Api", () => {
 				expect().fail("This routing was invalid.");
 			}, err => {
 				expect(err.message).to.be("Object at position 'x/Symbol(test)' is not exposed.");
+				expect(exposed.isExposed(err)).to.be.ok();
 				expect(err.type).to.be("route");
 				expect(err.route).to.eql(["x", symb]);
 			}),

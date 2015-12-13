@@ -3,6 +3,7 @@
 const helpers = require("owe-helpers");
 
 const Binding = require("./Binding");
+const exposed = require("./exposed");
 
 const errorHandled = Symbol("errorHandled");
 const boundObject = Symbol("boundObject");
@@ -27,7 +28,7 @@ class Api {
 
 		this[boundObject] = Promise.resolve(pObject).then(object => {
 			if(!Binding.isBound(object))
-				throw new TypeError(`Object at position '${this[route].map(helpers.string.convert).join("/")}' is not exposed.`);
+				throw new exposed.TypeError(`Object at position '${this[route].map(helpers.string.convert).join("/")}' is not exposed.`);
 
 			return object;
 		}).catch(errorHandlers.route.bind(this));

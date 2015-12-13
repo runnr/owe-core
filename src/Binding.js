@@ -107,7 +107,7 @@ class Binding {
 	/**
 	 * Returns whether the given object is bound (it has a Binding associated to it).
 	 * @static
-	 * @param {any} object The object to check. This can be any value. The method will always return false for non-objects.
+	 * @param {any} object The object to check. This can be any value. The method will always return `false` for non-objects.
 	 * @return {boolean} `true` if the object is bound. `false` if not.
 	 */
 	static isBound(object) {
@@ -174,6 +174,7 @@ Object.assign(Binding.prototype,
 	 * @lends Binding#
 	 */
 	{
+
 		/**
 		 * Calls {@link Binding#router} with a {@link State} object as its this-context.
 		 * @method

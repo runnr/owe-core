@@ -3,14 +3,6 @@
  */
 "use strict";
 
-const Api = require("./Api");
-const Binding = require("./Binding");
-const State = require("./State");
-
-const client = require("./client");
-
-const resourceMap = new WeakMap();
-
 /**
  * @exports owe-core
  *//**
@@ -63,10 +55,20 @@ function owe(object, router, closer, type) {
 	return Binding.bind(object, router, closer, type);
 }
 
+module.exports = owe;
+
+const Api = require("./Api");
+const Binding = require("./Binding");
+const State = require("./State");
+
+const client = require("./client");
+const expose = require("./exposed");
+const resource = require("./resource");
+
 Object.assign(owe, {
 
 	/**
-	 * A reference to the {@link client} namespace.
+	 * A reference to the {@link client} module.
 	 */
 	client,
 
@@ -79,6 +81,27 @@ Object.assign(owe, {
 	 * A reference to the {@link Binding} class.
 	 */
 	Binding,
+
+	/**
+	 * A reference to the {@link resource} module.
+	 */
+	resource,
+
+	/**
+	 * A reference to the {@link expose} module.
+	 */
+	expose,
+
+	/**
+	 * A reference to the {@link expose} module.
+	 */
+	exposed: expose,
+
+	/**
+	 * Checks whether a given object is exposed.
+	 * @method
+	 */
+	isExposed: expose.isExposed,
 
 	/**
 	 * Checks whether a given object is bound.
@@ -108,28 +131,5 @@ Object.assign(owe, {
 	 */
 	isApi(api) {
 		return api && typeof api === "object" && api instanceof Api || false;
-	},
-
-	/**
-	 * Attaches resource data to a given object. The resource data is usually used to store metadata (e. g. a content type) for an object.
-	 * @param {!object|!function} object The object that should get the given resource data.
-	 * @param {!object} data The resource data that should be attached to `object`.
-	 * @return {!object|!function} The given object.
-	 */
-	resource(object, data) {
-		if(data === undefined)
-			return resourceMap.get(object) || {};
-
-		if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
-			throw new TypeError("Could not transform given object into a resource.");
-
-		if(typeof data !== "object" || data === null)
-			throw new TypeError("Resource data has to be an object.");
-
-		resourceMap.set(object, data);
-
-		return object;
 	}
 });
-
-module.exports = owe;

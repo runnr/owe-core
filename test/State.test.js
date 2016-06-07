@@ -7,19 +7,20 @@ const Binding = require("../src/Binding");
 
 describe("State", () => {
 	const value = {
-			test: "Hello World.",
-			value: 42,
-			toString() {
-				return this.test.toLowerCase();
-			},
-			valueOf() {
-				return this.value;
-			}
+		test: "Hello World.",
+		value: 42,
+		toString() {
+			return this.test.toLowerCase();
 		},
-		route = ["route", "of", "this", "state"],
-		origin = {},
-		binding = Binding.getBinding(Binding.bind(null, () => undefined, () => undefined)),
-		state = new State(value, route, "great", origin, binding);
+		valueOf() {
+			return this.value;
+		}
+	};
+
+	const route = ["route", "of", "this", "state"];
+	const origin = {};
+	const binding = Binding.getBinding(Binding.bind(null, () => undefined, () => undefined));
+	const state = new State(value, route, "great", origin, binding);
 
 	it("should be frozen", () => {
 		expect(Object.isFrozen(state)).to.be.ok();

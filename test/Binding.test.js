@@ -7,8 +7,8 @@ const Binding = require("../src/Binding");
 describe("Binding", () => {
 	describe(".isBound()", () => {
 		it("should return true for objects that were bound", () => {
-			const boundObject = Binding.bind(null, () => undefined, () => undefined),
-				boundFunction = Binding.bind(() => undefined, () => undefined, () => undefined);
+			const boundObject = Binding.bind(null, () => undefined, () => undefined);
+			const boundFunction = Binding.bind(() => undefined, () => undefined, () => undefined);
 
 			expect(Binding.isBound(boundObject)).to.be(true);
 			expect(Binding.isBound(boundFunction)).to.be(true);
@@ -102,11 +102,12 @@ describe("Binding", () => {
 				expect(Binding.isBound(object)).to.be(true);
 
 				let clone;
-				const router = function() {
+
+				function router() {
 					expect(this.value).to.be(object);
 
 					return this.value;
-				};
+				}
 
 				expect(() => clone = Binding.bind(object, router, () => undefined, Binding.types.clone)).not.to.throwError();
 				expect(Binding.isBound(clone)).to.be(true);
@@ -150,9 +151,9 @@ describe("Binding", () => {
 		});
 
 		it("just returns unbound objects and data", () => {
-			const o = Object.freeze({}),
-				f = () => undefined,
-				s = Symbol();
+			const o = Object.freeze({});
+			const f = () => undefined;
+			const s = Symbol();
 
 			expect(Binding.unbind(o)).to.be(o);
 			expect(Binding.unbind(true)).to.be(true);
@@ -170,7 +171,8 @@ describe("Binding", () => {
 	const route = ["a", "b", "c"];
 	const data = "ein test";
 	const origin = {};
-	const router = function(pData) {
+
+	function router(pData) {
 		expect(this.value).to.be(object);
 		expect(this.route).to.eql(route);
 		expect(this.type).to.be("route");
@@ -179,8 +181,9 @@ describe("Binding", () => {
 		expect(data).to.be(pData);
 
 		return "result";
-	};
-	const closer = function(pData) {
+	}
+
+	function closer(pData) {
 		expect(this.value).to.be(object);
 		expect(this.route).to.eql(route);
 		expect(this.type).to.be("close");
@@ -189,7 +192,8 @@ describe("Binding", () => {
 		expect(data).to.be(pData);
 
 		return "result";
-	};
+	}
+
 	const binding = Binding.getBinding(Binding.bind(object, router, closer));
 
 	describe("#router", () => {

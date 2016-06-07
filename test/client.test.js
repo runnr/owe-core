@@ -89,7 +89,7 @@ describe("client", () => {
 			});
 
 			it("should be (un)observable at the api", () => {
-				let protocol, l;
+				let l, protocol;
 				const changes = [true, false, true, false];
 				const api = client({
 					init() {

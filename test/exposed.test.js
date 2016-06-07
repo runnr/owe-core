@@ -91,7 +91,7 @@ describe(".exposed", () => {
 			const err = new TypeError("The properties to be exposed have to be iterable.");
 
 			expect(() => exposed.properties({}, [])).not.to.throwError();
-			expect(() => exposed.properties({}, function*() {}())).not.to.throwError();
+			expect(() => exposed.properties({}, (function* () {}()))).not.to.throwError();
 			expect(() => exposed.properties({}, new Set())).not.to.throwError();
 			expect(() => exposed.properties({})).to.throwError(err);
 			expect(() => exposed.properties({}, null)).to.throwError(err);

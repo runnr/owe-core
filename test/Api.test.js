@@ -6,6 +6,7 @@ const Binding = require("../src/Binding");
 const State = require("../src/State");
 const Api = require("../src/Api");
 const exposed = require("../src/exposed");
+const proxify = require("../src/proxify");
 
 describe("Api", () => {
 	const symb = Symbol("test");
@@ -211,5 +212,11 @@ describe("Api", () => {
 	describe("#object", () => {
 		it("should contain a promise to the object this api exposes",
 			() => api.object.then(apiObject => expect(apiObject).to.be(original)));
+	});
+
+	describe("#proxified", () => {
+		it("should be a proxified version of this Api", () => {
+			expect(proxify.revert(api.proxified)).to.be(api);
+		});
 	});
 });

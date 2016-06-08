@@ -1,5 +1,7 @@
 "use strict";
 
+const proxify = require("./proxify");
+
 const protocol = Symbol("protocol");
 const route = Symbol("route");
 
@@ -87,6 +89,17 @@ class ClientApi {
 	unobserveConnection(observer) {
 		this[protocol].unobserve(observer);
 	}
+
+	/**
+	 * A proxy that returns `this.route(A).proxified` when property `A` is accessed and `this.close(B)` when called with parameter `B`.
+	 * `then` and `catch` however are directly passed through.
+	 * @type {Proxy}
+	 */
+	get proxified() {
+		return proxify(this);
+	}
 }
+
+ClientApi.prototype[proxify.passthrough] = new Set(["then", "catch"]);
 
 module.exports = ClientApi;

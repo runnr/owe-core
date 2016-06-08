@@ -27,6 +27,11 @@ describe("owe", () => {
 		expect(owe.resource).to.be(require("../src/resource"));
 	});
 
+	it("should have a reference to proxify and unproxify", () => {
+		expect(owe.proxify).to.be(require("../src/proxify"));
+		expect(owe.unproxify).to.be(owe.proxify.revert);
+	});
+
 	it("should have a reference to exposed", () => {
 		expect(owe.exposed).to.be(exposed);
 		expect(owe.expose).to.be(exposed);

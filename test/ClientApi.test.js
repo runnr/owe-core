@@ -3,6 +3,7 @@
 const expect = require("expect.js");
 
 const ClientApi = require("../src/ClientApi");
+const proxify = require("../src/proxify");
 
 describe("ClientApi", () => {
 	const protocol = {
@@ -83,7 +84,7 @@ describe("ClientApi", () => {
 	});
 
 	describe("#connected", () => {
-		it("mirror the value of protocol.connected", () => {
+		it("should mirror the value of protocol.connected", () => {
 			expect(api.connected).to.be(false);
 			protocol.connected = true;
 			expect(api.connected).to.be(true);
@@ -94,6 +95,12 @@ describe("ClientApi", () => {
 
 		it("should be read-only", () => {
 			expect(() => api.connected = true).to.throwError();
+		});
+	});
+
+	describe("#proxified", () => {
+		it("should be a proxified version of this Api", () => {
+			expect(proxify.revert(api.proxified)).to.be(api);
 		});
 	});
 });

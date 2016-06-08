@@ -12,19 +12,21 @@ gulp.task("eslint", () => {
 	return gulp.src(["src/*.js", "test/*.test.js"])
 		.pipe(eslint())
 		.pipe(eslint.format())
-		.pipe(eslint.failOnError());
+		.pipe(eslint.failAfterError());
 });
 
 gulp.task("mocha", callback => {
+	const coverageVariable = `c${Date.now()}`;
+
 	gulp.src(["src/*.js"])
-		.pipe(istanbul())
+		.pipe(istanbul({ coverageVariable }))
 		.on("error", callback)
 		.pipe(istanbul.hookRequire())
 		.on("finish", () => {
 			gulp.src(["test/*.test.js"])
 				.pipe(mocha())
 				.on("error", callback)
-				.pipe(istanbul.writeReports())
+				.pipe(istanbul.writeReports({ coverageVariable }))
 				.pipe(istanbul.enforceThresholds({
 					thresholds: {
 						global: 90
@@ -54,12 +56,11 @@ gulp.task("docWatch", () => {
 });
 
 gulp.task("watch", () => {
+	gulp.start(["test"]);
 	gulp.watch(["src/**", "test/**"], ["test"]);
 });
 
-gulp.task("default", () => {
-	runSequence("test", "watch");
-});
+gulp.task("default", ["watch"]);
 
 gulp.task("withDocs", () => {
 	runSequence("test", "docs", "docWatch");

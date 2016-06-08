@@ -4,6 +4,7 @@ const helpers = require("owe-helpers");
 
 const Binding = require("./Binding");
 const exposed = require("./exposed");
+const proxify = require("./proxify");
 
 const errorHandled = Symbol("errorHandled");
 const boundObject = Symbol("boundObject");
@@ -111,7 +112,17 @@ class Api {
 			|| (this[object] = this[boundObject].then(object => Binding.getBinding(object).target));
 	}
 
+	/**
+	 * A proxy that returns `this.route(A).proxified` when property `A` is accessed and `this.close(B)` when called with parameter `B`.
+	 * `then` and `catch` however are directly passed through.
+	 * @type {Proxy}
+	 */
+	get proxified() {
+		return proxify(this);
+	}
 }
+
+Api.prototype[proxify.passthrough] = new Set(["then", "catch"]);
 
 const errorHandlers = {
 

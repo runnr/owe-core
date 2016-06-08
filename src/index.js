@@ -64,6 +64,7 @@ const State = require("./State");
 const client = require("./client");
 const expose = require("./exposed");
 const resource = require("./resource");
+const proxify = require("./proxify");
 
 Object.assign(owe, {
 
@@ -108,6 +109,10 @@ Object.assign(owe, {
 	 * @method
 	 */
 	isBound: Binding.isBound.bind(Binding), // kek.
+
+	proxify,
+
+	unproxify: proxify.revert,
 
 	/**
 	 * Behaves like {@link owe} but return an Api instead of the given object. If `object` is already bound, router, closer and type are optional and `api()` simply returns an {@link Api} instance for the given object.

@@ -52,6 +52,7 @@ gulp.task("uploadDocs", () => {
 });
 
 gulp.task("docWatch", () => {
+	gulp.start(["test", "docs"]);
 	gulp.watch(["src/**", "test/**"], ["test", "docs"]);
 });
 
@@ -61,10 +62,6 @@ gulp.task("watch", () => {
 });
 
 gulp.task("default", ["watch"]);
-
-gulp.task("withDocs", () => {
-	runSequence("test", "docs", "docWatch");
-});
 
 gulp.task("deploy", () => {
 	runSequence("docs", "uploadDocs");

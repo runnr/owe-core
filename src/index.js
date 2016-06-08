@@ -110,8 +110,14 @@ Object.assign(owe, {
 	 */
 	isBound: Binding.isBound.bind(Binding), // kek.
 
+	/**
+	 * A reference to the {@link proxify} function.
+	 */
 	proxify,
 
+	/**
+	 * An alias for the {@link proxify.revert} function.
+	 */
 	unproxify: proxify.revert,
 
 	/**

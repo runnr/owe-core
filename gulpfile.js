@@ -8,6 +8,8 @@ const runSequence = require("run-sequence");
 const shell = require("gulp-shell");
 const ghPages = require("gulp-gh-pages");
 
+require("chai").use(require("chai-as-promised"));
+
 gulp.task("eslint", () => {
 	return gulp.src(["src/*.js", "test/*.test.js"])
 		.pipe(eslint())

@@ -33,7 +33,7 @@ function proxify(api) {
 
 	const proxy = new Proxy(target, {
 		get(target, property) {
-			if(passthroughSet && passthroughSet.has(property) && property in api)
+			if(typeof property === "symbol" || passthroughSet && passthroughSet.has(property) && property in api)
 				return typeof api[property] === "function" ? api[property].bind(api) : api[property];
 
 			return proxify(api.route(property));

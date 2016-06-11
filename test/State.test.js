@@ -1,6 +1,6 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const State = require("../src/State");
 const Binding = require("../src/Binding");
@@ -23,87 +23,87 @@ describe("State", () => {
 	const state = new State(value, route, "great", origin, binding);
 
 	it("should be frozen", () => {
-		expect(Object.isFrozen(state)).to.be.ok();
+		expect(Object.isFrozen(state)).to.equal(true);
 	});
 
 	describe("#value", () => {
 		it("should contain the assigned value", () => {
-			expect(state.value).to.be(value);
+			expect(state.value).to.equal(value);
 		});
 
 		it("should be read-only", () => {
 			expect(() => state.value = {
 				something: "else"
-			}).to.throwError();
+			}).to.throw();
 		});
 	});
 
 	describe("#route", () => {
 		it("should be an array", () => {
 			expect(() => new State(value, "NOPE", "great", origin, binding))
-				.to.throwError(new TypeError("State route has to be an array."));
+				.to.throw(TypeError, "State route has to be an array.");
 			expect(state.route).to.be.an("array");
 		});
 
 		it("should contain the assigned route", () => {
-			expect(state.route).to.eql(route);
+			expect(state.route).to.deep.equal(route);
 		});
 
 		it("should be read-only", () => {
-			expect(() => state.route = ["something", "else"]).to.throwError();
+			expect(() => state.route = ["something", "else"]).to.throw();
 		});
 	});
 
 	describe("#type", () => {
 		it("should contain the assigned type", () => {
-			expect(state.type).to.be("great");
+			expect(state.type).to.equal("great");
 		});
 
 		it("should be read-only", () => {
-			expect(() => state.type = "derp").to.throwError();
+			expect(() => state.type = "derp").to.throw();
 		});
 	});
 
 	describe("#origin", () => {
 		it("should contain the assigned origin", () => {
-			expect(state.origin).to.eql(origin);
+			expect(state.origin).to.deep.equal(origin);
 		});
 		it("should be read-only", () => {
-			expect(() => state.origin = "derp").to.throwError();
+			expect(() => state.origin = "derp").to.throw();
 		});
 	});
 
 	describe("#binding", () => {
 		it("should be a Binding", () => {
 			expect(() => new State(value, route, "great", origin, "NOPE"))
-				.to.throwError(new TypeError("State binding has to be an instance of Binding."));
-			expect(state.binding).to.be.a(Binding);
+				.to.throw(TypeError, "State binding has to be an instance of Binding.");
+			expect(state.binding).to.be.an.instanceof(Binding);
 		});
 
 		it("should contain the assigned binding", () => {
-			expect(state.binding).to.be(binding);
+			expect(state.binding).to.equal(binding);
 		});
 
 		it("should be read-only", () => {
-			expect(() => state.binding = null).to.throwError();
+			expect(() => state.binding = null).to.throw();
 		});
 	});
 
 	describe("#setValue()", () => {
 		it("should require an object propery descriptor", () => {
-			expect(() => state.setValue(null)).to.throwError();
+			expect(() => state.setValue(null)).to.throw();
 
-			expect(() => state.setValue(undefined)).to.throwError();
+			expect(() => state.setValue(undefined)).to.throw();
 
-			expect(() => state.setValue(true)).to.throwError();
+			expect(() => state.setValue(true)).to.throw();
 
-			expect(() => state.setValue(3)).to.throwError();
+			expect(() => state.setValue(3)).to.throw();
 
-			expect(() => state.setValue("test")).to.throwError();
+			expect(() => state.setValue("test")).to.throw();
 
-			expect(() => state.setValue(() => undefined)).to.throwError();
+			expect(() => state.setValue(() => undefined)).to.throw();
 
-			expect(() => state.setValue({})).not.to.throwError();
+			expect(() => state.setValue({})).not.to.throw();
 
 		});
 
@@ -111,7 +111,7 @@ describe("State", () => {
 			state.setValue({
 				value: "test"
 			});
-			expect(state.value).to.be(value);
+			expect(state.value).to.equal(value);
 		});
 
 		it("should return a new State with the new value", () => {
@@ -119,14 +119,14 @@ describe("State", () => {
 				value: "test"
 			});
 
-			expect(modified).not.to.be(state);
-			expect(modified).to.be.a(State);
-			expect(modified.value).to.be("test");
+			expect(modified).not.to.equal(state);
+			expect(modified).to.be.an.instanceof(State);
+			expect(modified.value).to.equal("test");
 		});
 
 		it("should return a state with a .modified flag", () => {
-			expect(state.modified).to.be(false);
-			expect(state.setValue({}).modified).to.be(true);
+			expect(state.modified).to.equal(false);
+			expect(state.setValue({}).modified).to.equal(true);
 		});
 
 		it("can not make .value writable", () => {
@@ -137,7 +137,7 @@ describe("State", () => {
 				});
 
 				modified.value = "test";
-			}).to.throwError();
+			}).to.throw();
 		});
 
 		it("can define getter & setter functions for .value", () => {
@@ -153,7 +153,7 @@ describe("State", () => {
 			});
 
 			modified.value = "test";
-			expect(modified.value).to.be("test");
+			expect(modified.value).to.equal("test");
 		});
 	});
 });

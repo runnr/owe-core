@@ -1,6 +1,6 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const Api = require("../src/Api");
 const ClientApi = require("../src/ClientApi");
@@ -35,23 +35,23 @@ describe("proxify and unproxify", () => {
 		});
 
 		it("should throw for non objects and objects that do not offer an owe Api interface", () => {
-			expect(() => proxify(null)).to.throwError();
-			expect(() => proxify()).to.throwError();
-			expect(() => proxify(1)).to.throwError();
-			expect(() => proxify("test")).to.throwError();
-			expect(() => proxify(Symbol("test"))).to.throwError();
-			expect(() => proxify(false)).to.throwError();
-			expect(() => proxify(() => {})).to.throwError();
-			expect(() => proxify(Object.assign(() => {}, objectGenerator()))).to.throwError();
+			expect(() => proxify(null)).to.throw();
+			expect(() => proxify()).to.throw();
+			expect(() => proxify(1)).to.throw();
+			expect(() => proxify("test")).to.throw();
+			expect(() => proxify(Symbol("test"))).to.throw();
+			expect(() => proxify(false)).to.throw();
+			expect(() => proxify(() => {})).to.throw();
+			expect(() => proxify(Object.assign(() => {}, objectGenerator()))).to.throw();
 
-			expect(() => proxify({})).to.throwError();
-			expect(() => proxify(new Promise(() => {}))).to.throwError();
+			expect(() => proxify({})).to.throw();
+			expect(() => proxify(new Promise(() => {}))).to.throw();
 			expect(() => proxify({
 				route: true,
 				close: true,
 				then: true,
 				catch: true
-			})).to.throwError();
+			})).to.throw();
 		});
 
 		it("should translate property lookups to route calls", () => {
@@ -76,10 +76,10 @@ describe("proxify and unproxify", () => {
 			const p = proxify(o);
 
 			expect(p.test).to.be.a("function");
-			expect(a).to.eql(["test"]);
+			expect(a).to.deep.equal(["test"]);
 			expect(p.a1.b1.a2.b2.a3.b3).to.be.a("function");
-			expect(a).to.eql(["test", "a1", "a2", "a3"]);
-			expect(b).to.eql(["b1", "b2", "b3"]);
+			expect(a).to.deep.equal(["test", "a1", "a2", "a3"]);
+			expect(b).to.deep.equal(["b1", "b2", "b3"]);
 		});
 
 		it("should translate calls to close calls", () => {
@@ -89,35 +89,35 @@ describe("proxify and unproxify", () => {
 				}
 			});
 
-			expect(proxify(o)()).to.be("hello world");
+			expect(proxify(o)()).to.equal("hello world");
 		});
 
 		it("should list no own keys", () => {
-			expect(Object.keys(proxify(objectGenerator()))).to.eql([]);
+			expect(Object.keys(proxify(objectGenerator()))).to.deep.equal([]);
 		});
 
 		it("should have a null prototype", () => {
-			expect(Object.getPrototypeOf(proxify(objectGenerator()))).to.be(null);
+			expect(Object.getPrototypeOf(proxify(objectGenerator()))).to.equal(null);
 		});
 
 		it("should not be extendable or changeable", () => {
 			const o = objectGenerator();
 			const p = proxify(o);
 
-			expect(Object.isExtensible(p)).to.be(false);
-			expect(() => p.a = 1).to.throwError();
-			expect(Reflect.deleteProperty(p, "a")).to.be(false);
+			expect(Object.isExtensible(p)).to.equal(false);
+			expect(() => p.a = 1).to.throw();
+			expect(Reflect.deleteProperty(p, "a")).to.equal(false);
 			expect(() => Object.defineProperty(p, "x", {
 				value: 1
-			})).to.throwError();
+			})).to.throw();
 		});
 
 		it("should pass through all calls of methods listed in an Apis proxify.paththough property", () => {
 			const o = objectGenerator();
 			const p = proxify(o);
 
-			expect(p.a()).to.be(o);
-			expect(p.b).to.be(true);
+			expect(p.a()).to.equal(o);
+			expect(p.b).to.equal(true);
 
 			// then and catch are functions:
 			expect(proxify(new Api()).then).to.be.a("function");
@@ -126,16 +126,16 @@ describe("proxify and unproxify", () => {
 			expect(proxify(new ClientApi()).catch).to.be.a("function");
 
 			// Api proxies however are functions as well, so that case has to be excluded:
-			expect(unproxify(proxify(new Api()).then)).to.be(undefined);
-			expect(unproxify(proxify(new Api()).catch)).to.be(undefined);
-			expect(unproxify(proxify(new ClientApi()).then)).to.be(undefined);
-			expect(unproxify(proxify(new ClientApi()).catch)).to.be(undefined);
+			expect(unproxify(proxify(new Api()).then)).to.equal(undefined);
+			expect(unproxify(proxify(new Api()).catch)).to.equal(undefined);
+			expect(unproxify(proxify(new ClientApi()).then)).to.equal(undefined);
+			expect(unproxify(proxify(new ClientApi()).catch)).to.equal(undefined);
 
 			// then and catch must also return promises to exclude the case that some other methods were returned by the proxy:
-			expect(proxify(new Api()).then(() => {})).to.be.a(Promise);
-			expect(proxify(new Api()).catch(() => {})).to.be.a(Promise);
-			expect(proxify(new ClientApi()).then(() => {})).to.be.a(Promise);
-			expect(proxify(new ClientApi()).catch(() => {})).to.be.a(Promise);
+			expect(proxify(new Api()).then(() => {})).to.be.a("promise");
+			expect(proxify(new Api()).catch(() => {})).to.be.a("promise");
+			expect(proxify(new ClientApi()).then(() => {})).to.be.a("promise");
+			expect(proxify(new ClientApi()).catch(() => {})).to.be.a("promise");
 		});
 	});
 
@@ -145,8 +145,8 @@ describe("proxify and unproxify", () => {
 		});
 
 		it("should be a the key for a set of 'then' and 'catch' in Api and ClientApi", () => {
-			expect(Api.prototype[passthrough]).to.eql(new Set(["then", "catch"]));
-			expect(ClientApi.prototype[passthrough]).to.eql(new Set(["then", "catch"]));
+			expect(Api.prototype[passthrough]).to.deep.equal(new Set(["then", "catch"]));
+			expect(ClientApi.prototype[passthrough]).to.deep.equal(new Set(["then", "catch"]));
 		});
 	});
 });

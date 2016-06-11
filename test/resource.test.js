@@ -1,41 +1,41 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const resource = require("../src/resource");
 
 describe("resource", () => {
 	it("should return an empty object for everything without a resource", () => {
-		expect(resource({})).to.eql({});
-		expect(resource(() => undefined)).to.eql({});
-		expect(resource(null)).to.eql({});
-		expect(resource(undefined)).to.eql({});
-		expect(resource(0)).to.eql({});
-		expect(resource(NaN)).to.eql({});
-		expect(resource(Infinity)).to.eql({});
-		expect(resource("test")).to.eql({});
-		expect(resource(1)).to.eql({});
-		expect(resource(true)).to.eql({});
-		expect(resource(Symbol("test"))).to.eql({});
+		expect(resource({})).to.deep.equal({});
+		expect(resource(() => undefined)).to.deep.equal({});
+		expect(resource(null)).to.deep.equal({});
+		expect(resource(undefined)).to.deep.equal({});
+		expect(resource(0)).to.deep.equal({});
+		expect(resource(NaN)).to.deep.equal({});
+		expect(resource(Infinity)).to.deep.equal({});
+		expect(resource("test")).to.deep.equal({});
+		expect(resource(1)).to.deep.equal({});
+		expect(resource(true)).to.deep.equal({});
+		expect(resource(Symbol("test"))).to.deep.equal({});
 	});
 
 	it("should throw when assigning a resource to a basic type", () => {
-		expect(() => resource(null, {})).to.throwError();
-		expect(() => resource(0, {})).to.throwError();
-		expect(() => resource(undefined, {})).to.throwError();
-		expect(() => resource(55, {})).to.throwError();
-		expect(() => resource("test", {})).to.throwError();
-		expect(() => resource(true, {})).to.throwError();
-		expect(() => resource(Symbol("test"), {})).to.throwError();
+		expect(() => resource(null, {})).to.throw();
+		expect(() => resource(0, {})).to.throw();
+		expect(() => resource(undefined, {})).to.throw();
+		expect(() => resource(55, {})).to.throw();
+		expect(() => resource("test", {})).to.throw();
+		expect(() => resource(true, {})).to.throw();
+		expect(() => resource(Symbol("test"), {})).to.throw();
 	});
 
 	it("should throw when assigning a basic type to an object", () => {
-		expect(() => resource({}, null)).to.throwError();
-		expect(() => resource({}, 0)).to.throwError();
-		expect(() => resource({}, 55)).to.throwError();
-		expect(() => resource({}, "test")).to.throwError();
-		expect(() => resource({}, true)).to.throwError();
-		expect(() => resource({}, Symbol("test"))).to.throwError();
+		expect(() => resource({}, null)).to.throw();
+		expect(() => resource({}, 0)).to.throw();
+		expect(() => resource({}, 55)).to.throw();
+		expect(() => resource({}, "test")).to.throw();
+		expect(() => resource({}, true)).to.throw();
+		expect(() => resource({}, Symbol("test"))).to.throw();
 	});
 
 	it("should assign an object resource to an object that can then be read", () => {
@@ -44,8 +44,8 @@ describe("resource", () => {
 
 		const test = resource(a, b);
 
-		expect(test).to.be(a);
+		expect(test).to.equal(a);
 
-		expect(resource(a)).to.be(b);
+		expect(resource(a)).to.equal(b);
 	});
 });

@@ -1,6 +1,6 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const client = require("../src/client");
 const ClientApi = require("../src/ClientApi");
@@ -13,18 +13,18 @@ describe("client", () => {
 				b: 2,
 				c: 3,
 				init() {
-					expect(this.connected).to.be(false);
-					expect(this.init).to.be(protocol.init);
-					expect(this.closer).to.be(protocol.closer);
-					expect(this.a).to.be(protocol.a);
-					expect(this.b).to.be(protocol.b);
-					expect(this.c).to.be(protocol.c);
+					expect(this.connected).to.equal(false);
+					expect(this.init).to.equal(protocol.init);
+					expect(this.closer).to.equal(protocol.closer);
+					expect(this.a).to.equal(protocol.a);
+					expect(this.b).to.equal(protocol.b);
+					expect(this.c).to.equal(protocol.c);
 				},
 				closer() {}
 			};
 			const api = client(protocol);
 
-			expect(api).to.be.a(ClientApi);
+			expect(api).to.be.an.instanceof(ClientApi);
 		});
 
 		it("should call the init method of the given protocol", () => {
@@ -34,55 +34,55 @@ describe("client", () => {
 				a: 1,
 				init() {
 					x = true;
-					expect(this.a).to.be(1);
+					expect(this.a).to.equal(1);
 				},
 				closer() {}
 			});
 
-			expect(x).to.be(true);
+			expect(x).to.equal(true);
 		});
 
 		it("should throw if given an invalid protocol", () => {
-			expect(() => client()).to.throwError();
-			expect(() => client("x")).to.throwError();
-			expect(() => client(1)).to.throwError();
-			expect(() => client(undefined)).to.throwError();
-			expect(() => client(() => undefined)).to.throwError();
-			expect(() => client(Symbol("test"))).to.throwError();
-			expect(() => client(true)).to.throwError();
-			expect(() => client({})).to.throwError();
+			expect(() => client()).to.throw();
+			expect(() => client("x")).to.throw();
+			expect(() => client(1)).to.throw();
+			expect(() => client(undefined)).to.throw();
+			expect(() => client(() => undefined)).to.throw();
+			expect(() => client(Symbol("test"))).to.throw();
+			expect(() => client(true)).to.throw();
+			expect(() => client({})).to.throw();
 			expect(() => client({
 				init: true,
 				closer: true
-			})).to.throwError();
+			})).to.throw();
 			expect(() => client({
 				init() {}
-			})).to.throwError();
+			})).to.throw();
 			expect(() => client({
 				closer() {}
-			})).not.to.throwError();
+			})).not.to.throw();
 			expect(() => client({
 				init: {},
 				closer() {}
-			})).to.throwError();
+			})).to.throw();
 			expect(() => client({
 				init() {},
 				closer: {}
-			})).to.throwError();
+			})).to.throw();
 		});
 
 		describe("#protocol", () => {
 			it("should have a forced boolean connected property", () => {
 				client({
 					init() {
-						expect(this.connected).to.be(false);
+						expect(this.connected).to.equal(false);
 						this.connected = true;
-						expect(this.connected).to.be(true);
-						expect(() => this.connected = 1).to.throwError();
-						expect(() => this.connected = new Boolean(true)).to.throwError();
-						expect(() => this.connected = "true").to.throwError();
-						expect(() => this.connected = null).to.throwError();
-						expect(() => this.connected = undefined).to.throwError();
+						expect(this.connected).to.equal(true);
+						expect(() => this.connected = 1).to.throw();
+						expect(() => this.connected = new Boolean(true)).to.throw();
+						expect(() => this.connected = "true").to.throw();
+						expect(() => this.connected = null).to.throw();
+						expect(() => this.connected = undefined).to.throw();
 					},
 					closer() {}
 				});
@@ -99,7 +99,7 @@ describe("client", () => {
 				}).route();
 
 				api.observeConnection(l = change => {
-					expect(change).to.be(changes.shift());
+					expect(change).to.equal(changes.shift());
 				});
 				protocol.connected = true;
 				protocol.connected = true;
@@ -108,31 +108,31 @@ describe("client", () => {
 				protocol.connected = true;
 				protocol.connected = false;
 
-				expect(() => api.observeConnection()).to.throwError(new TypeError("Protocol connection state observers have to be functions."));
+				expect(() => api.observeConnection()).to.throw(TypeError, "Protocol connection state observers have to be functions.");
 			});
 		});
 	});
 
 	describe(".isApi()", () => {
 		it("should return 'false' for everything that is not an instance of Api", () => {
-			expect(client.isApi()).to.be(false);
-			expect(client.isApi(undefined)).to.be(false);
-			expect(client.isApi(null)).to.be(false);
-			expect(client.isApi(123.456)).to.be(false);
-			expect(client.isApi("test")).to.be(false);
-			expect(client.isApi(NaN)).to.be(false);
-			expect(client.isApi(Infinity)).to.be(false);
-			expect(client.isApi({})).to.be(false);
-			expect(client.isApi(() => undefined)).to.be(false);
-			expect(client.isApi(ClientApi)).to.be(false);
-			expect(client.isApi(Object.create(ClientApi))).to.be(false);
-			expect(client.isApi(Symbol("test"))).to.be(false);
+			expect(client.isApi()).to.equal(false);
+			expect(client.isApi(undefined)).to.equal(false);
+			expect(client.isApi(null)).to.equal(false);
+			expect(client.isApi(123.456)).to.equal(false);
+			expect(client.isApi("test")).to.equal(false);
+			expect(client.isApi(NaN)).to.equal(false);
+			expect(client.isApi(Infinity)).to.equal(false);
+			expect(client.isApi({})).to.equal(false);
+			expect(client.isApi(() => undefined)).to.equal(false);
+			expect(client.isApi(ClientApi)).to.equal(false);
+			expect(client.isApi(Object.create(ClientApi))).to.equal(false);
+			expect(client.isApi(Symbol("test"))).to.equal(false);
 		});
 
 		it("should return 'true' for everything that is an instance of Api", () => {
-			expect(client.isApi(new ClientApi({}))).to.be(true);
-			expect(client.isApi(Object.create(new ClientApi({})))).to.be(true);
-			expect(client.isApi(Object.create(ClientApi.prototype))).to.be(true);
+			expect(client.isApi(new ClientApi({}))).to.equal(true);
+			expect(client.isApi(Object.create(new ClientApi({})))).to.equal(true);
+			expect(client.isApi(Object.create(ClientApi.prototype))).to.equal(true);
 		});
 	});
 });

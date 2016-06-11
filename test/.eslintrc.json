@@ -4,6 +4,7 @@
 	},
 	"rules": {
 		"no-throw-literal": "off",
-		"no-new-wrappers": "off"
+		"no-new-wrappers": "off",
+		"no-unused-expressions": "off"
 	}
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const owe = require("../src");
 const exposed = owe.exposed;
@@ -15,13 +15,13 @@ describe(".exposed", () => {
 		const f = () => undefined;
 		const e = new Error();
 
-		expect(exposed(o)).to.be(o);
-		expect(exposed(f)).to.be(f);
-		expect(exposed(e)).to.be(e);
+		expect(exposed(o)).to.equal(o);
+		expect(exposed(f)).to.equal(f);
+		expect(exposed(e)).to.equal(e);
 
-		expect(exposedValue(o)).to.be.ok();
-		expect(exposedValue(f)).to.be.ok();
-		expect(exposedValue(e)).to.be.ok();
+		expect(exposedValue(o)).to.equal(o);
+		expect(exposedValue(f)).to.equal(f);
+		expect(exposedValue(e)).to.equal(e);
 	});
 
 	it("should expose given objects with data when called with data", () => {
@@ -31,13 +31,13 @@ describe(".exposed", () => {
 
 		const data = Symbol("unique");
 
-		expect(exposed(o, data)).to.be(o);
-		expect(exposed(f, data)).to.be(f);
-		expect(exposed(e, data)).to.be(e);
+		expect(exposed(o, data)).to.equal(o);
+		expect(exposed(f, data)).to.equal(f);
+		expect(exposed(e, data)).to.equal(e);
 
-		expect(exposedValue(o)).to.be(data);
-		expect(exposedValue(f)).to.be(data);
-		expect(exposedValue(e)).to.be(data);
+		expect(exposedValue(o)).to.equal(data);
+		expect(exposedValue(f)).to.equal(data);
+		expect(exposedValue(e)).to.equal(data);
 	});
 
 	describe(".isExposed", () => {
@@ -47,10 +47,10 @@ describe(".exposed", () => {
 			const f = exposed(() => undefined, true);
 			const e = exposed(new Error(), "one");
 
-			expect(exposed.isExposed(o)).to.be(true);
-			expect(exposed.isExposed(o2)).to.be(true);
-			expect(exposed.isExposed(f)).to.be(true);
-			expect(exposed.isExposed(e)).to.be(true);
+			expect(exposed.isExposed(o)).to.equal(true);
+			expect(exposed.isExposed(o2)).to.equal(true);
+			expect(exposed.isExposed(f)).to.equal(true);
+			expect(exposed.isExposed(e)).to.equal(true);
 		});
 
 		it("should return false when given a non exposed object", () => {
@@ -58,9 +58,9 @@ describe(".exposed", () => {
 			const f = () => undefined;
 			const e = new Error();
 
-			expect(exposed.isExposed(o)).to.be(false);
-			expect(exposed.isExposed(f)).to.be(false);
-			expect(exposed.isExposed(e)).to.be(false);
+			expect(exposed.isExposed(o)).to.equal(false);
+			expect(exposed.isExposed(f)).to.equal(false);
+			expect(exposed.isExposed(e)).to.equal(false);
 		});
 	});
 
@@ -72,30 +72,30 @@ describe(".exposed", () => {
 			const e2 = exposed(new Error());
 			const n = {};
 
-			expect(Object.getOwnPropertyDescriptor(e2, "message")).to.eql({
+			expect(Object.getOwnPropertyDescriptor(e2, "message")).to.deep.equal({
 				value: e2.message,
 				enumerable: true,
 				writable: false,
 				configurable: false
 			});
-			expect(exposed.getValue(o)).to.be(o);
-			expect(exposed.getValue(f)).to.eql({});
-			expect(exposed.getValue(e)).to.be("one");
-			expect(exposed.getValue(e2)).to.be(e2);
-			expect(exposed.getValue(n)).to.be(undefined);
+			expect(exposed.getValue(o)).to.equal(o);
+			expect(exposed.getValue(f)).to.deep.equal({});
+			expect(exposed.getValue(e)).to.equal("one");
+			expect(exposed.getValue(e2)).to.equal(e2);
+			expect(exposed.getValue(n)).to.equal(undefined);
 		});
 	});
 
 	describe(".properties", () => {
 		it("should only accept iterable property lists", () => {
-			const err = new TypeError("The properties to be exposed have to be iterable.");
+			const err = [TypeError, "The properties to be exposed have to be iterable."];
 
-			expect(() => exposed.properties({}, [])).not.to.throwError();
-			expect(() => exposed.properties({}, (function* () {}()))).not.to.throwError();
-			expect(() => exposed.properties({}, new Set())).not.to.throwError();
-			expect(() => exposed.properties({})).to.throwError(err);
-			expect(() => exposed.properties({}, null)).to.throwError(err);
-			expect(() => exposed.properties({}, "test")).to.throwError(err);
+			expect(() => exposed.properties({}, [])).not.to.throw();
+			expect(() => exposed.properties({}, (function* () {}()))).not.to.throw();
+			expect(() => exposed.properties({}, new Set())).not.to.throw();
+			expect(() => exposed.properties({})).to.throw(...err);
+			expect(() => exposed.properties({}, null)).to.throw(...err);
+			expect(() => exposed.properties({}, "test")).to.throw(...err);
 		});
 
 		it("should expose the given properties of an object", () => {
@@ -108,7 +108,7 @@ describe(".exposed", () => {
 
 			exposed.properties(o, ["b", "d"]);
 
-			expect(exposedValue(o)).to.eql({
+			expect(exposedValue(o)).to.deep.equal({
 				b: 2,
 				d: 4
 			});
@@ -127,7 +127,7 @@ describe(".exposed", () => {
 				["d", "c"]
 			]));
 
-			expect(exposedValue(o)).to.eql({
+			expect(exposedValue(o)).to.deep.equal({
 				a: 2,
 				c: 4
 			});
@@ -140,11 +140,11 @@ describe(".exposed", () => {
 		const err = new exposed.Error();
 
 		it("should be an Error", () => {
-			expect(err).to.be.an(Error);
+			expect(err).to.be.an.instanceof(Error);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -152,11 +152,11 @@ describe(".exposed", () => {
 		const err = new exposed.TypeError();
 
 		it("should be an TypeError", () => {
-			expect(err).to.be.an(TypeError);
+			expect(err).to.be.an.instanceof(TypeError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -164,11 +164,11 @@ describe(".exposed", () => {
 		const err = new exposed.ReferenceError();
 
 		it("should be an ReferenceError", () => {
-			expect(err).to.be.an(ReferenceError);
+			expect(err).to.be.an.instanceof(ReferenceError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -176,11 +176,11 @@ describe(".exposed", () => {
 		const err = new exposed.RangeError();
 
 		it("should be an RangeError", () => {
-			expect(err).to.be.an(RangeError);
+			expect(err).to.be.an.instanceof(RangeError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -188,11 +188,11 @@ describe(".exposed", () => {
 		const err = new exposed.SyntaxError();
 
 		it("should be an SyntaxError", () => {
-			expect(err).to.be.an(SyntaxError);
+			expect(err).to.be.an.instanceof(SyntaxError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -200,11 +200,11 @@ describe(".exposed", () => {
 		const err = new exposed.URIError();
 
 		it("should be an URIError", () => {
-			expect(err).to.be.an(URIError);
+			expect(err).to.be.an.instanceof(URIError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 
@@ -212,11 +212,11 @@ describe(".exposed", () => {
 		const err = new exposed.EvalError();
 
 		it("should be an EvalError", () => {
-			expect(err).to.be.an(EvalError);
+			expect(err).to.be.an.instanceof(EvalError);
 		});
 
 		it("should be exposed", () => {
-			expect(exposedValue(err)).to.be.ok();
+			expect(exposedValue(err)).to.be.ok;
 		});
 	});
 });

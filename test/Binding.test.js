@@ -1,6 +1,6 @@
 "use strict";
 
-const expect = require("expect.js");
+const expect = require("chai").expect;
 
 const Binding = require("../src/Binding");
 
@@ -10,19 +10,19 @@ describe("Binding", () => {
 			const boundObject = Binding.bind(null, () => undefined, () => undefined);
 			const boundFunction = Binding.bind(() => undefined, () => undefined, () => undefined);
 
-			expect(Binding.isBound(boundObject)).to.be(true);
-			expect(Binding.isBound(boundFunction)).to.be(true);
+			expect(Binding.isBound(boundObject)).to.equal(true);
+			expect(Binding.isBound(boundFunction)).to.equal(true);
 		});
 
 		it("should return false for everything that was not bound", () => {
-			expect(Binding.isBound(null)).to.be(false);
-			expect(Binding.isBound(undefined)).to.be(false);
-			expect(Binding.isBound({})).to.be(false);
-			expect(Binding.isBound(true)).to.be(false);
-			expect(Binding.isBound(3)).to.be(false);
-			expect(Binding.isBound("test")).to.be(false);
-			expect(Binding.isBound(() => undefined)).to.be(false);
-			expect(Binding.isBound(Symbol("test"))).to.be(false);
+			expect(Binding.isBound(null)).to.equal(false);
+			expect(Binding.isBound(undefined)).to.equal(false);
+			expect(Binding.isBound({})).to.equal(false);
+			expect(Binding.isBound(true)).to.equal(false);
+			expect(Binding.isBound(3)).to.equal(false);
+			expect(Binding.isBound("test")).to.equal(false);
+			expect(Binding.isBound(() => undefined)).to.equal(false);
+			expect(Binding.isBound(Symbol("test"))).to.equal(false);
 		});
 	});
 
@@ -31,16 +31,16 @@ describe("Binding", () => {
 			const object = {};
 
 			Binding.bind(object, () => undefined, () => undefined);
-			expect(Binding.getBinding(object)).to.be.a(Binding);
+			expect(Binding.getBinding(object)).to.be.an.instanceof(Binding);
 
-			expect(Binding.getBinding(null)).to.be(undefined);
-			expect(Binding.getBinding(undefined)).to.be(undefined);
-			expect(Binding.getBinding({})).to.be(undefined);
-			expect(Binding.getBinding(true)).to.be(undefined);
-			expect(Binding.getBinding(3)).to.be(undefined);
-			expect(Binding.getBinding("test")).to.be(undefined);
-			expect(Binding.getBinding(() => undefined)).to.be(undefined);
-			expect(Binding.getBinding(Symbol("test"))).to.be(undefined);
+			expect(Binding.getBinding(null)).to.equal(undefined);
+			expect(Binding.getBinding(undefined)).to.equal(undefined);
+			expect(Binding.getBinding({})).to.equal(undefined);
+			expect(Binding.getBinding(true)).to.equal(undefined);
+			expect(Binding.getBinding(3)).to.equal(undefined);
+			expect(Binding.getBinding("test")).to.equal(undefined);
+			expect(Binding.getBinding(() => undefined)).to.equal(undefined);
+			expect(Binding.getBinding(Symbol("test"))).to.equal(undefined);
 		});
 	});
 
@@ -48,49 +48,49 @@ describe("Binding", () => {
 		const bindingFunction = Binding.bind.bind(Binding);
 
 		it("can be used to bind to an object by calling bind", () => {
-			expect(Binding.isBound(Binding.bind({}, () => undefined, () => undefined))).to.be.ok();
+			expect(Binding.isBound(Binding.bind({}, () => undefined, () => undefined))).to.equal(true);
 		});
 
 		it("only binds objects, functions and null", () => {
-			expect(bindingFunction).withArgs(undefined, () => undefined, () => undefined).to.throwError();
-			expect(bindingFunction).withArgs("test", () => undefined, () => undefined).to.throwError();
-			expect(bindingFunction).withArgs(false, () => undefined, () => undefined).to.throwError();
-			expect(bindingFunction).withArgs(Symbol("test"), () => undefined, () => undefined).to.throwError();
+			expect(() => bindingFunction(undefined, () => undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction("test", () => undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction(false, () => undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction(Symbol("test"), () => undefined, () => undefined)).to.throw();
 
-			expect(bindingFunction).withArgs(null, () => undefined, () => undefined).not.to.throwError();
-			expect(bindingFunction).withArgs(() => undefined, () => undefined, () => undefined).not.to.throwError();
-			expect(bindingFunction).withArgs({}, () => undefined, () => undefined).not.to.throwError();
-			expect(bindingFunction).withArgs([], () => undefined, () => undefined).not.to.throwError();
+			expect(() => bindingFunction(null, () => undefined, () => undefined)).not.to.throw();
+			expect(() => bindingFunction(() => undefined, () => undefined, () => undefined)).not.to.throw();
+			expect(() => bindingFunction({}, () => undefined, () => undefined)).not.to.throw();
+			expect(() => bindingFunction([], () => undefined, () => undefined)).not.to.throw();
 		});
 
 		it("requires a router and a closer function", () => {
-			expect(bindingFunction).withArgs({}).to.throwError();
-			expect(bindingFunction).withArgs({}, () => undefined).to.throwError();
-			expect(bindingFunction).withArgs({}, undefined, () => undefined).to.throwError();
-			expect(bindingFunction).withArgs({}, [], []).to.throwError();
-			expect(bindingFunction).withArgs({}, {}, {}).to.throwError();
-			expect(bindingFunction).withArgs({}, "a", "b").to.throwError();
-			expect(bindingFunction).withArgs({}, true, true).to.throwError();
-			expect(bindingFunction).withArgs({}, 4, 11).to.throwError();
+			expect(() => bindingFunction({})).to.throw();
+			expect(() => bindingFunction({}, () => undefined)).to.throw();
+			expect(() => bindingFunction({}, undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction({}, [], [])).to.throw();
+			expect(() => bindingFunction({}, {}, {})).to.throw();
+			expect(() => bindingFunction({}, "a", "b")).to.throw();
+			expect(() => bindingFunction({}, true, true)).to.throw();
+			expect(() => bindingFunction({}, 4, 11)).to.throw();
 		});
 
 		describe("type parameter", () => {
 			it("should be optional and 'normal' by default", () => {
-				expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined)).type).to.be(Binding.types.normal);
+				expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined)).type).to.equal(Binding.types.normal);
 			});
 
 			it("when 'normal': only accepts unbound objects", () => {
 				const object = {};
 
-				expect(bindingFunction).withArgs(object, () => undefined, () => undefined).not.to.throwError();
-				expect(bindingFunction).withArgs(object, () => undefined, () => undefined).to.throwError();
+				expect(() => bindingFunction(object, () => undefined, () => undefined)).not.to.throw();
+				expect(() => bindingFunction(object, () => undefined, () => undefined)).to.throw();
 			});
 
 			it("when 'rebind': accepts all objects and rebinds them if neccessary", () => {
 				const object = {};
 
-				expect(bindingFunction).withArgs(object, () => undefined, () => undefined, Binding.types.rebind).not.to.throwError();
-				expect(bindingFunction).withArgs(object, () => undefined, () => undefined, Binding.types.rebind).not.to.throwError();
+				expect(() => bindingFunction(object, () => undefined, () => undefined, Binding.types.rebind)).not.to.throw();
+				expect(() => bindingFunction(object, () => undefined, () => undefined, Binding.types.rebind)).not.to.throw();
 			});
 
 			it("when 'clone': binds to a new object that behaves as if it were the original object in Apis", () => {
@@ -98,33 +98,33 @@ describe("Binding", () => {
 					a: 1
 				};
 
-				expect(bindingFunction).withArgs(object, () => undefined, () => undefined).not.to.throwError();
-				expect(Binding.isBound(object)).to.be(true);
+				expect(() => bindingFunction(object, () => undefined, () => undefined)).not.to.throw();
+				expect(Binding.isBound(object)).to.equal(true);
 
 				let clone;
 
 				function router() {
-					expect(this.value).to.be(object);
+					expect(this.value).to.equal(object);
 
 					return this.value;
 				}
 
-				expect(() => clone = Binding.bind(object, router, () => undefined, Binding.types.clone)).not.to.throwError();
-				expect(Binding.isBound(clone)).to.be(true);
-				expect(Object.getPrototypeOf(clone)).to.be(null);
-				expect(clone.object).to.be(object);
+				expect(() => clone = Binding.bind(object, router, () => undefined, Binding.types.clone)).not.to.throw();
+				expect(Binding.isBound(clone)).to.equal(true);
+				expect(Object.getPrototypeOf(clone)).to.equal(null);
+				expect(clone.object).to.equal(object);
 
 				const binding = Binding.getBinding(clone);
 
 				let clone2;
 
-				expect(() => clone2 = Binding.bind(object, binding.router, () => undefined, Binding.types.clone)).not.to.throwError();
+				expect(() => clone2 = Binding.bind(object, binding.router, () => undefined, Binding.types.clone)).not.to.throw();
 
 				const binding2 = Binding.getBinding(clone2);
 
 				return Promise.all([
-					binding.route([], {}).then(result => expect(result).to.be(clone)),
-					binding2.route([], {}).then(result => expect(result).to.be(clone2))
+					binding.route([], {}).then(result => expect(result).to.equal(clone)),
+					binding2.route([], {}).then(result => expect(result).to.equal(clone2))
 				]);
 			});
 		});
@@ -136,18 +136,18 @@ describe("Binding", () => {
 
 			const a = Binding.bind(o, () => undefined, () => undefined);
 
-			expect(a).to.be(o);
-			expect(Binding.isBound(o)).to.be.ok();
+			expect(a).to.equal(o);
+			expect(Binding.isBound(o)).to.equal(true);
 
 			const b = Binding.unbind(o);
 
-			expect(b).to.be(o);
-			expect(Binding.isBound(o)).not.to.be.ok();
+			expect(b).to.equal(o);
+			expect(Binding.isBound(o)).not.to.equal(true);
 
 			const c = Binding.bind(o, () => undefined, () => undefined);
 
-			expect(c).to.be(o);
-			expect(Binding.isBound(o)).to.be.ok();
+			expect(c).to.equal(o);
+			expect(Binding.isBound(o)).to.equal(true);
 		});
 
 		it("just returns unbound objects and data", () => {
@@ -155,12 +155,12 @@ describe("Binding", () => {
 			const f = () => undefined;
 			const s = Symbol();
 
-			expect(Binding.unbind(o)).to.be(o);
-			expect(Binding.unbind(true)).to.be(true);
-			expect(Binding.unbind("test")).to.be("test");
-			expect(Binding.unbind(5.5)).to.be(5.5);
-			expect(Binding.unbind(s)).to.be(s);
-			expect(Binding.unbind(f)).to.be(f);
+			expect(Binding.unbind(o)).to.equal(o);
+			expect(Binding.unbind(true)).to.equal(true);
+			expect(Binding.unbind("test")).to.equal("test");
+			expect(Binding.unbind(5.5)).to.equal(5.5);
+			expect(Binding.unbind(s)).to.equal(s);
+			expect(Binding.unbind(f)).to.equal(f);
 		});
 
 	});
@@ -173,25 +173,25 @@ describe("Binding", () => {
 	const origin = {};
 
 	function router(pData, state) {
-		expect(state.value).to.be(object);
-		expect(state.route).to.eql(route);
-		expect(state.type).to.be("route");
-		expect(state.binding).to.be(binding);
-		expect(state.origin).to.be(origin);
-		expect(data).to.be(pData);
-		expect(this).to.be(state);
+		expect(state.value).to.equal(object);
+		expect(state.route).to.deep.equal(route);
+		expect(state.type).to.equal("route");
+		expect(state.binding).to.equal(binding);
+		expect(state.origin).to.equal(origin);
+		expect(data).to.equal(pData);
+		expect(this).to.equal(state);
 
 		return "result";
 	}
 
 	function closer(pData, state) {
-		expect(state.value).to.be(object);
-		expect(state.route).to.eql(route);
-		expect(state.type).to.be("close");
-		expect(state.binding).to.be(binding);
-		expect(state.origin).to.be(origin);
-		expect(data).to.be(pData);
-		expect(this).to.be(state);
+		expect(state.value).to.equal(object);
+		expect(state.route).to.deep.equal(route);
+		expect(state.type).to.equal("close");
+		expect(state.binding).to.equal(binding);
+		expect(state.origin).to.equal(origin);
+		expect(data).to.equal(pData);
+		expect(this).to.equal(state);
 
 		return "result";
 	}
@@ -200,21 +200,21 @@ describe("Binding", () => {
 
 	describe("#router", () => {
 		it("should contain the assigned router", () => {
-			expect(binding.router).to.be(router);
+			expect(binding.router).to.equal(router);
 		});
 	});
 
 	describe("#closer", () => {
 		it("should contain the assigned closer", () => {
-			expect(binding.closer).to.be(closer);
+			expect(binding.closer).to.equal(closer);
 		});
 	});
 
 	describe("#type", () => {
 		it("should contain the type used at Binding creation", () => {
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.normal)).type).to.be(Binding.types.normal);
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.clone)).type).to.be(Binding.types.clone);
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.rebind)).type).to.be(Binding.types.rebind);
+			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.normal)).type).to.equal(Binding.types.normal);
+			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.clone)).type).to.equal(Binding.types.clone);
+			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.rebind)).type).to.equal(Binding.types.rebind);
 		});
 	});
 
@@ -223,32 +223,32 @@ describe("Binding", () => {
 			const o = {},
 				oBound = Binding.bind(o, () => undefined, () => undefined, Binding.types.normal);
 
-			expect(Binding.getBinding(oBound).target).to.be(o);
-			expect(oBound).to.be(o);
+			expect(Binding.getBinding(oBound).target).to.equal(o);
+			expect(oBound).to.equal(o);
 
 			const p = o,
 				pBound = Binding.bind(o, () => undefined, () => undefined, Binding.types.rebind);
 
-			expect(Binding.getBinding(pBound).target).to.be(p);
-			expect(pBound).to.be(p);
+			expect(Binding.getBinding(pBound).target).to.equal(p);
+			expect(pBound).to.equal(p);
 
 			const q = {},
 				qBound = Binding.bind(q, () => undefined, () => undefined, Binding.types.clone);
 
-			expect(Binding.getBinding(qBound).target).to.be(q);
-			expect(qBound).not.to.be(q);
+			expect(Binding.getBinding(qBound).target).to.equal(q);
+			expect(qBound).not.to.equal(q);
 		});
 	});
 
 	describe("#route()", () => {
 		it("should call .router() bound to a State with the given route and the given data as parameter", () => {
-			expect(binding.route(route, origin, data)).to.be("result");
+			expect(binding.route(route, origin, data)).to.equal("result");
 		});
 	});
 
 	describe("#close()", () => {
 		it("should call .closer() bound to a State with the given route and the given data as parameter", () => {
-			expect(binding.close(route, origin, data)).to.be("result");
+			expect(binding.close(route, origin, data)).to.equal("result");
 		});
 	});
 

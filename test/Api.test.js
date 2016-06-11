@@ -22,9 +22,10 @@ describe("Api", () => {
 			return this.value;
 		})
 	};
-	const object = Binding.bind(original, function(a) {
-		expect(this).to.be.a(State);
-		expect(this.value).to.be(original);
+	const object = Binding.bind(original, function(a, state) {
+		expect(state).to.be.a(State);
+		expect(this).to.be(state);
+		expect(state.value).to.be(original);
 
 		if(a === "error")
 			throw new Error("error");
@@ -33,20 +34,21 @@ describe("Api", () => {
 			throw a;
 
 		if(a === "x")
-			return this.value.x;
+			return state.value.x;
 
-		return a && this.value;
-	}, function(key) {
-		expect(this).to.be.a(State);
-		expect(this.value).to.be(original);
+		return a && state.value;
+	}, function(key, state) {
+		expect(state).to.be.a(State);
+		expect(this).to.be(state);
+		expect(state.value).to.be(original);
 
 		if(key instanceof Error)
 			throw key;
 
-		if(!(key in this.value))
+		if(!(key in state.value))
 			throw new Error(`${key} not found.`);
 
-		return this.value[key];
+		return state.value[key];
 	}, Binding.types.clone);
 	const api = new Api(object);
 
@@ -175,21 +177,23 @@ describe("Api", () => {
 		const foo = {},
 			test = Object.create(null);
 
-		const api = new Api(Binding.bind(original, function(a) {
-			expect(this).to.be.a(State);
-			expect(this.value).to.be(original);
-			expect([test, foo]).to.contain(this.origin);
+		const api = new Api(Binding.bind(original, function(a, state) {
+			expect(state).to.be.a(State);
+			expect(this).to.be(state);
+			expect(state.value).to.be(original);
+			expect([test, foo]).to.contain(state.origin);
 
 			return a && this.value;
-		}, function(key) {
-			expect(this).to.be.a(State);
-			expect(this.value).to.be(original);
-			expect(this.origin).to.be(test);
+		}, function(key, state) {
+			expect(state).to.be.a(State);
+			expect(this).to.be(state);
+			expect(state.value).to.be(original);
+			expect(state.origin).to.be(test);
 
-			if(!(key in this.value))
+			if(!(key in state.value))
 				throw new Error(`${key} not found.`);
 
-			return this.value[key];
+			return state.value[key];
 		}, Binding.types.clone)).origin(test);
 
 		it("should return an Api", () => {

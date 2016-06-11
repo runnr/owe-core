@@ -164,7 +164,9 @@ Binding.types = types;
 
 function traverse(type, typeName) {
 	return function(route, origin, data) {
-		return this[type].call(new State(this.target, route, typeName, origin, this), data);
+		const state = new State(this.target, route, typeName, origin, this);
+
+		return this[type].call(state, data, state);
 	};
 }
 

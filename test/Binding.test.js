@@ -172,24 +172,26 @@ describe("Binding", () => {
 	const data = "ein test";
 	const origin = {};
 
-	function router(pData) {
-		expect(this.value).to.be(object);
-		expect(this.route).to.eql(route);
-		expect(this.type).to.be("route");
-		expect(this.binding).to.be(binding);
-		expect(this.origin).to.be(origin);
+	function router(pData, state) {
+		expect(state.value).to.be(object);
+		expect(state.route).to.eql(route);
+		expect(state.type).to.be("route");
+		expect(state.binding).to.be(binding);
+		expect(state.origin).to.be(origin);
 		expect(data).to.be(pData);
+		expect(this).to.be(state);
 
 		return "result";
 	}
 
-	function closer(pData) {
-		expect(this.value).to.be(object);
-		expect(this.route).to.eql(route);
-		expect(this.type).to.be("close");
-		expect(this.binding).to.be(binding);
-		expect(this.origin).to.be(origin);
+	function closer(pData, state) {
+		expect(state.value).to.be(object);
+		expect(state.route).to.eql(route);
+		expect(state.type).to.be("close");
+		expect(state.binding).to.be(binding);
+		expect(state.origin).to.be(origin);
 		expect(data).to.be(pData);
+		expect(this).to.be(state);
 
 		return "result";
 	}

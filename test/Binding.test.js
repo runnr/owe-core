@@ -7,8 +7,8 @@ const Binding = require("../src/Binding");
 describe("Binding", () => {
 	describe(".isBound()", () => {
 		it("should return true for objects that were bound", () => {
-			const boundObject = Binding.bind(null, () => undefined, () => undefined);
-			const boundFunction = Binding.bind(() => undefined, () => undefined, () => undefined);
+			const boundObject = Binding.bind(null, () => {}, () => {});
+			const boundFunction = Binding.bind(() => {}, () => {}, () => {});
 
 			expect(Binding.isBound(boundObject)).to.equal(true);
 			expect(Binding.isBound(boundFunction)).to.equal(true);
@@ -21,7 +21,7 @@ describe("Binding", () => {
 			expect(Binding.isBound(true)).to.equal(false);
 			expect(Binding.isBound(3)).to.equal(false);
 			expect(Binding.isBound("test")).to.equal(false);
-			expect(Binding.isBound(() => undefined)).to.equal(false);
+			expect(Binding.isBound(() => {})).to.equal(false);
 			expect(Binding.isBound(Symbol("test"))).to.equal(false);
 		});
 	});
@@ -30,7 +30,7 @@ describe("Binding", () => {
 		it("should return the Binding object for the given object", () => {
 			const object = {};
 
-			Binding.bind(object, () => undefined, () => undefined);
+			Binding.bind(object, () => {}, () => {});
 			expect(Binding.getBinding(object)).to.be.an.instanceof(Binding);
 
 			expect(Binding.getBinding(null)).to.equal(undefined);
@@ -39,7 +39,7 @@ describe("Binding", () => {
 			expect(Binding.getBinding(true)).to.equal(undefined);
 			expect(Binding.getBinding(3)).to.equal(undefined);
 			expect(Binding.getBinding("test")).to.equal(undefined);
-			expect(Binding.getBinding(() => undefined)).to.equal(undefined);
+			expect(Binding.getBinding(() => {})).to.equal(undefined);
 			expect(Binding.getBinding(Symbol("test"))).to.equal(undefined);
 		});
 	});
@@ -48,25 +48,25 @@ describe("Binding", () => {
 		const bindingFunction = Binding.bind.bind(Binding);
 
 		it("can be used to bind to an object by calling bind", () => {
-			expect(Binding.isBound(Binding.bind({}, () => undefined, () => undefined))).to.equal(true);
+			expect(Binding.isBound(Binding.bind({}, () => {}, () => {}))).to.equal(true);
 		});
 
 		it("only binds objects, functions and null", () => {
-			expect(() => bindingFunction(undefined, () => undefined, () => undefined)).to.throw();
-			expect(() => bindingFunction("test", () => undefined, () => undefined)).to.throw();
-			expect(() => bindingFunction(false, () => undefined, () => undefined)).to.throw();
-			expect(() => bindingFunction(Symbol("test"), () => undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction(undefined, () => {}, () => {})).to.throw();
+			expect(() => bindingFunction("test", () => {}, () => {})).to.throw();
+			expect(() => bindingFunction(false, () => {}, () => {})).to.throw();
+			expect(() => bindingFunction(Symbol("test"), () => {}, () => {})).to.throw();
 
-			expect(() => bindingFunction(null, () => undefined, () => undefined)).not.to.throw();
-			expect(() => bindingFunction(() => undefined, () => undefined, () => undefined)).not.to.throw();
-			expect(() => bindingFunction({}, () => undefined, () => undefined)).not.to.throw();
-			expect(() => bindingFunction([], () => undefined, () => undefined)).not.to.throw();
+			expect(() => bindingFunction(null, () => {}, () => {})).not.to.throw();
+			expect(() => bindingFunction(() => {}, () => {}, () => {})).not.to.throw();
+			expect(() => bindingFunction({}, () => {}, () => {})).not.to.throw();
+			expect(() => bindingFunction([], () => {}, () => {})).not.to.throw();
 		});
 
 		it("requires a router and a closer function", () => {
 			expect(() => bindingFunction({})).to.throw();
-			expect(() => bindingFunction({}, () => undefined)).to.throw();
-			expect(() => bindingFunction({}, undefined, () => undefined)).to.throw();
+			expect(() => bindingFunction({}, () => {})).to.throw();
+			expect(() => bindingFunction({}, undefined, () => {})).to.throw();
 			expect(() => bindingFunction({}, [], [])).to.throw();
 			expect(() => bindingFunction({}, {}, {})).to.throw();
 			expect(() => bindingFunction({}, "a", "b")).to.throw();
@@ -76,21 +76,21 @@ describe("Binding", () => {
 
 		describe("type parameter", () => {
 			it("should be optional and 'normal' by default", () => {
-				expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined)).type).to.equal(Binding.types.normal);
+				expect(Binding.getBinding(Binding.bind({}, () => {}, () => {})).type).to.equal(Binding.types.normal);
 			});
 
 			it("when 'normal': only accepts unbound objects", () => {
 				const object = {};
 
-				expect(() => bindingFunction(object, () => undefined, () => undefined)).not.to.throw();
-				expect(() => bindingFunction(object, () => undefined, () => undefined)).to.throw();
+				expect(() => bindingFunction(object, () => {}, () => {})).not.to.throw();
+				expect(() => bindingFunction(object, () => {}, () => {})).to.throw();
 			});
 
 			it("when 'rebind': accepts all objects and rebinds them if neccessary", () => {
 				const object = {};
 
-				expect(() => bindingFunction(object, () => undefined, () => undefined, Binding.types.rebind)).not.to.throw();
-				expect(() => bindingFunction(object, () => undefined, () => undefined, Binding.types.rebind)).not.to.throw();
+				expect(() => bindingFunction(object, () => {}, () => {}, Binding.types.rebind)).not.to.throw();
+				expect(() => bindingFunction(object, () => {}, () => {}, Binding.types.rebind)).not.to.throw();
 			});
 
 			it("when 'clone': binds to a new object that behaves as if it were the original object in Apis", () => {
@@ -98,7 +98,7 @@ describe("Binding", () => {
 					a: 1
 				};
 
-				expect(() => bindingFunction(object, () => undefined, () => undefined)).not.to.throw();
+				expect(() => bindingFunction(object, () => {}, () => {})).not.to.throw();
 				expect(Binding.isBound(object)).to.equal(true);
 
 				let clone;
@@ -109,7 +109,7 @@ describe("Binding", () => {
 					return this.value;
 				}
 
-				expect(() => clone = Binding.bind(object, router, () => undefined, Binding.types.clone)).not.to.throw();
+				expect(() => clone = Binding.bind(object, router, () => {}, Binding.types.clone)).not.to.throw();
 				expect(Binding.isBound(clone)).to.equal(true);
 				expect(Object.getPrototypeOf(clone)).to.equal(null);
 				expect(clone.object).to.equal(object);
@@ -118,7 +118,7 @@ describe("Binding", () => {
 
 				let clone2;
 
-				expect(() => clone2 = Binding.bind(object, binding.router, () => undefined, Binding.types.clone)).not.to.throw();
+				expect(() => clone2 = Binding.bind(object, binding.router, () => {}, Binding.types.clone)).not.to.throw();
 
 				const binding2 = Binding.getBinding(clone2);
 
@@ -134,7 +134,7 @@ describe("Binding", () => {
 		it("unbinds bound objects and returns them", () => {
 			const o = {};
 
-			const a = Binding.bind(o, () => undefined, () => undefined);
+			const a = Binding.bind(o, () => {}, () => {});
 
 			expect(a).to.equal(o);
 			expect(Binding.isBound(o)).to.equal(true);
@@ -144,7 +144,7 @@ describe("Binding", () => {
 			expect(b).to.equal(o);
 			expect(Binding.isBound(o)).not.to.equal(true);
 
-			const c = Binding.bind(o, () => undefined, () => undefined);
+			const c = Binding.bind(o, () => {}, () => {});
 
 			expect(c).to.equal(o);
 			expect(Binding.isBound(o)).to.equal(true);
@@ -152,7 +152,7 @@ describe("Binding", () => {
 
 		it("just returns unbound objects and data", () => {
 			const o = Object.freeze({});
-			const f = () => undefined;
+			const f = () => {};
 			const s = Symbol();
 
 			expect(Binding.unbind(o)).to.equal(o);
@@ -212,28 +212,28 @@ describe("Binding", () => {
 
 	describe("#type", () => {
 		it("should contain the type used at Binding creation", () => {
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.normal)).type).to.equal(Binding.types.normal);
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.clone)).type).to.equal(Binding.types.clone);
-			expect(Binding.getBinding(Binding.bind({}, () => undefined, () => undefined, Binding.types.rebind)).type).to.equal(Binding.types.rebind);
+			expect(Binding.getBinding(Binding.bind({}, () => {}, () => {}, Binding.types.normal)).type).to.equal(Binding.types.normal);
+			expect(Binding.getBinding(Binding.bind({}, () => {}, () => {}, Binding.types.clone)).type).to.equal(Binding.types.clone);
+			expect(Binding.getBinding(Binding.bind({}, () => {}, () => {}, Binding.types.rebind)).type).to.equal(Binding.types.rebind);
 		});
 	});
 
 	describe("#target", () => {
 		it("should always contain the binding target object", () => {
 			const o = {},
-				oBound = Binding.bind(o, () => undefined, () => undefined, Binding.types.normal);
+				oBound = Binding.bind(o, () => {}, () => {}, Binding.types.normal);
 
 			expect(Binding.getBinding(oBound).target).to.equal(o);
 			expect(oBound).to.equal(o);
 
 			const p = o,
-				pBound = Binding.bind(o, () => undefined, () => undefined, Binding.types.rebind);
+				pBound = Binding.bind(o, () => {}, () => {}, Binding.types.rebind);
 
 			expect(Binding.getBinding(pBound).target).to.equal(p);
 			expect(pBound).to.equal(p);
 
 			const q = {},
-				qBound = Binding.bind(q, () => undefined, () => undefined, Binding.types.clone);
+				qBound = Binding.bind(q, () => {}, () => {}, Binding.types.clone);
 
 			expect(Binding.getBinding(qBound).target).to.equal(q);
 			expect(qBound).not.to.equal(q);

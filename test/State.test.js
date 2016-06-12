@@ -19,7 +19,7 @@ describe("State", () => {
 
 	const route = ["route", "of", "this", "state"];
 	const origin = {};
-	const binding = Binding.getBinding(Binding.bind(null, () => undefined, () => undefined));
+	const binding = Binding.getBinding(Binding.bind(null, () => {}, () => {}));
 	const state = new State(value, route, "great", origin, binding);
 
 	it("should be frozen", () => {
@@ -101,7 +101,7 @@ describe("State", () => {
 
 			expect(() => state.setValue("test")).to.throw();
 
-			expect(() => state.setValue(() => undefined)).to.throw();
+			expect(() => state.setValue(() => {})).to.throw();
 
 			expect(() => state.setValue({})).not.to.throw();
 

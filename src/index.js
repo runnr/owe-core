@@ -36,8 +36,8 @@ function owe(object, router, closer, type) {
 		router = router.router;
 	}
 
-	router = typeof router !== "function" ? () => undefined : router;
-	closer = typeof closer !== "function" ? () => undefined : closer;
+	router = typeof router !== "function" ? () => {} : router;
+	closer = typeof closer !== "function" ? () => {} : closer;
 
 	if(type !== undefined && typeof type !== "symbol") {
 

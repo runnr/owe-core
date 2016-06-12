@@ -7,7 +7,7 @@ const resource = require("../src/resource");
 describe("resource", () => {
 	it("should return an empty object for everything without a resource", () => {
 		expect(resource({})).to.deep.equal({});
-		expect(resource(() => undefined)).to.deep.equal({});
+		expect(resource(() => {})).to.deep.equal({});
 		expect(resource(null)).to.deep.equal({});
 		expect(resource(undefined)).to.deep.equal({});
 		expect(resource(0)).to.deep.equal({});

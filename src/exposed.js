@@ -122,12 +122,8 @@ module.exports = Object.assign(expose, {
 			get: properties instanceof Map ? () => {
 				const result = {};
 
-				for(const property of properties) {
-					const key = property[0];
-					const value = property[1];
-
+				for(const [key, value] of properties)
 					result[value] = obj[key];
-				}
 
 				return result;
 			} : () => {

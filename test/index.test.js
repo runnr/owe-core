@@ -45,25 +45,25 @@ describe("owe", () => {
 		it("should return the given object", () => {
 			const o = {};
 
-			expect(owe(o, () => undefined, () => undefined)).to.equal(o);
+			expect(owe(o, () => {}, () => {})).to.equal(o);
 		});
 
 		it("should bind the given object", () => {
-			const o = owe({}, () => undefined, () => undefined);
+			const o = owe({}, () => {}, () => {});
 
 			expect(owe.isBound(o)).to.equal(true);
 		});
 
 		it("should return a new bound object if none was given", () => {
-			const o = owe(null, () => undefined, () => undefined);
+			const o = owe(null, () => {}, () => {});
 
 			expect(o).to.be.an("object");
 			expect(owe.isBound(o)).to.equal(true);
 		});
 
 		it("should use the given routing and closing functions for binding", () => {
-			const a = () => undefined;
-			const b = () => undefined;
+			const a = () => {};
+			const b = () => {};
 
 			const binding = owe.Binding.getBinding(owe({}, a, b));
 
@@ -72,8 +72,8 @@ describe("owe", () => {
 		});
 
 		it("should accept router and closer wrapped in an object", () => {
-			const a = () => undefined;
-			const b = () => undefined;
+			const a = () => {};
+			const b = () => {};
 
 			const binding = owe.Binding.getBinding(owe({}, {
 				router: a,
@@ -86,17 +86,17 @@ describe("owe", () => {
 
 		it("should throw if router and closer are wrapped in an object and a closer is given as third param", () => {
 			expect(() => owe.Binding.getBinding(owe({}, {
-				router: () => undefined,
-				closer: () => undefined
-			}, () => undefined))).to.throw();
+				router: () => {},
+				closer: () => {}
+			}, () => {}))).to.throw();
 
 			expect(() => owe.Binding.getBinding(owe({}, {
-				router: () => undefined
-			}, () => undefined))).to.throw();
+				router: () => {}
+			}, () => {}))).to.throw();
 
 			expect(() => owe.Binding.getBinding(owe({}, {
-				closer: () => undefined
-			}, () => undefined))).to.throw();
+				closer: () => {}
+			}, () => {}))).to.throw();
 		});
 
 		it("should accept a missing router and/or closer and use empty functions instead", () => {
@@ -105,7 +105,7 @@ describe("owe", () => {
 			expect(binding1.router).to.be.a("function");
 			expect(binding1.closer).to.be.a("function");
 
-			const a = () => undefined;
+			const a = () => {};
 			const binding2 = owe.Binding.getBinding(owe({}, {
 				router: a,
 				closer: null
@@ -142,7 +142,7 @@ describe("owe", () => {
 			expect(binding2.type).to.equal(owe.Binding.types.rebind);
 
 			const binding3 = owe.Binding.getBinding(owe({}, {
-				router: () => undefined
+				router: () => {}
 			}, "normal"));
 
 			expect(binding3.type).to.equal(owe.Binding.types.normal);
@@ -151,7 +151,7 @@ describe("owe", () => {
 
 			expect(binding4.type).to.equal(owe.Binding.types.clone);
 
-			const binding5 = owe.Binding.getBinding(owe({}, () => undefined, () => undefined, "clone"));
+			const binding5 = owe.Binding.getBinding(owe({}, () => {}, () => {}, "clone"));
 
 			expect(binding5.type).to.equal(owe.Binding.types.clone);
 		});
@@ -166,7 +166,7 @@ describe("owe", () => {
 			expect(binding2.type).to.equal(owe.Binding.types.rebind);
 
 			const binding3 = owe.Binding.getBinding(owe({}, {
-				router: () => undefined
+				router: () => {}
 			}, owe.Binding.types.normal));
 
 			expect(binding3.type).to.equal(owe.Binding.types.normal);
@@ -175,7 +175,7 @@ describe("owe", () => {
 
 			expect(binding4.type).to.equal(owe.Binding.types.clone);
 
-			const binding5 = owe.Binding.getBinding(owe({}, () => undefined, () => undefined, owe.Binding.types.clone));
+			const binding5 = owe.Binding.getBinding(owe({}, () => {}, () => {}, owe.Binding.types.clone));
 
 			expect(binding5.type).to.equal(owe.Binding.types.clone);
 		});
@@ -205,8 +205,8 @@ describe("owe", () => {
 			expect(() => owe({}, undefined, undefined, "__proto__")).to.throw();
 			expect(() => owe({}, {}, {})).to.throw();
 			expect(() => owe({}, undefined, undefined, {})).to.throw();
-			expect(() => owe({}, {}, () => undefined)).to.throw();
-			expect(() => owe({}, undefined, undefined, () => undefined)).to.throw();
+			expect(() => owe({}, {}, () => {})).to.throw();
+			expect(() => owe({}, undefined, undefined, () => {})).to.throw();
 			expect(() => owe({}, {}, Symbol("test"))).to.throw();
 			expect(() => owe({}, undefined, undefined, Symbol("test"))).to.throw();
 			expect(() => owe({}, {}, 1)).to.throw();
@@ -228,7 +228,7 @@ describe("owe", () => {
 			expect(owe.isApi(NaN)).to.equal(false);
 			expect(owe.isApi(Infinity)).to.equal(false);
 			expect(owe.isApi({})).to.equal(false);
-			expect(owe.isApi(() => undefined)).to.equal(false);
+			expect(owe.isApi(() => {})).to.equal(false);
 			expect(owe.isApi(owe({}))).to.equal(false);
 			expect(owe.isApi(Api)).to.equal(false);
 			expect(owe.isApi(Object.create(Api))).to.equal(false);
@@ -255,7 +255,7 @@ describe("owe", () => {
 		it("should bind an unbound object and return an Api instance for it", () => {
 			const o1 = {};
 			const o2 = {};
-			const f = () => undefined;
+			const f = () => {};
 			const api1 = owe.api(o1);
 			const api2 = owe.api(o2, f, f);
 

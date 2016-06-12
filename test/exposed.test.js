@@ -12,7 +12,7 @@ function exposedValue(o) {
 describe(".exposed", () => {
 	it("should expose given objects when called", () => {
 		const o = {};
-		const f = () => undefined;
+		const f = () => {};
 		const e = new Error();
 
 		expect(exposed(o)).to.equal(o);
@@ -26,7 +26,7 @@ describe(".exposed", () => {
 
 	it("should expose given objects with data when called with data", () => {
 		const o = {};
-		const f = () => undefined;
+		const f = () => {};
 		const e = new Error();
 
 		const data = Symbol("unique");
@@ -44,7 +44,7 @@ describe(".exposed", () => {
 		it("should return true when given an exposed object", () => {
 			const o = exposed({});
 			const o2 = exposed({}, undefined);
-			const f = exposed(() => undefined, true);
+			const f = exposed(() => {}, true);
 			const e = exposed(new Error(), "one");
 
 			expect(exposed.isExposed(o)).to.equal(true);
@@ -55,7 +55,7 @@ describe(".exposed", () => {
 
 		it("should return false when given a non exposed object", () => {
 			const o = {};
-			const f = () => undefined;
+			const f = () => {};
 			const e = new Error();
 
 			expect(exposed.isExposed(o)).to.equal(false);
@@ -67,7 +67,7 @@ describe(".exposed", () => {
 	describe(".getValue", () => {
 		it("should return the exposed value", () => {
 			const o = exposed({});
-			const f = exposed(() => undefined, {});
+			const f = exposed(() => {}, {});
 			const e = exposed(new Error(), "one");
 			const e2 = exposed(new Error());
 			const n = {};

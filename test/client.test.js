@@ -47,7 +47,7 @@ describe("client", () => {
 			expect(() => client("x")).to.throw();
 			expect(() => client(1)).to.throw();
 			expect(() => client(undefined)).to.throw();
-			expect(() => client(() => undefined)).to.throw();
+			expect(() => client(() => {})).to.throw();
 			expect(() => client(Symbol("test"))).to.throw();
 			expect(() => client(true)).to.throw();
 			expect(() => client({})).to.throw();
@@ -123,7 +123,7 @@ describe("client", () => {
 			expect(client.isApi(NaN)).to.equal(false);
 			expect(client.isApi(Infinity)).to.equal(false);
 			expect(client.isApi({})).to.equal(false);
-			expect(client.isApi(() => undefined)).to.equal(false);
+			expect(client.isApi(() => {})).to.equal(false);
 			expect(client.isApi(ClientApi)).to.equal(false);
 			expect(client.isApi(Object.create(ClientApi))).to.equal(false);
 			expect(client.isApi(Symbol("test"))).to.equal(false);

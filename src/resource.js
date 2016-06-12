@@ -13,10 +13,10 @@ function resource(object, data) {
 	if(data === undefined)
 		return resourceMap.get(object) || {};
 
-	if((typeof object !== "object" || object === null) && typeof object !== "function" || resourceMap.has(object))
+	if(!object || typeof object !== "object" && typeof object !== "function" || resourceMap.has(object))
 		throw new TypeError("Could not transform given object into a resource.");
 
-	if(typeof data !== "object" || data === null)
+	if(!data || typeof data !== "object")
 		throw new TypeError("Resource data has to be an object.");
 
 	resourceMap.set(object, data);

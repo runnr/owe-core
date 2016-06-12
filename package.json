@@ -1,6 +1,6 @@
 {
 	"name": "owe-core",
-	"version": "0.11.2",
+	"version": "0.11.3",
 	"description": "Core of the owe.js API framework ecosystem.",
 	"keywords": [
 		"api",

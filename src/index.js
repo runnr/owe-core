@@ -41,7 +41,7 @@ function owe(object, router, closer, type) {
 
 	if(type !== undefined && typeof type !== "symbol") {
 
-		if(typeof type === "object" && type !== null && "valueOf" in type)
+		if(type && typeof type === "object" && "valueOf" in type)
 			type = type.valueOf();
 
 		if(typeof type === "string" && type in Binding.types)

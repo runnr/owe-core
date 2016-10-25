@@ -75,11 +75,12 @@ describe("proxify and unproxify", () => {
 
 			const p = proxify(o);
 
-			expect(p.test).to.be.a("function");
-			expect(a).to.deep.equal(["test"]);
+			expect(p.test.name.length).to.be.a("function");
+			expect(a).to.deep.equal(["test", "length"]);
+			expect(b).to.deep.equal(["name"]);
 			expect(p.a1.b1.a2.b2.a3.b3).to.be.a("function");
-			expect(a).to.deep.equal(["test", "a1", "a2", "a3"]);
-			expect(b).to.deep.equal(["b1", "b2", "b3"]);
+			expect(a).to.deep.equal(["test", "length", "a1", "a2", "a3"]);
+			expect(b).to.deep.equal(["name", "b1", "b2", "b3"]);
 		});
 
 		it("should translate calls to close calls", () => {

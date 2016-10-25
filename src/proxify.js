@@ -2,7 +2,12 @@
 
 const proxyMap = new WeakMap();
 
-const target = Object.freeze(Object.setPrototypeOf(() => {}, null));
+const target = Object.setPrototypeOf(() => {}, null);
+
+delete target.name;
+delete target.length;
+
+Object.freeze(target);
 
 /**
  * A proxy for an object that has a Set for this property key will pass through all properties with a name that can be found in that Set.

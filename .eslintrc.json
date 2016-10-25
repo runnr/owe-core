@@ -1,4 +1,8 @@
 {
 	"root": true,
-	"extends": "cortys"
+	"extends": "cortys",
+
+	"rules": {
+		"no-unsafe-finally": "off"
+	}
 }

@@ -29,11 +29,11 @@
 		"owe-helpers": "0.11.x"
 	},
 	"devDependencies": {
-		"eslint": "3.8.1",
+		"eslint": "3.12.2",
 		"eslint-config-cortys": "1.x",
 		"chai": "3.5.0",
 		"chai-as-promised": "6.0.0",
-		"jsdoc": "3.4.2",
+		"jsdoc": "3.4.3",
 		"gulp": "3.9.1",
 		"minami": "1.1.1",
 		"gulp-eslint": "3.0.1",
@@ -42,9 +42,9 @@
 		"gulp-rename": "1.2.2",
 		"gulp-shell": "0.5.2",
 		"gulp-gh-pages": "0.5.4",
-		"mocha": "3.1.2",
+		"mocha": "3.2.0",
 		"run-sequence": "1.2.2",
-		"coveralls": "2.11.14"
+		"coveralls": "2.11.15"
 	},
 	"scripts": {
 		"test": "./node_modules/.bin/gulp test",

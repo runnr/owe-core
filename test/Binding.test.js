@@ -162,7 +162,6 @@ describe("Binding", () => {
 			expect(Binding.unbind(s)).to.equal(s);
 			expect(Binding.unbind(f)).to.equal(f);
 		});
-
 	});
 
 	const object = {
@@ -251,5 +250,4 @@ describe("Binding", () => {
 			expect(binding.close(route, origin, data)).to.equal("result");
 		});
 	});
-
 });

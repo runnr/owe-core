@@ -135,8 +135,6 @@ describe(".exposed", () => {
 	});
 
 	describe(".Error instance", () => {
-		console.log(exposed);
-
 		const err = new exposed.Error();
 
 		it("should be an Error", () => {

@@ -104,7 +104,6 @@ describe("State", () => {
 			expect(() => state.setValue(() => {})).to.throw();
 
 			expect(() => state.setValue({})).not.to.throw();
-
 		});
 
 		it("should not change the state itself", () => {

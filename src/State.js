@@ -17,7 +17,6 @@ class State {
 	 * @param {Binding} binding The {@link Binding} object of {@link State#value}. This has to be set, because {@link Binding~types.clone clone}-Bindings do not bind the object itself and thus hold no reference to the {@link Binding}.
 	 */
 	constructor(value, route, type, origin, binding) {
-
 		if(!Array.isArray(route))
 			throw new TypeError("State route has to be an array.");
 		if(!Binding || !(binding instanceof Binding))

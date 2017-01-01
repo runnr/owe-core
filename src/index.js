@@ -1,6 +1,7 @@
 /**
  * @module owe-core
  */
+
 "use strict";
 
 /**
@@ -24,7 +25,6 @@
 function owe(object, router, closer, type) {
 	// An object of the form { router:[function], closer:[function] } can be used as well:
 	if(router && typeof router === "object") {
-
 		if(closer !== undefined && arguments.length === 3) {
 			type = closer;
 			closer = undefined;
@@ -40,7 +40,6 @@ function owe(object, router, closer, type) {
 	closer = typeof closer !== "function" ? () => {} : closer;
 
 	if(type !== undefined && typeof type !== "symbol") {
-
 		if(type && typeof type === "object" && "valueOf" in type)
 			type = type.valueOf();
 

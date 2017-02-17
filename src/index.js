@@ -68,7 +68,7 @@ const proxify = require("./proxify");
 Object.assign(owe, {
 
 	/**
-	 * A reference to the {@link client} module.
+	 * A reference to the [client]{@link module:client} module.
 	 */
 	client,
 
@@ -83,17 +83,17 @@ Object.assign(owe, {
 	Binding,
 
 	/**
-	 * A reference to the {@link resource} module.
+	 * A reference to the [resource]{@link module:resource} module.
 	 */
 	resource,
 
 	/**
-	 * A reference to the {@link expose} module.
+	 * A reference to the [expose]{@link module:expose} module.
 	 */
 	expose,
 
 	/**
-	 * A reference to the {@link expose} module.
+	 * A reference to the [expose]{@link module:expose} module.
 	 */
 	exposed: expose,
 

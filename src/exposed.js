@@ -6,7 +6,6 @@ const resource = require("./resource");
  * Exposes objects as another value when serialized.
  * `expose` uses the `expose` property of object [resources]{@link resource} internally.
  * @module expose
- * @alias exposed
  * @param {!object} obj The object to expose.
  * @param {any} [val] The value that should be used instead of obj when serialized. If not specified and `obj` is an `Error`, `obj.message` will be made enumerable and obj will get itself as its exposed value.
  * @return {object} The exposed object.

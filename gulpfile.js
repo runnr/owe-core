@@ -6,7 +6,6 @@ const mocha = require("gulp-mocha");
 const eslint = require("gulp-eslint");
 const runSequence = require("run-sequence");
 const shell = require("gulp-shell");
-const ghPages = require("gulp-gh-pages");
 
 require("chai").use(require("chai-as-promised"));
 
@@ -49,13 +48,9 @@ gulp.task("docs", callback => {
 		.on("end", callback);
 });
 
-gulp.task("uploadDocs", () => {
-	return gulp.src("docs/owe-core/**/*").pipe(ghPages());
-});
-
 gulp.task("docWatch", () => {
 	gulp.start(["test", "docs"]);
-	gulp.watch(["src/**", "test/**"], ["test", "docs"]);
+	gulp.watch(["README.md", "src/**", "test/**"], ["test", "docs"]);
 });
 
 gulp.task("watch", () => {
@@ -65,6 +60,4 @@ gulp.task("watch", () => {
 
 gulp.task("default", ["watch"]);
 
-gulp.task("deploy", () => {
-	runSequence("docs", "uploadDocs");
-});
+gulp.task("deploy", ["test", "docs"]);

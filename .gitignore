@@ -5,10 +5,6 @@ logs
 # Coverage directory used by tools like istanbul
 coverage
 
-# Generated JSDoc documentation
-docs
-.publish
-
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 

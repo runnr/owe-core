@@ -4,10 +4,14 @@ const State = require("./State");
 
 /**
  * The types of Bindings.
- * @alias Binding.types
+ * @memberof Binding
  * @enum {symbol}
  */
 const types = {
+
+	/**
+	 * @ignore
+	 */
 	__proto__: null, // Set prototype to null.
 
 	/**
@@ -38,7 +42,7 @@ class Binding {
 	 * @param {object|function} object The object that will be bound.
 	 * @param {function} router The router function for this binding.
 	 * @param {function} closer The closer function for this binding.
-	 * @param {types} [type=Binding.types.normal] The {@link Binding.types type of binding} to be used.
+	 * @param {types} [type=Binding.types.normal] The {@linkplain Binding.types type of binding} to be used.
 	 * @param {object} clonedObject Only set if type=clone. Object the given object is a clone of.
 	 */
 	constructor(object, router, closer, type, clonedObject) {

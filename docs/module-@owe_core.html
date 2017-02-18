@@ -1,0 +1,3074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@owe/core - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-@owe_core.html">@owe/core</a><ul class='methods'><li data-type='method'><a href="module-@owe_core.html">module:@owe/core</a></li><li data-type='method'><a href="module-@owe_core.html">module:@owe/core</a></li><li data-type='method'><a href="module-@owe_core.html#~api">api</a></li><li data-type='method'><a href="module-@owe_core.html#~isApi">isApi</a></li><li data-type='method'><a href="module-@owe_core.html#~isBound">isBound</a></li><li data-type='method'><a href="module-@owe_core.html#~isExposed">isExposed</a></li></ul></li><li><a href="module-client.html">client</a></li><li><a href="module-expose.html">expose</a><ul class='methods'><li data-type='method'><a href="module-expose.html#~getValue">getValue</a></li><li data-type='method'><a href="module-expose.html#~isExposed">isExposed</a></li><li data-type='method'><a href="module-expose.html#~properties">properties</a></li></ul></li><li><a href="module-proxify.html">proxify</a><ul class='methods'><li data-type='method'><a href="module-proxify.html#.revert">revert</a></li></ul></li><li><a href="module-resource.html">resource</a></li></ul><h3>Classes</h3><ul><li><a href="Api.html">Api</a><ul class='methods'><li data-type='method'><a href="Api.html#catch">catch</a></li><li data-type='method'><a href="Api.html#close">close</a></li><li data-type='method'><a href="Api.html#origin">origin</a></li><li data-type='method'><a href="Api.html#route">route</a></li><li data-type='method'><a href="Api.html#then">then</a></li></ul></li><li><a href="Binding.html">Binding</a><ul class='methods'><li data-type='method'><a href="Binding.html#.bind">bind</a></li><li data-type='method'><a href="Binding.html#.getBinding">getBinding</a></li><li data-type='method'><a href="Binding.html#.isBound">isBound</a></li><li data-type='method'><a href="Binding.html#.unbind">unbind</a></li><li data-type='method'><a href="Binding.html#close">close</a></li><li data-type='method'><a href="Binding.html#route">route</a></li></ul></li><li><a href="ClientApi.html">ClientApi</a><ul class='methods'><li data-type='method'><a href="ClientApi.html#catch">catch</a></li><li data-type='method'><a href="ClientApi.html#close">close</a></li><li data-type='method'><a href="ClientApi.html#observeConnection">observeConnection</a></li><li data-type='method'><a href="ClientApi.html#route">route</a></li><li data-type='method'><a href="ClientApi.html#then">then</a></li><li data-type='method'><a href="ClientApi.html#unobserveConnection">unobserveConnection</a></li></ul></li><li><a href="module-expose-Error.html">Error</a></li><li><a href="module-expose-EvalError.html">EvalError</a></li><li><a href="module-expose-RangeError.html">RangeError</a></li><li><a href="module-expose-ReferenceError.html">ReferenceError</a></li><li><a href="module-expose-SyntaxError.html">SyntaxError</a></li><li><a href="module-expose-TypeError.html">TypeError</a></li><li><a href="module-expose-URIError.html">URIError</a></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#setValue">setValue</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">@owe/core</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+
+<section>
+
+
+
+<header data-tmpl="container.tmpl">
+    
+      <h2>Module: @owe/core</h2>
+        
+            
+        
+            
+        
+    
+
+    
+      <div class="bs-callout bs-callout-default">
+        <h5>Members</h5>
+        <br />
+        <dl class="dl-horizontal methods-members">
+        <dt>Fields &amp; Properties</dt><dd><ul>
+            <li><a href="#Binding">Binding</a></li>
+            
+            <li><a href="#client">client</a></li>
+            
+            <li><a href="#expose">expose</a></li>
+            
+            <li><a href="#exposed">exposed</a></li>
+            
+            <li><a href="#proxify">proxify</a></li>
+            
+            <li><a href="#resource">resource</a></li>
+            
+            <li><a href="#State">State</a></li>
+            
+            <li><a href="#unproxify">unproxify</a></li>
+            </ul></dd><dt>Methods</dt><dd><ul>
+            <li><a href="#module:@owe/core">module:@owe/core</a></li>
+            
+            <li><a href="#module:@owe/core">module:@owe/core</a></li>
+            
+            <li><a href="#api">api</a></li>
+            
+            <li><a href="#isApi">isApi</a></li>
+            
+            <li><a href="#isBound">isBound</a></li>
+            
+            <li><a href="#isExposed">isExposed</a></li>
+            </ul></dd></dl></div>
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line26">26</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="module:@owe/core">
+      <a href="#params-(require("@owe/core"))"><span class="type-signature"></span>(require("@owe/core"))</a><span class="signature">(object, router<span class="signature-attributes">nullable</span>, closer<span class="signature-attributes">nullable</span>, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Binds the given object to a router and closer function.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-(require("@owe/core"))">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-(require("@owe/core"))" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The object that should be bound.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>router</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The router that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The closer that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Binding.type</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "normal"
+                
+                </td>
+            
+
+            <td class="description last"><p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"\n * Binds the given object to a router and closer function.\n * @param {object} object The object that should be bound.\n * @param {?function} router The router that should be used.\n * @param {?function} closer The closer that should be used.\n * @param {Binding.type|string} [type=\"normal\"] The way `object` should be bound. Valid values are \"normal\", \"rebind\", \"clone\" or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.\n * @return {object} The object that was bound. If type was \"clone\" the bound cloned object is returned, object elsewise.\n */","meta":{"range":[1416,2396],"filename":"index.js","lineno":26,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001595","name":"owe","type":"FunctionDeclaration","paramnames":["object","router","closer","type"]},"vars":{"type":"module:@owe/core~type","closer":"module:@owe/core~closer","router":"module:@owe/core~router","":null},"shortpath":"index.js"},"description":"<p>Binds the given object to a router and closer function.</p>","params":[{"type":{"names":["object"]},"description":"<p>The object that should be bound.</p>","name":"object"},{"type":{"names":["function"]},"nullable":true,"description":"<p>The router that should be used.</p>","name":"router"},{"type":{"names":["function"]},"nullable":true,"description":"<p>The closer that should be used.</p>","name":"closer"},{"type":{"names":["Binding.type","string"]},"optional":true,"defaultvalue":"\"normal\"","description":"<p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p>","name":"type"}],"returns":[{"type":{"names":["object"]},"description":"<p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>"}],"name":"(require(\"@owe/core\"))","longname":"module:@owe/core","kind":"function","memberof":"module:@owe/core","___id":"T000002R000167","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"module:@owe/core","signature":"<span class=\"signature\">(object, router<span class=\"signature-attributes\">nullable</span>, closer<span class=\"signature-attributes\">nullable</span>, type<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"> &rarr; {object}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line26">26</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="module:@owe/core">
+      <a href="#params-(require("@owe/core"))"><span class="type-signature"></span>(require("@owe/core"))</a><span class="signature">(object, binding, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Binds the given object to a <code>binding</code> object that wraps a router and/or closer function. <strong>This usually is the preferred way to call this function.</strong></p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-(require("@owe/core"))">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-(require("@owe/core"))" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The object that should be bound.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>binding</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>An object containing a router and closer function.</p>
+                <h6>Properties</h6>
+                <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>router</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The router that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The closer that should be used.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Binding.type</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "normal"
+                
+                </td>
+            
+
+            <td class="description last"><p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"\n * Binds the given object to a `binding` object that wraps a router and/or closer function. **This usually is the preferred way to call this function.**\n * @param {object} object The object that should be bound.\n * @param {object} binding An object containing a router and closer function.\n * @param {function} [binding.router] The router that should be used.\n * @param {function} [binding.closer] The closer that should be used.\n * @param {Binding.type|string} [type=\"normal\"] The way `object` should be bound. Valid values are \"normal\", \"rebind\", \"clone\" or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.\n * @return {object} The object that was bound. If type was \"clone\" the bound cloned object is returned, object elsewise.\n ","meta":{"range":[1416,2396],"filename":"index.js","lineno":26,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001595","name":"owe","type":"FunctionDeclaration","paramnames":["object","router","closer","type"]},"shortpath":"index.js"},"description":"<p>Binds the given object to a <code>binding</code> object that wraps a router and/or closer function. <strong>This usually is the preferred way to call this function.</strong></p>","params":[{"type":{"names":["object"]},"description":"<p>The object that should be bound.</p>","name":"object"},{"type":{"names":["object"]},"description":"<p>An object containing a router and closer function.</p>","name":"binding","subparams":[{"type":{"names":["function"]},"optional":true,"description":"<p>The router that should be used.</p>","name":"router"},{"type":{"names":["function"]},"optional":true,"description":"<p>The closer that should be used.</p>","name":"closer"}]},null,null,{"type":{"names":["Binding.type","string"]},"optional":true,"defaultvalue":"\"normal\"","description":"<p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p>","name":"type"}],"returns":[{"type":{"names":["object"]},"description":"<p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>"}],"name":"(require(\"@owe/core\"))","longname":"module:@owe/core","kind":"function","memberof":"module:@owe/core","___id":"T000002R000166","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"module:@owe/core","signature":"<span class=\"signature\">(object, binding, type<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"> &rarr; {object}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>"]}
+</pre>
+-->
+</div>
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line84">84</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~Binding">
+  <span class="type-signature">(inner) </span>Binding<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="Binding.html"><code>Binding</code></a> class.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line74">74</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~client">
+  <span class="type-signature">(inner) </span>client<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="module-client.html"><code>client</code></a> module.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line94">94</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~expose">
+  <span class="type-signature">(inner) </span>expose<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="module-expose.html"><code>expose</code></a> module.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line99">99</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~exposed">
+  <span class="type-signature">(inner) </span>exposed<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="module-expose.html"><code>expose</code></a> module.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line116">116</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~proxify">
+  <span class="type-signature">(inner) </span>proxify<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="module-proxify.html"><code>proxify</code></a> function.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line89">89</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~resource">
+  <span class="type-signature">(inner) </span>resource<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="module-resource.html"><code>resource</code></a> module.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line79">79</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~State">
+  <span class="type-signature">(inner) </span>State<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>A reference to the <a href="State.html"><code>State</code></a> class.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line121">121</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="~unproxify">
+  <span class="type-signature">(inner) </span>unproxify<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>An alias for the <a href="module-proxify.html#.revert"><code>proxify.revert</code></a> function.</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line26">26</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="module:@owe/core">
+      <a href="#params-module:@owe/core"><span class="type-signature"></span>module:@owe/core</a><span class="signature">(object, router<span class="signature-attributes">nullable</span>, closer<span class="signature-attributes">nullable</span>, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Binds the given object to a router and closer function.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-module:@owe/core">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-module:@owe/core" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The object that should be bound.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>router</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The router that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The closer that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Binding.type</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "normal"
+                
+                </td>
+            
+
+            <td class="description last"><p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"\n * Binds the given object to a router and closer function.\n * @param {object} object The object that should be bound.\n * @param {?function} router The router that should be used.\n * @param {?function} closer The closer that should be used.\n * @param {Binding.type|string} [type=\"normal\"] The way `object` should be bound. Valid values are \"normal\", \"rebind\", \"clone\" or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.\n * @return {object} The object that was bound. If type was \"clone\" the bound cloned object is returned, object elsewise.\n */","meta":{"range":[1416,2396],"filename":"index.js","lineno":26,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001595","name":"owe","type":"FunctionDeclaration","paramnames":["object","router","closer","type"]},"vars":{"type":"module:@owe/core~type","closer":"module:@owe/core~closer","router":"module:@owe/core~router","":null},"shortpath":"index.js"},"description":"<p>Binds the given object to a router and closer function.</p>","params":[{"type":{"names":["object"]},"description":"<p>The object that should be bound.</p>","name":"object"},{"type":{"names":["function"]},"nullable":true,"description":"<p>The router that should be used.</p>","name":"router"},{"type":{"names":["function"]},"nullable":true,"description":"<p>The closer that should be used.</p>","name":"closer"},{"type":{"names":["Binding.type","string"]},"optional":true,"defaultvalue":"\"normal\"","description":"<p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p>","name":"type"}],"returns":[{"type":{"names":["object"]},"description":"<p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>"}],"name":"module:@owe/core","longname":"module:@owe/core","kind":"function","memberof":"module:@owe/core","___id":"T000002R000167","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"module:@owe/core","signature":"<span class=\"signature\">(object, router<span class=\"signature-attributes\">nullable</span>, closer<span class=\"signature-attributes\">nullable</span>, type<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"> &rarr; {object}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line26">26</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="module:@owe/core">
+      <a href="#params-module:@owe/core"><span class="type-signature"></span>module:@owe/core</a><span class="signature">(object, binding, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Binds the given object to a <code>binding</code> object that wraps a router and/or closer function. <strong>This usually is the preferred way to call this function.</strong></p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-module:@owe/core">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-module:@owe/core" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The object that should be bound.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>binding</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>An object containing a router and closer function.</p>
+                <h6>Properties</h6>
+                <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>router</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The router that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The closer that should be used.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Binding.type</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "normal"
+                
+                </td>
+            
+
+            <td class="description last"><p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"\n * Binds the given object to a `binding` object that wraps a router and/or closer function. **This usually is the preferred way to call this function.**\n * @param {object} object The object that should be bound.\n * @param {object} binding An object containing a router and closer function.\n * @param {function} [binding.router] The router that should be used.\n * @param {function} [binding.closer] The closer that should be used.\n * @param {Binding.type|string} [type=\"normal\"] The way `object` should be bound. Valid values are \"normal\", \"rebind\", \"clone\" or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.\n * @return {object} The object that was bound. If type was \"clone\" the bound cloned object is returned, object elsewise.\n ","meta":{"range":[1416,2396],"filename":"index.js","lineno":26,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001595","name":"owe","type":"FunctionDeclaration","paramnames":["object","router","closer","type"]},"shortpath":"index.js"},"description":"<p>Binds the given object to a <code>binding</code> object that wraps a router and/or closer function. <strong>This usually is the preferred way to call this function.</strong></p>","params":[{"type":{"names":["object"]},"description":"<p>The object that should be bound.</p>","name":"object"},{"type":{"names":["object"]},"description":"<p>An object containing a router and closer function.</p>","name":"binding","subparams":[{"type":{"names":["function"]},"optional":true,"description":"<p>The router that should be used.</p>","name":"router"},{"type":{"names":["function"]},"optional":true,"description":"<p>The closer that should be used.</p>","name":"closer"}]},null,null,{"type":{"names":["Binding.type","string"]},"optional":true,"defaultvalue":"\"normal\"","description":"<p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p>","name":"type"}],"returns":[{"type":{"names":["object"]},"description":"<p>The object that was bound. If type was &quot;clone&quot; the bound cloned object is returned, object elsewise.</p>"}],"name":"module:@owe/core","longname":"module:@owe/core","kind":"function","memberof":"module:@owe/core","___id":"T000002R000166","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"module:@owe/core","signature":"<span class=\"signature\">(object, binding, type<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"> &rarr; {object}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line131">131</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="~api">
+      <a href="#params-api"><span class="type-signature">(inner) </span>api</a><span class="signature">(object, router, closer, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Api.html">Api</a>}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Behaves like the <a href="module-@owe_core.html"><code>@owe/core</code></a> function but returns an Api instead of the given object. If <code>object</code> is already bound, router, closer and type are optional and <code>api()</code> simply returns an <a href="Api.html"><code>Api</code></a> instance for the given object.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-api">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-api" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The object that should be bound.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>router</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The router that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The closer that should be used.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Binding.type</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    Binding.types.normal
+                
+                </td>
+            
+
+            <td class="description last"><p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p>An <a href="Api.html"><code>Api</code></a> instance for <code>object</code>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Api.html">Api</a></span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n\t * Behaves like the <a href="module-@owe_core.html"><code>@owe/core</code></a> function but returns an Api instead of the given object. If `object` is already bound, router, closer and type are optional and `api()` simply returns an <a href="Api.html"><code>Api</code></a> instance for the given object.\n\t * @param {object} object The object that should be bound.\n\t * @param {function} router The router that should be used.\n\t * @param {function} closer The closer that should be used.\n\t * @param {Binding.type|string} [type=Binding.types.normal] The way `object` should be bound. Valid values are \"normal\", \"rebind\", \"clone\" or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.\n\t * @return {Api} An <a href="Api.html"><code>Api</code></a> instance for `object`.\n\t */","meta":{"range":[4302,4469],"filename":"index.js","lineno":131,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001836","name":"api","type":"FunctionExpression"},"vars":{"object":"module:@owe/core~object"},"shortpath":"index.js"},"description":"<p>Behaves like the <a href="module-@owe_core.html"><code>@owe/core</code></a> function but returns an Api instead of the given object. If <code>object</code> is already bound, router, closer and type are optional and <code>api()</code> simply returns an <a href="Api.html"><code>Api</code></a> instance for the given object.</p>","params":[{"type":{"names":["object"]},"description":"<p>The object that should be bound.</p>","name":"object"},{"type":{"names":["function"]},"description":"<p>The router that should be used.</p>","name":"router"},{"type":{"names":["function"]},"description":"<p>The closer that should be used.</p>","name":"closer"},{"type":{"names":["Binding.type","string"]},"optional":true,"defaultvalue":"Binding.types.normal","description":"<p>The way <code>object</code> should be bound. Valid values are &quot;normal&quot;, &quot;rebind&quot;, &quot;clone&quot; or their respective symbol representations found in <a href="Binding.html#.types"><code>Binding.types</code></a>.</p>","name":"type"}],"returns":[{"type":{"names":["Api"]},"description":"<p>An <a href="Api.html"><code>Api</code></a> instance for <code>object</code>.</p>"}],"name":"api","longname":"module:@owe/core~api","kind":"function","scope":"inner","memberof":"module:@owe/core","___id":"T000002R000195","___s":true,"attribs":"<span class=\"type-signature\">(inner) </span>","id":"~api","signature":"<span class=\"signature\">(object, router, closer, type<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"> &rarr; {<a href=\"Api.html\">Api</a>}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>~"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line143">143</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="~isApi">
+      <a href="#params-isApi"><span class="type-signature">(inner) </span>isApi</a><span class="signature">(api)</span><span class="type-signature"> &rarr; {boolean}</span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Returns whether the given object is an <a href="Api.html"><code>Api</code></a> instance.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-isApi">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-isApi" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>api</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The api to check. This can be any value. The method will always return false for non-objects.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bs-callout bs-callout-success">
+    <h5>Returns </h5>
+
+        
+<div class="param-desc">
+    <p><code>true</code> if <code>api</code> is an <a href="Api.html"><code>Api</code></a>. <code>false</code> if not.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+</div>
+  
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n\t * Returns whether the given object is an <a href="Api.html"><code>Api</code></a> instance.\n\t * @param {any} api The api to check. This can be any value. The method will always return false for non-objects.\n\t * @return {boolean} `true` if `api` is an <a href="Api.html"><code>Api</code></a>. `false` if not.\n\t */","meta":{"range":[4736,4823],"filename":"index.js","lineno":143,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001869","name":"isApi","type":"FunctionExpression"},"shortpath":"index.js"},"description":"<p>Returns whether the given object is an <a href="Api.html"><code>Api</code></a> instance.</p>","params":[{"type":{"names":["any"]},"description":"<p>The api to check. This can be any value. The method will always return false for non-objects.</p>","name":"api"}],"returns":[{"type":{"names":["boolean"]},"description":"<p><code>true</code> if <code>api</code> is an <a href="Api.html"><code>Api</code></a>. <code>false</code> if not.</p>"}],"name":"isApi","longname":"module:@owe/core~isApi","kind":"function","scope":"inner","memberof":"module:@owe/core","___id":"T000002R000197","___s":true,"attribs":"<span class=\"type-signature\">(inner) </span>","id":"~isApi","signature":"<span class=\"signature\">(api)</span><span class=\"type-signature\"> &rarr; {boolean}</span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>~"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line111">111</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="~isBound">
+      <a href="#params-isBound"><span class="type-signature">(inner) </span>isBound</a><span class="signature">()</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Checks whether a given object is bound.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-isBound">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n\t * Checks whether a given object is bound.\n\t * @method\n\t */","meta":{"range":[3333,3371],"filename":"index.js","lineno":111,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001822","name":"isBound","type":"CallExpression","value":""},"shortpath":"index.js"},"description":"<p>Checks whether a given object is bound.</p>","kind":"function","name":"isBound","longname":"module:@owe/core~isBound","scope":"inner","memberof":"module:@owe/core","___id":"T000002R000192","___s":true,"attribs":"<span class=\"type-signature\">(inner) </span>","id":"~isBound","signature":"<span class=\"signature\">()</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>~"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="index.js.html">index.js</a>:<a href="index.js.html#line105">105</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="~isExposed">
+      <a href="#params-isExposed"><span class="type-signature">(inner) </span>isExposed</a><span class="signature">()</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    <p>Checks whether a given object is exposed.</p>
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-isExposed">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n\t * Checks whether a given object is exposed.\n\t * @method\n\t */","meta":{"range":[3236,3263],"filename":"index.js","lineno":105,"path":"/Users/admin/Documents/owe-core/src","code":{"id":"astnode100001818","name":"isExposed","type":"MemberExpression","value":"expose.isExposed"},"shortpath":"index.js"},"description":"<p>Checks whether a given object is exposed.</p>","kind":"function","name":"isExposed","longname":"module:@owe/core~isExposed","scope":"inner","memberof":"module:@owe/core","___id":"T000002R000191","___s":true,"attribs":"<span class=\"type-signature\">(inner) </span>","id":"~isExposed","signature":"<span class=\"signature\">()</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"module-@owe_core.html\">@owe/core</a>~"]}
+</pre>
+-->
+</div>
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

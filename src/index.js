@@ -1,11 +1,12 @@
 /**
- * @module owe-core
+ * @module @owe/core
  */
 
 "use strict";
 
 /**
- * @exports owe-core
+ * @exports @owe/core
+ * @ignore
  *//**
  * Binds the given object to a `binding` object that wraps a router and/or closer function. **This usually is the preferred way to call this function.**
  * @param {object} object The object that should be bound.
@@ -110,17 +111,17 @@ Object.assign(owe, {
 	isBound: Binding.isBound.bind(Binding), // kek.
 
 	/**
-	 * A reference to the {@link proxify} function.
+	 * A reference to the [proxify]{@link module:proxify} function.
 	 */
 	proxify,
 
 	/**
-	 * An alias for the {@link proxify.revert} function.
+	 * An alias for the [proxify.revert]{@link module:proxify.revert} function.
 	 */
 	unproxify: proxify.revert,
 
 	/**
-	 * Behaves like {@link owe} but return an Api instead of the given object. If `object` is already bound, router, closer and type are optional and `api()` simply returns an {@link Api} instance for the given object.
+	 * Behaves like the [@owe/core]{@link module:@owe/core} function but returns an Api instead of the given object. If `object` is already bound, router, closer and type are optional and `api()` simply returns an {@link Api} instance for the given object.
 	 * @param {object} object The object that should be bound.
 	 * @param {function} router The router that should be used.
 	 * @param {function} closer The closer that should be used.

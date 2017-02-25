@@ -59,7 +59,7 @@ Object.assign(client, {
 
 	/**
 	 * Returns whether the given object is a {@link ClientApi} instance.
-	 * @memberof client
+	 * @memberof module:client
 	 * @param {any} api The api to check. This can be any value. The method will always return false for non-objects.
 	 * @return {boolean} `true` if `api` is a {@link ClientApi}. `false` if not.
 	 */

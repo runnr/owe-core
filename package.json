@@ -1,6 +1,6 @@
 {
 	"name": "@owe/core",
-	"version": "0.12.0",
+	"version": "0.13.0",
 	"description": "Core of the owe.js API framework ecosystem.",
 	"keywords": [
 		"api",
@@ -26,7 +26,7 @@
 	},
 	"main": "src/index.js",
 	"dependencies": {
-		"owe-helpers": "0.11.x"
+		"@owe/helpers": "0.13.x"
 	},
 	"devDependencies": {
 		"eslint": "3.17.1",

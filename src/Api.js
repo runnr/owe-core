@@ -1,6 +1,6 @@
 "use strict";
 
-const helpers = require("owe-helpers");
+const helpers = require("@owe/helpers");
 
 const Binding = require("./Binding");
 const exposed = require("./exposed");

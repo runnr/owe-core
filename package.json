@@ -37,7 +37,7 @@
 		"gulp": "3.9.1",
 		"loke-jsdoc-theme": "2.1.0",
 		"gulp-eslint": "3.0.1",
-		"gulp-istanbul": "1.1.1",
+		"gulp-istanbul": "1.1.2",
 		"gulp-mocha": "4.3.1",
 		"gulp-rename": "1.2.2",
 		"gulp-shell": "0.6.3",

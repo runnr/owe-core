@@ -44,7 +44,7 @@
 		"gulp-gh-pages": "0.5.4",
 		"mocha": "3.4.1",
 		"run-sequence": "2.1.0",
-		"coveralls": "2.13.1"
+		"coveralls": "2.13.2"
 	},
 	"scripts": {
 		"test": "./node_modules/.bin/gulp test",

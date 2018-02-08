@@ -29,7 +29,7 @@
 		"@owe/helpers": "0.13.x"
 	},
 	"devDependencies": {
-		"eslint": "4.16.0",
+		"eslint": "4.17.0",
 		"eslint-config-cortys": "1.x",
 		"chai": "4.1.2",
 		"chai-as-promised": "7.1.1",

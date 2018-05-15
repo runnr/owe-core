@@ -39,7 +39,7 @@
 		"gulp-eslint": "4.0.2",
 		"gulp-istanbul": "1.1.1",
 		"gulp-mocha": "5.0.0",
-		"gulp-rename": "1.2.2",
+		"gulp-rename": "1.2.3",
 		"gulp-shell": "0.6.5",
 		"gulp-gh-pages": "0.5.4",
 		"mocha": "5.0.1",

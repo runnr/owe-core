@@ -56,7 +56,6 @@ function client(protocol) {
 }
 
 Object.assign(client, {
-
 	/**
 	 * Returns whether the given object is a {@link ClientApi} instance.
 	 * @memberof module:client

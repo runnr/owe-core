@@ -8,7 +8,6 @@ const State = require("./State");
  * @enum {symbol}
  */
 const types = {
-
 	/**
 	 * @ignore
 	 */
@@ -36,7 +35,6 @@ const bindingMap = new WeakMap();
  * Stores the router and closer functions of bound objects.
  */
 class Binding {
-
 	/**
 	 * @constructor
 	 * @param {object|function} object The object that will be bound.
@@ -156,7 +154,6 @@ class Binding {
 
 		return object;
 	}
-
 }
 
 Binding.types = types;
@@ -170,12 +167,10 @@ function traverse(type, typeName) {
 }
 
 Object.assign(Binding.prototype,
-
 	/**
 	 * @lends Binding#
 	 */
 	{
-
 		/**
 		 * Calls {@link Binding#router} with a {@link State} object as its this-context.
 		 * @method
@@ -193,7 +188,8 @@ Object.assign(Binding.prototype,
 		 * @param {any} destination The data to close with.
 		 */
 		close: traverse("closer", "close")
-	});
+	}
+);
 
 State.setBinding(Binding);
 

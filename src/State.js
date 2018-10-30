@@ -7,7 +7,6 @@ let Binding;
  * Stores the state of an API request.
  */
 class State {
-
 	/**
 	 * @constructor
 	 * @param {object|function} value The object of the {@link Api} that created this {@link State}.

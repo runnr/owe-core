@@ -67,7 +67,6 @@ const resource = require("./resource");
 const proxify = require("./proxify");
 
 Object.assign(owe, {
-
 	/**
 	 * A reference to the [client]{@link module:client} module.
 	 */

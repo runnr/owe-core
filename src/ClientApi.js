@@ -9,7 +9,6 @@ const route = Symbol("route");
  * Represents an API node at a remote server.
  */
 class ClientApi {
-
 	/**
 	 * @constructor
 	 * @param {object} pProtocol The protocol object to be used for server communication.

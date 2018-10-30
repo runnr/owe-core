@@ -37,7 +37,6 @@ function subclassError(error) {
 }
 
 module.exports = Object.assign(expose, {
-
 	/**
 	 * An Error constructor that builds exposed errors.
 	 * @class

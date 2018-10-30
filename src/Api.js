@@ -16,7 +16,6 @@ const origin = Symbol("origin");
  * Represents an API node.
  */
 class Api {
-
 	/**
 	 * @constructor
 	 * @param {object|Promise} pObject A bound object this {@link Api} should be exposing. This may also be a Promise that resolves to a bound object.
@@ -125,7 +124,6 @@ class Api {
 Api.prototype[proxify.passthrough] = new Set(["then", "catch"]);
 
 const errorHandlers = {
-
 	/**
 	 * Handle routing errors.
 	 * @private

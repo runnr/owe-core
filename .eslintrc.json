@@ -3,6 +3,7 @@
 	"extends": "cortys",
 
 	"rules": {
-		"no-unsafe-finally": "off"
+		"no-unsafe-finally": "off",
+		"lines-around-comment": "off"
 	}
 }

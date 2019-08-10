@@ -33,7 +33,7 @@
 		"chai-as-promised": "7.1.1",
 		"coveralls": "^3.0.2",
 		"eslint": "^5.8.0",
-		"eslint-config-cortys": "1.x",
+		"eslint-config-cortys": "^2.1.1",
 		"gulp": "3.9.1",
 		"gulp-eslint": "^5.0.0",
 		"gulp-gh-pages": "0.5.4",

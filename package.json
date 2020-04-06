@@ -41,7 +41,7 @@
 		"gulp-mocha": "^6.0.0",
 		"gulp-rename": "^1.4.0",
 		"gulp-shell": "0.6.5",
-		"jsdoc": "3.5.5",
+		"jsdoc": "3.6.4",
 		"loke-jsdoc-theme": "2.1.0",
 		"mocha": "^6.0.0",
 		"run-sequence": "2.2.1"

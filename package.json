@@ -43,7 +43,7 @@
 		"gulp-shell": "0.6.5",
 		"jsdoc": "3.5.5",
 		"loke-jsdoc-theme": "2.1.0",
-		"mocha": "^6.0.0",
+		"mocha": "^7.1.2",
 		"run-sequence": "2.2.1"
 	},
 	"scripts": {
